@@ -21,10 +21,18 @@ class SettingsScreen extends StatelessWidget {
       body: ListView(
         children: [
           Surface(
-            title: "Profile",
+            title: "Account",
             children: [
               Row(
-                children: [],
+                children: [
+                  Row(
+                    children: [
+                      Switch(value: false, onChanged: (bool) {}),
+                      Text("Private Account"),
+                      Icon(Icons.lock),
+                    ],
+                  ),
+                ],
               )
             ],
           ),
@@ -43,13 +51,44 @@ class SettingsScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Switch(value: true, onChanged: (bool) {}),
+                      Switch(value: false, onChanged: (bool) {}),
                       Text("Night Mode"),
                       Icon(Icons.brightness_3),
                     ],
                   )
                 ],
               )
+            ],
+          ),
+          Surface(
+            title: "Danger Zone",
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: RaisedButton(
+                      color: Colors.red[800],
+                      child: Text(
+                        "Reset App",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  Container(width: 8),
+                  Expanded(
+                    child: RaisedButton(
+                      color: Colors.red[800],
+                      child: Text(
+                        "Delete Account",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
           Signature(),

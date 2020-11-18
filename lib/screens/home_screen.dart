@@ -31,7 +31,6 @@ class HomeScreen extends StatelessWidget {
               leading: Icon(Icons.backup_table),
               title: Text("Classes"),
               onTap: () {
-                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -39,7 +38,6 @@ class HomeScreen extends StatelessWidget {
               leading: Icon(Icons.account_circle),
               title: Text("Groups"),
               onTap: () {
-                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -47,7 +45,6 @@ class HomeScreen extends StatelessWidget {
               leading: Icon(Icons.insert_drive_file),
               title: Text("Documents"),
               onTap: () {
-                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -55,7 +52,6 @@ class HomeScreen extends StatelessWidget {
               leading: Icon(Icons.camera),
               title: Text("Scanner"),
               onTap: () {
-                Navigator.pop(context);
               },
             ),
             Divider(),
@@ -64,7 +60,6 @@ class HomeScreen extends StatelessWidget {
               leading: Icon(Icons.article),
               title: Text("News"),
               onTap: () {
-                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -72,7 +67,6 @@ class HomeScreen extends StatelessWidget {
               leading: Icon(Icons.bar_chart),
               title: Text("Statistics"),
               onTap: () {
-                Navigator.pop(context);
               },
             ),
             Divider(),
