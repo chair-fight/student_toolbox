@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/screens/profile_screen.dart';
 import 'package:student_toolbox/screens/settings_sceen.dart';
+import 'package:student_toolbox/widgets/signature.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -103,27 +104,7 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 16.0),
-                  child: Text(
-                    "v0.1 alpha",
-                    style: Theme.of(context).textTheme.caption,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 16.0),
-                  child: Text(
-                    "© Generic Team Name",
-                    style: Theme.of(context).textTheme.caption,
-                  ),
-                ),
-              ],
-            )
+            Signature(),
           ],
         ),
       ),

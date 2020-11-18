@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:student_toolbox/widgets/signature.dart';
 import 'package:student_toolbox/widgets/surface.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -39,10 +40,19 @@ class SettingsScreen extends StatelessWidget {
             title: "Accessibility",
             children: [
               Row(
-                children: [],
+                children: [
+                  Row(
+                    children: [
+                      Switch(value: true, onChanged: (bool) {}),
+                      Text("Night Mode"),
+                      Icon(Icons.brightness_3),
+                    ],
+                  )
+                ],
               )
             ],
           ),
+          Signature(),
         ],
       ),
     );
