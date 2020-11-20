@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:student_toolbox/services/auth.dart';
+import 'package:student_toolbox/services/theme_switcher.dart';
+import 'package:student_toolbox/widgets/dialogs/delete_account_dialog.dart';
 import 'package:student_toolbox/widgets/screen_app_bar.dart';
 import 'package:student_toolbox/widgets/signature.dart';
 import 'package:student_toolbox/widgets/surface.dart';
@@ -17,15 +20,7 @@ class SettingsScreen extends StatelessWidget {
             title: "Account",
             children: [
               Row(
-                children: [
-                  Row(
-                    children: [
-                      Switch(value: false, onChanged: (bool) {}),
-                      Text("Private Account"),
-                      Icon(Icons.lock),
-                    ],
-                  ),
-                ],
+                children: [],
               )
             ],
           ),
@@ -44,9 +39,15 @@ class SettingsScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Switch(value: false, onChanged: (bool) {}),
+                      Switch(
+                          value: themeSwitcher.isDark,
+                          onChanged: (bool) async {
+                            await themeSwitcher.switchTheme();
+                          }),
                       Text("Night Mode"),
-                      Icon(Icons.brightness_3),
+                      Icon(themeSwitcher.isDark
+                          ? Icons.brightness_3
+                          : Icons.brightness_7),
                     ],
                   )
                 ],
@@ -77,7 +78,9 @@ class SettingsScreen extends StatelessWidget {
                         "Delete Account",
                         style: TextStyle(color: Colors.white),
                       ),
-                      onPressed: () {},
+                      onPressed: () => showDialog(
+                          context: context,
+                          builder: (_) => DeleteAccountDialog()),
                     ),
                   ),
                 ],
