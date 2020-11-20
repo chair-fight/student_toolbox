@@ -10,8 +10,14 @@ import 'package:student_toolbox/widgets/surface.dart';
 import 'loading_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
+  Function _setParentHint;
+
+  RegisterScreen(Function setParentHint) {
+    _setParentHint = setParentHint;
+  }
+
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState(_setParentHint);
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
@@ -20,20 +26,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String _email = '';
   String _password = '';
 
-  String _firebaseError = '';
+  String _firebaseHint = '';
 
   bool _isLoading = false;
 
   final _formKey = GlobalKey<FormState>();
 
+  Function _setParentHint;
+
+  _RegisterScreenState(Function setParentHint) {
+    _setParentHint = setParentHint;
+  }
+
   Future _registerBtnPressed() async {
     if (_formKey.currentState.validate()) {
       setState(() => _isLoading = true);
       try {
-        await AuthService().emailRegister(_email, _password);
+        var user = await AuthService().emailRegister(_email, _password);
+        await AuthService().sendVerificationEmail(user);
+        _setParentHint(
+            "Please confirm your email address by following the instructions sent to you at " +
+                user.email);
+        await AuthService().logOut();
         Navigator.of(context).pop();
       } catch (e) {
-        setState(() => _firebaseError = e.toString());
+        setState(() => _firebaseHint = e.toString());
         setState(() => _isLoading = false);
       }
     }
@@ -111,9 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         Center(
                           child: Text(
-                            _firebaseError.isEmpty
-                                ? ""
-                                : ("Authentication error: " + _firebaseError),
+                            _firebaseHint.isEmpty ? "" : _firebaseHint,
                             style: TextStyle(color: Colors.red),
                           ),
                         ),

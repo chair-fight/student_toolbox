@@ -1,10 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/screens/loading_screen.dart';
 import 'package:student_toolbox/screens/register_screen.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/services/validators/email_validator.dart';
 import 'package:student_toolbox/services/validators/password_validator.dart';
-import 'home_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -15,24 +15,49 @@ class _SignInScreenState extends State<SignInScreen> {
   String _email = '';
   String _password = '';
 
-  String _firebaseError = '';
+  String _firebaseHint = '';
 
   final _formKey = GlobalKey<FormState>();
 
   bool _isLoading = false;
+  User _resendUser; // the user to resend the email to
+
+  void _setFirebaseHint(String hint) {
+    setState(() => _firebaseHint = hint);
+  }
 
   Future _signInBtnClick() async {
     if (_formKey.currentState.validate()) {
       setState(() => _isLoading = true);
       try {
-        await AuthService().emailSignIn(_email, _password);
+        var user = await AuthService().emailSignIn(_email, _password);
+        if (!user.emailVerified) {
+          _firebaseHint = "You should verify your email address first. "
+              "Press \"Resend Email to send a new verification email to the address you used here.\"";
+          setState(() {
+            _isLoading = false;
+            _resendUser = user;
+          });
+        }
       } catch (e) {
         setState(() {
-          _firebaseError = e.toString();
+          _firebaseHint = e.toString();
           _isLoading = false;
         });
       }
     }
+  }
+
+  Future _resendBtnClick() async {
+    try {
+      await AuthService().sendVerificationEmail(_resendUser);
+      await AuthService().logOut();
+      _resendUser = null;
+    } catch (e) {
+      _firebaseHint = e.toString();
+      return;
+    }
+    setState(() => _firebaseHint = "Email has been resent. Check your inbox");
   }
 
   @override
@@ -98,10 +123,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 ),
                                 Center(
                                   child: Text(
-                                    _firebaseError.isEmpty
-                                        ? ""
-                                        : ("Authentication error: " +
-                                            _firebaseError),
+                                    _firebaseHint.isEmpty ? "" : _firebaseHint,
                                     style: TextStyle(color: Colors.red),
                                   ),
                                 ),
@@ -146,9 +168,27 @@ class _SignInScreenState extends State<SignInScreen> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      RegisterScreen()));
+                                                      RegisterScreen(
+                                                          _setFirebaseHint)));
                                         },
                                       ),
+                                      _resendUser == null
+                                          ? Container()
+                                          : RaisedButton(
+                                              child: Text(
+                                                "Resend Email",
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onPrimary,
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                              onPressed: _resendBtnClick,
+                                            ),
                                     ],
                                   ),
                                 ),

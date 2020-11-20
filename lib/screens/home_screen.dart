@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:student_toolbox/screens/assignment_list_screen.dart';
 import 'package:student_toolbox/screens/group_list_screen.dart';
 import 'package:student_toolbox/screens/news_screen.dart';

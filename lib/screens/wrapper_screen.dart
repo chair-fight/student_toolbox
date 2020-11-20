@@ -9,7 +9,7 @@ class WrapperScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _user = Provider.of<User>(context, listen: true);
-    if (_user == null) return SignInScreen();
+    if (_user == null || !_user.emailVerified) return SignInScreen();
     return HomeScreen();
   }
 }
