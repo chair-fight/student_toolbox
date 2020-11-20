@@ -1,23 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:student_toolbox/services/auth.dart';
+import 'package:student_toolbox/widgets/screen_app_bar.dart';
 import 'package:student_toolbox/widgets/surface.dart';
 
 class ProfileScreen extends StatelessWidget {
+  final User user;
+
+  const ProfileScreen({Key key, this.user}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: FlatButton(
-          child: Icon(
-            Icons.arrow_back,
-            color: Theme.of(context).colorScheme.onPrimary,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: Text("Profile"),
-      ),
+      appBar: ScreenAppBar(
+        title: "Profile",
+        subScreen: true,
+      ).get(context),
       body: ListView(
         children: [
           Surface(
@@ -45,7 +44,7 @@ class ProfileScreen extends StatelessWidget {
                         Container(
                           width: 200,
                           child: TextFormField(
-                            initialValue: "Dna. Doctor Madalina Adam",
+                            initialValue: user.email,
                             readOnly: true,
                             decoration: InputDecoration(
                               labelText: "Name",
