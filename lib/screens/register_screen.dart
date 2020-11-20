@@ -1,8 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:student_toolbox/services/auth.dart';
+import 'package:student_toolbox/services/validators/email_validator.dart';
+import 'package:student_toolbox/services/validators/nonempty_validator.dart';
+import 'package:student_toolbox/services/validators/password_validator.dart';
+import 'package:student_toolbox/services/validators/repeat_password_validator.dart';
 import 'package:student_toolbox/widgets/signature.dart';
 import 'package:student_toolbox/widgets/surface.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
+  @override
+  _RegisterScreenState createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  String _name = '';
+  String _surname = '';
+  String _email = '';
+  String _password = '';
+
+  String _firebaseError = '';
+
+  final _formKey = GlobalKey<FormState>();
+
+  Future _registerBtnPressed() async {
+    if (_formKey.currentState.validate())
+      try {
+        await AuthService().emailRegister(_email, _password);
+        Navigator.of(context).pop();
+      } catch (e) {
+        setState(() => _firebaseError = e.toString());
+      }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,76 +47,83 @@ class RegisterScreen extends StatelessWidget {
         ),
         title: Text("Register"),
       ),
-      body: ListView(
-        children: [
-          Surface(
-            padding: EdgeInsets.fromLTRB(32, 16, 32, 0),
+      body: Form(
+        key: _formKey,
+        child: Center(
+          child: Column(
             children: [
-              Row(
+              Surface(
+                padding: EdgeInsets.fromLTRB(32, 16, 32, 0),
                 children: [
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(labelText: "Name"),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          decoration: InputDecoration(labelText: "Name"),
+                          validator: NonEmptyValidator.validate,
+                          onChanged: (value) => setState(() => _name = value),
+                        ),
+                      ),
+                      SizedBox(width: 32),
+                      Expanded(
+                        child: TextFormField(
+                          decoration: InputDecoration(labelText: "Surname"),
+                          validator: NonEmptyValidator.validate,
+                          onChanged: (value) =>
+                              setState(() => _surname = value),
+                        ),
+                      ),
+                    ],
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: "Email"),
+                    validator: EmailValidator.validate,
+                    onChanged: (value) => setState(() => _email = value),
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: "Password"),
+                    obscureText: true,
+                    validator: PasswordValidator.validate,
+                    onChanged: (value) => setState(() => _password = value),
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: "Repeat Password"),
+                    obscureText: true,
+                    validator: (value) =>
+                        RepeatPasswordValidator.validate(_password, value),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                    child: Text(
+                      _firebaseError.isEmpty
+                          ? ""
+                          : ("Authentication error: " + _firebaseError),
+                      style: TextStyle(color: Colors.red),
                     ),
                   ),
-                  SizedBox(width: 32),
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(labelText: "Surname"),
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 32),
+                    width: 150,
+                    child: RaisedButton(
+                      child: Text(
+                        "Register",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 20,
+                        ),
+                      ),
+                      color: Theme.of(context).colorScheme.primary,
+                      onPressed: () async => await _registerBtnPressed(),
                     ),
                   ),
+                  Signature(),
                 ],
               ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Email"),
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Password"),
-                obscureText: true,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Repeat Password"),
-                obscureText: true,
-              ),
-              Container(
-                width: 200,
-                child: InputDatePickerFormField(
-                  fieldLabelText: "Date of Birth",
-                  firstDate: DateTime(1900),
-                  lastDate: DateTime.now(),
-                ),
-              ),
-              Container(
-                width: 200,
-                child: DropdownButtonFormField(
-                  items: [
-                    DropdownMenuItem(child: Text("Male")),
-                    DropdownMenuItem(child: Text("Female")),
-                    DropdownMenuItem(child: Text("Other")),
-                  ],
-                  onChanged: (bool) {},
-                ),
-              ),
-              Divider(),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 32),
-                width: 150,
-                child: RaisedButton(
-                  child: Text(
-                    "Register",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      fontSize: 20,
-                    ),
-                  ),
-                  color: Theme.of(context).colorScheme.primary,
-                  onPressed: () {},
-                ),
-              ),
-              Signature(),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

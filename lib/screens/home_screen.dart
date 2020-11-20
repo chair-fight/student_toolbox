@@ -4,6 +4,7 @@ import 'package:student_toolbox/screens/assignment_list_screen.dart';
 import 'package:student_toolbox/screens/group_list_screen.dart';
 import 'package:student_toolbox/screens/news_screen.dart';
 import 'package:student_toolbox/screens/profile_screen.dart';
+import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/screens/scanner_screen.dart';
 import 'package:student_toolbox/screens/settings_screen.dart';
 import 'package:student_toolbox/widgets/screen_app_bar.dart';
@@ -43,6 +44,7 @@ class HomeScreen extends StatelessWidget {
             ListTile(
               visualDensity: VisualDensity.compact,
               leading: Icon(Icons.backup_table),
+
               title: Text("Assignments"),
               onTap: () {
                 Navigator.pop(context);
@@ -66,6 +68,7 @@ class HomeScreen extends StatelessWidget {
               visualDensity: VisualDensity.compact,
               leading: Icon(Icons.camera),
               title: Text("Scanner"),
+
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context,
@@ -88,9 +91,9 @@ class HomeScreen extends StatelessWidget {
               visualDensity: VisualDensity.compact,
               leading: Icon(Icons.logout),
               title: Text("Log out"),
-              onTap: () {
+              onTap: () async {
                 Navigator.pop(context);
-                Navigator.pop(context);
+                await AuthService().logOut();
               },
             ),
             ListTile(
