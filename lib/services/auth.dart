@@ -26,4 +26,6 @@ class AuthService {
   Stream<User> get user => _auth.authStateChanges();
 
   User get currentUser => FirebaseAuth.instance.currentUser;
+
+  Future<void> deleteAccount() async => await _auth.currentUser.delete();
 }
