@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/screens/profile_screen.dart';
 import 'package:student_toolbox/screens/settings_sceen.dart';
+import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/widgets/signature.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -30,53 +31,47 @@ class HomeScreen extends StatelessWidget {
               visualDensity: VisualDensity.compact,
               leading: Icon(Icons.backup_table),
               title: Text("Classes"),
-              onTap: () {
-              },
+              onTap: () {},
             ),
             ListTile(
               visualDensity: VisualDensity.compact,
               leading: Icon(Icons.account_circle),
               title: Text("Groups"),
-              onTap: () {
-              },
+              onTap: () {},
             ),
             ListTile(
               visualDensity: VisualDensity.compact,
               leading: Icon(Icons.insert_drive_file),
               title: Text("Documents"),
-              onTap: () {
-              },
+              onTap: () {},
             ),
             ListTile(
               visualDensity: VisualDensity.compact,
               leading: Icon(Icons.camera),
               title: Text("Scanner"),
-              onTap: () {
-              },
+              onTap: () {},
             ),
             Divider(),
             ListTile(
               visualDensity: VisualDensity.compact,
               leading: Icon(Icons.article),
               title: Text("News"),
-              onTap: () {
-              },
+              onTap: () {},
             ),
             ListTile(
               visualDensity: VisualDensity.compact,
               leading: Icon(Icons.bar_chart),
               title: Text("Statistics"),
-              onTap: () {
-              },
+              onTap: () {},
             ),
             Divider(),
             ListTile(
               visualDensity: VisualDensity.compact,
               leading: Icon(Icons.logout),
               title: Text("Log out"),
-              onTap: () {
+              onTap: () async {
                 Navigator.pop(context);
-                Navigator.pop(context);
+                await AuthService().logOut();
               },
             ),
             ListTile(
@@ -85,7 +80,8 @@ class HomeScreen extends StatelessWidget {
               title: Text("Profile"),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProfileScreen()));
               },
             ),
             ListTile(
@@ -94,7 +90,8 @@ class HomeScreen extends StatelessWidget {
               title: Text("Settings"),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SettingsScreen()));
               },
             ),
             Divider(),
