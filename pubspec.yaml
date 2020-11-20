@@ -26,7 +26,9 @@ dependencies:
   cupertino_icons: ^1.0.0
   firebase_auth: ^0.18.3
   shared_preferences: ^0.5.12+4
-  provider:
+  provider: any
+  flutter_spinkit: "^4.1.2"
+  lint: any
 
 dev_dependencies:
   flutter_test:
