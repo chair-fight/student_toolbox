@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:student_toolbox/screens/loading_screen.dart';
 import 'package:student_toolbox/screens/wrapper_screen.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/themes/custom_themes.dart';
@@ -31,11 +32,7 @@ class App extends StatelessWidget {
             return StreamProvider<User>.value(
                 value: AuthService().user, child: WrapperScreen());
           }
-          return const Scaffold(
-            body: Center(
-              child: Text("Loading..."), // TODO - make a loading screen
-            ),
-          );
+          return LoadingScreen();
         },
       ),
     );
