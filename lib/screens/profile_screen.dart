@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:student_toolbox/widgets/surface.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -18,31 +20,32 @@ class ProfileScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          Container(
-            child: SizedBox(
-              height: 128,
-              child: Row(
+          Surface(
+            height: 144,
+            children: [
+              Row(
                 children: [
                   Container(
                     height: 128,
                     width: 128,
-                    color: Colors.red,
-                    child: Center(
-                      child: Text("IMAGE"),
+                    child: Icon(
+                      Icons.account_circle,
+                      color: Theme.of(context).colorScheme.onBackground,
+                      size: 128,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      shape: BoxShape.circle,
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.only(left: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           "Darius Calugar",
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                        Text(
-                          "Calugar",
                           style: Theme.of(context).textTheme.headline6,
                         ),
                         Text(
@@ -51,13 +54,24 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
-            ),
-            decoration:
-                BoxDecoration(color: Theme.of(context).colorScheme.surface),
-          )
+            ],
+          ),
+          Surface(
+            padding: EdgeInsets.symmetric(horizontal: 32),
+            children: [
+              TextFormField(
+                initialValue: "11/18/2020",
+                readOnly: true,
+                decoration: InputDecoration(
+                  labelText: "Joined on",
+                  isDense: true,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
