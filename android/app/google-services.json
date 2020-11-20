@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "338412023532",
+    "firebase_url": "https://studbox-e8f75.firebaseio.com",
+    "project_id": "studbox-e8f75",
+    "storage_bucket": "studbox-e8f75.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338412023532:android:e0c421a0404513ce20bfc9",
+        "android_client_info": {
+          "package_name": "com.studbox_team.studbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338412023532-fvm4ol85p105pvi8qac05cptiggl64n8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBT2G_ejIQ44cxmcSI07mEzohXMAAH_nok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "338412023532-fvm4ol85p105pvi8qac05cptiggl64n8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

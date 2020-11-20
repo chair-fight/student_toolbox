@@ -41,16 +41,28 @@ class ProfileScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.only(left: 16),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          "Darius Calugar",
-                          style: Theme.of(context).textTheme.headline6,
+                        Container(
+                          width: 200,
+                          child: TextFormField(
+                            initialValue: "Dna. Doctor Madalina Adam",
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              labelText: "Name",
+                              isDense: true,
+                            ),
+                          ),
                         ),
-                        Text(
-                          "\"Babeș Boyiai\" University",
-                          style: Theme.of(context).textTheme.headline6,
+                        Container(
+                          width: 200,
+                          child: TextFormField(
+                            initialValue: "Babes Boyiai University",
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              labelText: "University",
+                              isDense: true,
+                            ),
+                          ),
                         ),
                       ],
                     ),
