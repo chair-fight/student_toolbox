@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:student_toolbox/models/post_model.dart';
+import 'package:student_toolbox/models/user_model.dart';
 import 'package:student_toolbox/screens/assignment_list_screen.dart';
 import 'package:student_toolbox/screens/group_list_screen.dart';
 import 'package:student_toolbox/screens/news_screen.dart';
@@ -9,8 +11,11 @@ import 'package:student_toolbox/screens/profile_screen.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/screens/scanner_screen.dart';
 import 'package:student_toolbox/screens/settings_screen.dart';
+import 'package:student_toolbox/widgets/news_card.dart';
+import 'package:student_toolbox/widgets/post_card.dart';
 import 'package:student_toolbox/widgets/screen_app_bar.dart';
 import 'package:student_toolbox/widgets/signature.dart';
+import 'package:student_toolbox/widgets/surface.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -105,10 +110,22 @@ class HomeScreen extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ProfileScreen(user: AuthService().currentUser)));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfileScreen(
+                      user: UserModel(
+                        name: "Madalina",
+                        surname: "Adam",
+                        email: "dariusel@mail.com",
+                        photo: Image.network("https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg"),
+                        university: "Babes Bolyai University",
+                        gender: "Female",
+                        dateOfBirth: DateTime.now(),
+                        metaUser: AuthService().currentUser,
+                      ),
+                    ),
+                  ),
+                );
               },
             ),
             ListTile(
@@ -125,6 +142,31 @@ class HomeScreen extends StatelessWidget {
             Signature(),
           ],
         ),
+      ),
+      body: ListView(
+        children: [
+          Surface(
+            title: "Reminders",
+            children: [],
+          ),
+          Divider(),
+          PostCard(
+            post: PostModel(
+              title: "Post One",
+              text: "Lorem Ipsum",
+              datePosted: DateTime.now(),
+            ),
+          ),
+          PostCard(
+            post: PostModel(
+              title: "Post Two",
+              text: "Lorem Ipsum",
+              image: Image.network(
+                  "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg"),
+              datePosted: DateTime.now(),
+            ),
+          ),
+        ],
       ),
     );
   }
