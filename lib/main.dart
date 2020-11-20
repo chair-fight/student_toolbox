@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:student_toolbox/screens/loading_screen.dart';
 import 'package:student_toolbox/screens/wrapper_screen.dart';
 import 'package:student_toolbox/services/auth.dart';
+import 'package:student_toolbox/services/theme_switcher.dart';
 import 'package:student_toolbox/themes/custom_themes.dart';
 
 void main() async {
@@ -12,11 +13,26 @@ void main() async {
   runApp(App());
 }
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  @override
+  void initState() {
+    super.initState();
+    themeSwitcher.addListener(() {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: CustomThemes.dark(),
+      theme: CustomThemes.light(),
+      darkTheme: CustomThemes.dark(),
+      themeMode: themeSwitcher.currentTheme(),
       home: FutureBuilder(
         future: Firebase.initializeApp(),
         builder: (context, snapshot) {
