@@ -50,7 +50,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: Form(
         key: _formKey,
         child: Center(
-          child: Column(
+          child: ListView(
             children: [
               Surface(
                 padding: EdgeInsets.fromLTRB(32, 16, 32, 0),

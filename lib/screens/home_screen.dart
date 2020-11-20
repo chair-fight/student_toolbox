@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:student_toolbox/screens/assignment_list_screen.dart';
 import 'package:student_toolbox/screens/group_list_screen.dart';
 import 'package:student_toolbox/screens/news_screen.dart';
@@ -44,12 +46,13 @@ class HomeScreen extends StatelessWidget {
             ListTile(
               visualDensity: VisualDensity.compact,
               leading: Icon(Icons.backup_table),
-
               title: Text("Assignments"),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AssignmentListScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AssignmentListScreen()));
               },
             ),
             ListTile(
@@ -68,7 +71,6 @@ class HomeScreen extends StatelessWidget {
               visualDensity: VisualDensity.compact,
               leading: Icon(Icons.camera),
               title: Text("Scanner"),
-
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context,
@@ -102,8 +104,11 @@ class HomeScreen extends StatelessWidget {
               title: Text("Profile"),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ProfileScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ProfileScreen(user: AuthService().currentUser)));
               },
             ),
             ListTile(
