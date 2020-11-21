@@ -30,6 +30,7 @@ dependencies:
   flutter_spinkit: "^4.1.2"
   lint: any
   http:
+  intl: "^0.16.1"
 
 dev_dependencies:
   flutter_test:
