@@ -1,5 +1,6 @@
 class ReminderModel {
+  final String rid;
   final String text;
 
-  ReminderModel({this.text});
+  ReminderModel({this.rid, this.text});
 }
