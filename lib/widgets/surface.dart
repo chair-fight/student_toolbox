@@ -37,7 +37,7 @@ class Surface extends StatelessWidget {
                   ),
                 ),
           Container(
-            margin: EdgeInsets.all(8),
+            margin: EdgeInsets.fromLTRB(8,4,8,4),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Material(

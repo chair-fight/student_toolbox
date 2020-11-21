@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/user_model.dart';
 import 'package:student_toolbox/services/auth.dart';
-import 'package:student_toolbox/widgets/button_accent.dart';
+import 'package:student_toolbox/widgets/button_primary.dart';
 import 'package:student_toolbox/widgets/profile_preview.dart';
 import 'package:student_toolbox/widgets/screen_app_bar.dart';
 import 'package:student_toolbox/widgets/surface.dart';
@@ -30,13 +30,13 @@ class ProfileScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ButtonAccent(
+                ButtonPrimary(
                   label: "Add Friend",
                   leading: Icons.person_add,
                   width: 160,
                   onPressed: () {},
                 ),
-                ButtonAccent(
+                ButtonPrimary(
                   label: "Invite to Group",
                   leading: Icons.group_add,
                   width: 160,
@@ -51,7 +51,7 @@ class ProfileScreen extends StatelessWidget {
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   alignment: AlignmentDirectional.topStart,
-                  child: Text("Hello World :)")),
+                  child: Text("Hello World")),
             ],
           ),
           Surface(

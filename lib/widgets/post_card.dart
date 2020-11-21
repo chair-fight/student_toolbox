@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/post_model.dart';
+import 'package:student_toolbox/widgets/group_mini.dart';
 import 'surface.dart';
 
 class PostCard extends StatelessWidget {
@@ -11,6 +12,11 @@ class PostCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Surface(
       children: [
+        GroupMini(
+          group: post.group,
+          navigateOnPress: true,
+        ),
+        Divider(),
         Container(
           alignment: AlignmentDirectional.topStart,
           child: Text(

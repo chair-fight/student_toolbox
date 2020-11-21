@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/assignment_model.dart';
-import 'package:student_toolbox/widgets/button_accent.dart';
-import 'package:student_toolbox/widgets/button_square.dart';
+import 'package:student_toolbox/widgets/button_primary.dart';
+import 'package:student_toolbox/widgets/button_close.dart';
 import 'package:student_toolbox/widgets/surface.dart';
 
 class AssignmentPreview extends StatelessWidget {
@@ -55,7 +55,7 @@ class AssignmentPreview extends StatelessWidget {
                       assignment.description,
                     ),
                   ),
-                  ButtonAccent(
+                  ButtonPrimary(
                     width: 100,
                     leading: Icons.check,
                     label: "Done",

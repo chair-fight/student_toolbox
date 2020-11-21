@@ -5,6 +5,7 @@ import 'package:student_toolbox/screens/register_screen.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/services/validators/email_validator.dart';
 import 'package:student_toolbox/services/validators/password_validator.dart';
+import 'package:student_toolbox/widgets/button_primary.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -103,6 +104,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                     ),
                                   ),
                                 ),
+                                Divider(),
                                 TextFormField(
                                   decoration:
                                       InputDecoration(hintText: "Email"),
@@ -134,35 +136,14 @@ class _SignInScreenState extends State<SignInScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.stretch,
                                     children: [
-                                      RaisedButton(
-                                        child: Text(
-                                          "Sign in",
-                                          style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onPrimary,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
+                                      ButtonPrimary(
+                                        label: "Sign in",
                                         onPressed: () async =>
                                             await _signInBtnClick(),
                                       ),
-                                      RaisedButton(
-                                        child: Text(
-                                          "Register",
-                                          style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onPrimary,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
+                                      Divider(),
+                                      ButtonPrimary(
+                                        label: "Register",
                                         onPressed: () {
                                           Navigator.push(
                                               context,
@@ -174,20 +155,14 @@ class _SignInScreenState extends State<SignInScreen> {
                                       ),
                                       _resendUser == null
                                           ? Container()
-                                          : RaisedButton(
-                                              child: Text(
-                                                "Resend Email",
-                                                style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .onPrimary,
-                                                  fontSize: 20,
+                                          : Column(
+                                              children: [
+                                                Divider(),
+                                                ButtonPrimary(
+                                                  label: "Resend Email",
+                                                  onPressed: _resendBtnClick,
                                                 ),
-                                              ),
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                              onPressed: _resendBtnClick,
+                                              ],
                                             ),
                                     ],
                                   ),
