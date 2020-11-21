@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:student_toolbox/models/group_model.dart';
 import 'package:student_toolbox/models/post_model.dart';
 import 'package:student_toolbox/models/reminder_model.dart';
 import 'package:student_toolbox/models/user_model.dart';
 import 'package:student_toolbox/screens/assignment_list_screen.dart';
+import 'package:student_toolbox/screens/friend_list_screen/friend_list_screen.dart';
 import 'package:student_toolbox/screens/group_list_screen.dart';
 import 'package:student_toolbox/screens/news_screen.dart';
 import 'package:student_toolbox/screens/notification_screen.dart';
@@ -14,7 +14,6 @@ import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/screens/scanner_screen.dart';
 import 'package:student_toolbox/screens/settings_screen.dart';
 import 'package:student_toolbox/widgets/button_primary.dart';
-import 'package:student_toolbox/widgets/news_card.dart';
 import 'package:student_toolbox/widgets/post_card.dart';
 import 'package:student_toolbox/widgets/reminder.dart';
 import 'package:student_toolbox/widgets/screen_app_bar.dart';
@@ -40,7 +39,13 @@ class HomeScreen extends StatelessWidget {
               visualDensity: VisualDensity.compact,
               leading: Icon(Icons.person_search),
               title: Text("Friends"),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FriendListScreen()));
+              },
             ),
             ListTile(
               visualDensity: VisualDensity.compact,
@@ -92,8 +97,10 @@ class HomeScreen extends StatelessWidget {
               title: Text("Notifications"),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => NotificationScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NotificationScreen()));
               },
             ),
             Divider(),
@@ -194,6 +201,12 @@ class HomeScreen extends StatelessWidget {
               title: "Some Test Post",
               text: "Lorem Ipsum dolor sit amet etc",
               datePosted: DateTime.now(),
+              op: UserModel(
+                name: "Darius",
+                surname: "Calugar",
+                photo: Image.network(
+                    "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg"),
+              ),
             ),
           ),
           PostCard(
@@ -204,6 +217,12 @@ class HomeScreen extends StatelessWidget {
               image: Image.network(
                   "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg"),
               datePosted: DateTime.now(),
+              op: UserModel(
+                name: "Darius",
+                surname: "Calugar",
+                photo: Image.network(
+                    "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg"),
+              ),
             ),
           ),
         ],

@@ -1,15 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/user_model.dart';
+import 'package:student_toolbox/screens/assignment_list_screen.dart';
 import 'package:student_toolbox/screens/profile_screen.dart';
 
 import 'surface.dart';
 
 class ProfilePreview extends StatelessWidget {
   final UserModel user;
+  final bool isDense;
   final bool navigateOnPress;
 
-  const ProfilePreview({Key key, this.user, this.navigateOnPress})
+  const ProfilePreview(
+      {Key key, this.user, this.navigateOnPress, this.isDense = false})
       : super(key: key);
 
   @override
@@ -25,15 +29,32 @@ class ProfilePreview extends StatelessWidget {
           : null,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ClipOval(
-              child: Container(
-                width: 64,
-                height: 64,
-                child: user.photo,
-              ),
+            Stack(
+              alignment: Alignment.bottomLeft,
+              children: [
+                ClipOval(
+                  child: Container(
+                    width: isDense ? 48 : 64,
+                    height: isDense ? 48 : 64,
+                    child: user.photo,
+                  ),
+                ),
+                ClipOval(
+                  child: Container(
+                    color: Theme.of(context).colorScheme.primary,
+                    child: Icon(
+                      Icons.person_add,
+                      size: 16,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            Flexible(
+            Expanded(
               child: Container(
                 padding: EdgeInsets.only(left: 16),
                 child: Column(
@@ -54,7 +75,21 @@ class ProfilePreview extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
+            if (navigateOnPress)
+              Container(
+                width: 20,
+                height: 20,
+                alignment: Alignment.topRight,
+                child: FlatButton(
+                  padding: EdgeInsets.zero,
+                  child: Icon(
+                    Icons.arrow_forward_ios,
+                    size: 16,
+                  ),
+                  onPressed: null,
+                ),
+              ),
           ],
         ),
       ],

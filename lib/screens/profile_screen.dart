@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/user_model.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/widgets/button_primary.dart';
+import 'package:student_toolbox/widgets/profile_mini.dart';
 import 'package:student_toolbox/widgets/profile_preview.dart';
 import 'package:student_toolbox/widgets/screen_app_bar.dart';
 import 'package:student_toolbox/widgets/surface.dart';
@@ -67,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               TextFormField(
-                initialValue: user.metaUser.email,
+                initialValue: user.email,
                 readOnly: true,
                 decoration: InputDecoration(
                   labelText: "Email",

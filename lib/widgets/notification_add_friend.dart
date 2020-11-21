@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/user_model.dart';
 import 'package:student_toolbox/widgets/button_primary.dart';
-import 'package:student_toolbox/widgets/button_secondary.dart';
 import 'package:student_toolbox/widgets/button_close.dart';
 import 'package:student_toolbox/widgets/profile_preview.dart';
 import 'package:student_toolbox/widgets/surface.dart';
@@ -21,11 +20,23 @@ class NotificationAddFriend extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(Icons.person_add),
+            Icon(
+              Icons.person_add,
+              size: 32,
+            ),
             VerticalDivider(),
-            Text(
-              "Pending friend request",
-              style: Theme.of(context).textTheme.headline6,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Friend Request",
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                Text(
+                  "${dateTime.day}/${dateTime.month}/${dateTime.year}",
+                  style: Theme.of(context).textTheme.caption,
+                ),
+              ],
             ),
             Expanded(child: Container()),
             ButtonClose(
@@ -34,17 +45,10 @@ class NotificationAddFriend extends StatelessWidget {
           ],
         ),
         Divider(),
-        if (dateTime != null)
-          Container(
-            alignment: AlignmentDirectional.topEnd,
-            child: Text(
-              "${dateTime.day}/${dateTime.month}/${dateTime.year}",
-              style: Theme.of(context).textTheme.caption,
-            ),
-          ),
         ProfilePreview(
           user: user,
           navigateOnPress: true,
+          isDense: true,
         ),
         Container(
           padding: EdgeInsets.only(bottom: 4),

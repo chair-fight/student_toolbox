@@ -5,11 +5,19 @@ import 'package:student_toolbox/models/user_model.dart';
 
 class GroupModel {
   final String name;
+  final String description;
   final Image photo;
   final List<UserModel> admins;
   final List<UserModel> users;
   final List<PostModel> posts;
   final List<AssignmentModel> assignments;
 
-  GroupModel({this.name, this.photo, this.admins, this.users, this.posts, this.assignments});
+  GroupModel(
+      {this.description = "",
+      this.name,
+      this.photo,
+      this.admins,
+      this.users,
+      this.posts,
+      this.assignments});
 }

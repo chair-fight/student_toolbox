@@ -22,8 +22,8 @@ class GroupMini extends StatelessWidget {
                   splashColor: Theme.of(context).colorScheme.secondary,
                   child: Image.network(
                     "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg",
-                    height: 32,
-                    width: 32,
+                    height: 24,
+                    width: 24,
                   ),
                   onTap: navigateOnPress
                       ? () {

@@ -19,14 +19,26 @@ class NotificationInvite extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(Icons.person_add),
+            Icon(
+              Icons.group_add,
+              size: 32,
+            ),
             VerticalDivider(),
-            Text(
-              "Pending friend request",
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headline6,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Group Invite",
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline6,
+                ),
+                Text(
+                  "${dateTime.day}/${dateTime.month}/${dateTime.year}",
+                  style: Theme.of(context).textTheme.caption,
+                ),
+              ],
             ),
             Expanded(child: Container()),
             ButtonClose(
@@ -37,34 +49,18 @@ class NotificationInvite extends StatelessWidget {
         Divider(),
         if (dateTime != null) Container(
           alignment: AlignmentDirectional.topEnd,
-          child: Text(
-            "${dateTime.day}/${dateTime.month}/${dateTime.year}",
-            style: Theme
-                .of(context)
-                .textTheme
-                .caption,
-          ),
         ),
         GroupPreview(
           group: group,
           navigateOnPress: true,
+          isDense: true,
         ),
         Container(
           padding: EdgeInsets.only(bottom: 4),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ButtonPrimary(
-                label: "Accept",
-                width: 128,
-                onPressed: () {},
-              ),
-              ButtonPrimary(
-                label: "Decline",
-                width: 128,
-                onPressed: () {},
-              ),
-            ],
+          child: ButtonPrimary(
+            label: "Accept",
+            width: 128,
+            onPressed: () {},
           ),
         ),
       ],
