@@ -13,8 +13,8 @@ class GroupModel {
   final List<AssignmentModel> assignments;
 
   GroupModel(
-      {this.name,
-      this.description,
+      {this.description = "",
+      this.name,
       this.photo,
       this.admins,
       this.users,

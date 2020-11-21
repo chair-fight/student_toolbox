@@ -8,6 +8,7 @@ class Surface extends StatelessWidget {
   final double height;
   final double width;
   final String title;
+  final Color color;
   final Function onTap;
 
   Surface(
@@ -17,6 +18,7 @@ class Surface extends StatelessWidget {
       this.title = "",
       this.margin,
       this.padding,
+      this.color,
       this.onTap});
 
   @override
@@ -37,11 +39,11 @@ class Surface extends StatelessWidget {
                   ),
                 ),
           Container(
-            margin: EdgeInsets.fromLTRB(8,4,8,4),
+            margin: EdgeInsets.fromLTRB(8, 4, 8, 4),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Material(
-                color: Theme.of(context).colorScheme.surface,
+                color: color != null ? color : Theme.of(context).colorScheme.surface,
                 child: InkWell(
                   onTap: onTap,
                   splashColor: Theme.of(context).colorScheme.secondary,
