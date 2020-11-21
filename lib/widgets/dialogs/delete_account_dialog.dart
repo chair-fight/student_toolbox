@@ -72,9 +72,6 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                     child: Text("Cancel"),
                     onPressed: () async {
                       Navigator.of(context).pop();
-                      var x = await Database.getUserReminders(
-                          AuthService().currentUser.uid);
-                      print(x);
                     },
                   ),
                 ],
