@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:student_toolbox/models/group_model.dart';
+import 'package:student_toolbox/models/reminder_model.dart';
 import 'package:student_toolbox/models/user_model.dart';
 
 class DatabaseException implements Exception {
@@ -35,6 +36,7 @@ class Database {
   static const String _getGroupMembersRoute = 'get_members';
   static const String _addReminderRoute = 'add_reminder';
   static const String _removeReminderRoute = 'delete_reminder';
+  static const String _getRemindersRoute = 'get_reminders';
 
   static UserModel _userFromJson(
       Map<String, dynamic> json, String index, User user) {
@@ -54,6 +56,15 @@ class Database {
     return GroupModel(
       name: json['name'][index],
       description: json['description'][index],
+    );
+  }
+
+  static ReminderModel _reminderFromJson(
+      Map<String, dynamic> json, String index) {
+    if (json['id'] == null || json['id'][index] == null) return null;
+    return ReminderModel(
+      rid: json['id'][index].toString(),
+      text: json['description'][index],
     );
   }
 
@@ -237,5 +248,26 @@ class Database {
     if (code == null || code != 100)
       throw DatabaseException(
           "Database error code " + (code == null ? "" : code.toString()));
+  }
+
+  static Future<List<ReminderModel>> getUserReminders(String uid) async {
+    var body = <String, String>{
+      'uid': uid,
+    };
+    print(body);
+    var dec = await _request('GET', body, _url + '/' + _getRemindersRoute);
+    dec = jsonDecode(dec);
+    var code = DatabaseCodeResult.fromJson(dec, '0')._code;
+    if (code == null || code != 100)
+      throw DatabaseException(
+          "Database error code " + (code == null ? "" : code.toString()));
+    var currentIndex = 0;
+    ReminderModel currentReminder;
+    List<ReminderModel> result = List<ReminderModel>();
+    do {
+      currentReminder = _reminderFromJson(dec, (currentIndex++).toString());
+      if (currentReminder != null) result += [currentReminder];
+    } while (currentReminder != null);
+    return result;
   }
 }
