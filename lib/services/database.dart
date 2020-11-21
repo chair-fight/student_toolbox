@@ -33,11 +33,14 @@ class Database {
   static const String _getAllUsersRoute = 'get_all_users';
   static const String _updateUserRoute = 'update_user';
   static const String _getGroupMembersRoute = 'get_members';
+  static const String _addReminderRoute = 'add_reminder';
+  static const String _removeReminderRoute = 'delete_reminder';
 
   static UserModel _userFromJson(
       Map<String, dynamic> json, String index, User user) {
     if (json['name'] == null || json['name'][index] == null) return null;
     return UserModel(
+        uid: json['id'][index],
         name: json['name'][index],
         surname: json['surname'][index],
         email: json['email'][index],
@@ -208,5 +211,31 @@ class Database {
       if (currentUser != null) result += [currentUser];
     } while (currentUser != null);
     return result;
+  }
+
+  static Future<void> addReminder(String uid, String content) async {
+    var body = <String, String>{
+      'id': uid,
+      'description': content,
+    };
+    print(body);
+    var dec = await _request('POST', body, _url + '/' + _addReminderRoute);
+    var code = DatabaseCodeResult.fromJson(dec, null)._code;
+    if (code == null || code != 100)
+      throw DatabaseException(
+          "Database error code " + (code == null ? "" : code.toString()));
+  }
+
+  static Future<void> removeReminder(String uid, String rid) async {
+    var body = <String, String>{
+      'uid': uid,
+      'rid': rid,
+    };
+    print(body);
+    var dec = await _request('POST', body, _url + '/' + _removeReminderRoute);
+    var code = DatabaseCodeResult.fromJson(dec, null)._code;
+    if (code == null || code != 100)
+      throw DatabaseException(
+          "Database error code " + (code == null ? "" : code.toString()));
   }
 }
