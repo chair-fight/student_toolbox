@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:student_toolbox/widgets/button_accent.dart';
+import 'package:student_toolbox/widgets/button_primary.dart';
 import 'package:student_toolbox/widgets/screen_app_bar.dart';
 import 'package:student_toolbox/widgets/surface.dart';
 
@@ -36,7 +36,7 @@ class ScannerScreen extends StatelessWidget {
               children: [
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 4),
-                  child: ButtonAccent(
+                  child: ButtonPrimary(
                     label: "Gallery",
                     width: 100,
                     onPressed: () {},
@@ -44,7 +44,7 @@ class ScannerScreen extends StatelessWidget {
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 4),
-                  child: ButtonAccent(
+                  child: ButtonPrimary(
                     label: "New",
                     width: 100,
                     onPressed: () {},
@@ -55,7 +55,7 @@ class ScannerScreen extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.only(top: 32),
-            child: ButtonAccent(
+            child: ButtonPrimary(
               width: 200,
               label: "Scan",
               onPressed: () {},

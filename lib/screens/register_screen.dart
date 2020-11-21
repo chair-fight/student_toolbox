@@ -4,6 +4,7 @@ import 'package:student_toolbox/services/validators/email_validator.dart';
 import 'package:student_toolbox/services/validators/nonempty_validator.dart';
 import 'package:student_toolbox/services/validators/password_validator.dart';
 import 'package:student_toolbox/services/validators/repeat_password_validator.dart';
+import 'package:student_toolbox/widgets/button_primary.dart';
 import 'package:student_toolbox/widgets/signature.dart';
 import 'package:student_toolbox/widgets/surface.dart';
 
@@ -135,15 +136,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Container(
                           padding: EdgeInsets.symmetric(vertical: 32),
                           width: 150,
-                          child: RaisedButton(
-                            child: Text(
-                              "Register",
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.onPrimary,
-                                fontSize: 20,
-                              ),
-                            ),
-                            color: Theme.of(context).colorScheme.primary,
+                          child: ButtonPrimary(
+                            label: "Register",
                             onPressed: () async => await _registerBtnPressed(),
                           ),
                         ),

@@ -14,7 +14,6 @@ class NewsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Surface(
       children: [
-
         if (title != null)
           Container(
             alignment: AlignmentDirectional.topStart,

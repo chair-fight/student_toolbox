@@ -1,21 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:student_toolbox/models/group_model.dart';
+import 'package:student_toolbox/models/post_model.dart';
+import 'package:student_toolbox/models/reminder_model.dart';
+import 'package:student_toolbox/models/user_model.dart';
 import 'package:student_toolbox/screens/assignment_list_screen.dart';
 import 'package:student_toolbox/screens/group_list_screen.dart';
 import 'package:student_toolbox/screens/news_screen.dart';
+import 'package:student_toolbox/screens/notification_screen.dart';
 import 'package:student_toolbox/screens/profile_screen.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/screens/scanner_screen.dart';
 import 'package:student_toolbox/screens/settings_screen.dart';
+import 'package:student_toolbox/widgets/button_primary.dart';
+import 'package:student_toolbox/widgets/news_card.dart';
+import 'package:student_toolbox/widgets/post_card.dart';
+import 'package:student_toolbox/widgets/reminder.dart';
 import 'package:student_toolbox/widgets/screen_app_bar.dart';
 import 'package:student_toolbox/widgets/signature.dart';
+import 'package:student_toolbox/widgets/surface.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ScreenAppBar(
-        title: "Home",
+        title: "Dashboard",
         subScreen: false,
       ).get(context),
       drawer: Drawer(
@@ -75,6 +86,16 @@ class HomeScreen extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => ScannerScreen()));
               },
             ),
+            ListTile(
+              visualDensity: VisualDensity.compact,
+              leading: Icon(Icons.announcement),
+              title: Text("Notifications"),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NotificationScreen()));
+              },
+            ),
             Divider(),
             ListTile(
               visualDensity: VisualDensity.compact,
@@ -103,10 +124,23 @@ class HomeScreen extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ProfileScreen(user: AuthService().currentUser)));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfileScreen(
+                      user: UserModel(
+                        name: "Name",
+                        surname: "Surname",
+                        email: "dariusel@mail.com",
+                        photo: Image.network(
+                            "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg"),
+                        university: "Babes Bolyai University",
+                        gender: "Female",
+                        dateOfBirth: DateTime.now(),
+                        metaUser: AuthService().currentUser,
+                      ),
+                    ),
+                  ),
+                );
               },
             ),
             ListTile(
@@ -123,6 +157,56 @@ class HomeScreen extends StatelessWidget {
             Signature(),
           ],
         ),
+      ),
+      body: ListView(
+        children: [
+          Surface(
+            title: "Reminders",
+            children: [
+              Column(
+                children: [
+                  Reminder(
+                    reminderModel: ReminderModel(
+                      text: "Assignments Due",
+                      dateTime: DateTime.now(),
+                    ),
+                  ),
+                  Divider(),
+                  Reminder(
+                    reminderModel: ReminderModel(
+                      text: "Exam Soon",
+                      dateTime: DateTime.now(),
+                    ),
+                  ),
+                  Divider(),
+                  ButtonPrimary(
+                    label: "+",
+                    onPressed: () {},
+                  )
+                ],
+              ),
+            ],
+          ),
+          Divider(),
+          PostCard(
+            post: PostModel(
+              group: GroupModel(name: "Analysis"),
+              title: "Some Test Post",
+              text: "Lorem Ipsum dolor sit amet etc",
+              datePosted: DateTime.now(),
+            ),
+          ),
+          PostCard(
+            post: PostModel(
+              group: GroupModel(name: "Advanced Programming Methods"),
+              title: "Somebody come look at this cool penguin we found :D",
+              text: "We found this guy just idling around campus.",
+              image: Image.network(
+                  "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg"),
+              datePosted: DateTime.now(),
+            ),
+          ),
+        ],
       ),
     );
   }

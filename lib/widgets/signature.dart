@@ -17,7 +17,7 @@ class Signature extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           child: Text(
-            "© GenericTeamName",
+            "© ChairFight Unihack",
             style: Theme.of(context).textTheme.caption,
           ),
         ),
