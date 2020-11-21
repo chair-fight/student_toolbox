@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/post_model.dart';
 import 'package:student_toolbox/widgets/group_mini.dart';
+import 'package:student_toolbox/widgets/profile_mini.dart';
 import 'surface.dart';
 
 class PostCard extends StatelessWidget {
@@ -37,12 +38,24 @@ class PostCard extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 8),
           child: post.image,
         ),
-        Container(
-          alignment: AlignmentDirectional.topEnd,
-          child: Text(
-            "13/11/2020",
-            style: Theme.of(context).textTheme.caption,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Container(
+                child: ProfileMini(
+                  user: post.op,
+                ),
+              ),
+            ),
+            Container(
+              alignment: AlignmentDirectional.topEnd,
+              child: Text(
+                "13/11/2020",
+                style: Theme.of(context).textTheme.caption,
+              ),
+            ),
+          ],
         ),
       ],
     );

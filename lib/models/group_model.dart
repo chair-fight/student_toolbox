@@ -8,7 +8,6 @@ class GroupModel {
   final String name;
   final String description;
   final Image photo;
-
   GroupModel(
       {this.id,
       this.name,

@@ -1,20 +1,22 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:student_toolbox/models/group_model.dart';
 import 'package:student_toolbox/models/post_model.dart';
 import 'package:student_toolbox/models/reminder_model.dart';
 import 'package:student_toolbox/models/user_model.dart';
 import 'package:student_toolbox/screens/assignment_list_screen.dart';
-import 'package:student_toolbox/screens/group_list_screen.dart';
+import 'package:student_toolbox/screens/friend_list_screen/friend_list_screen.dart';
+import 'file:///D:/Projects/student_toolbox/lib/screens/group_screen/group_list_screen.dart';
 import 'package:student_toolbox/screens/news_screen.dart';
 import 'package:student_toolbox/screens/notification_screen.dart';
 import 'package:student_toolbox/screens/profile_screen.dart';
+import 'package:student_toolbox/screens/schedule_screen/schedule_screen.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/screens/scanner_screen.dart';
 import 'package:student_toolbox/screens/settings_screen.dart';
+import 'package:student_toolbox/services/database.dart';
 import 'package:student_toolbox/widgets/button_primary.dart';
-import 'package:student_toolbox/widgets/news_card.dart';
 import 'package:student_toolbox/widgets/post_card.dart';
 import 'package:student_toolbox/widgets/reminder.dart';
 import 'package:student_toolbox/widgets/reminders_card.dart';
@@ -41,7 +43,13 @@ class HomeScreen extends StatelessWidget {
               visualDensity: VisualDensity.compact,
               leading: Icon(Icons.person_search),
               title: Text("Friends"),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FriendListScreen()));
+              },
             ),
             ListTile(
               visualDensity: VisualDensity.compact,
@@ -69,7 +77,11 @@ class HomeScreen extends StatelessWidget {
               visualDensity: VisualDensity.compact,
               leading: Icon(Icons.calendar_today),
               title: Text("Schedule"),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ScheduleScreen()));
+              },
             ),
             ListTile(
               visualDensity: VisualDensity.compact,
@@ -129,19 +141,8 @@ class HomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProfileScreen(
-                      user: UserModel(
-                        name: "Name",
-                        surname: "Surname",
-                        email: "dariusel@mail.com",
-                        photo: Image.network(
-                            "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg"),
-                        university: "Babes Bolyai University",
-                        gender: "Female",
-                        dateOfBirth: DateTime.now(),
-                        metaUser: AuthService().currentUser,
-                      ),
-                    ),
+                    builder: (context) =>
+                        ProfileScreen(metaUser: AuthService().currentUser),
                   ),
                 );
               },
@@ -162,6 +163,7 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: ListView(
+        dragStartBehavior: DragStartBehavior.start,
         children: [
           RemindersCard(),
           Divider(),
@@ -171,6 +173,12 @@ class HomeScreen extends StatelessWidget {
               title: "Some Test Post",
               text: "Lorem Ipsum dolor sit amet etc",
               datePosted: DateTime.now(),
+              op: UserModel(
+                name: "Darius",
+                surname: "Calugar",
+                photo: Image.network(
+                    "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg"),
+              ),
             ),
           ),
           PostCard(
@@ -181,6 +189,12 @@ class HomeScreen extends StatelessWidget {
               image: Image.network(
                   "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg"),
               datePosted: DateTime.now(),
+              op: UserModel(
+                name: "Darius",
+                surname: "Calugar",
+                photo: Image.network(
+                    "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg"),
+              ),
             ),
           ),
         ],

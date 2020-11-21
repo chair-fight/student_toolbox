@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/group_model.dart';
-import 'package:student_toolbox/screens/group_screen.dart';
+import 'package:student_toolbox/screens/group_screen/group_screen.dart';
 
 class GroupMini extends StatelessWidget {
   final GroupModel group;
@@ -22,8 +22,8 @@ class GroupMini extends StatelessWidget {
                   splashColor: Theme.of(context).colorScheme.secondary,
                   child: Image.network(
                     "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg",
-                    height: 32,
-                    width: 32,
+                    height: 24,
+                    width: 24,
                   ),
                   onTap: navigateOnPress
                       ? () {

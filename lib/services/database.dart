@@ -90,7 +90,7 @@ class Database {
         email: json['email'][index],
         university: json['university'][index],
         photo: null, //Image.network(user.photoURL),
-        metaUser: user);
+        );
   }
 
   static GroupModel _groupFromJson(Map<String, dynamic> json, String index) {
