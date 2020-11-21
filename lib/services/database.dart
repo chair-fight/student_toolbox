@@ -368,6 +368,7 @@ class Database {
       currentReminder = _reminderFromJson(dec, (currentIndex++).toString());
       if (currentReminder != null) result += [currentReminder];
     } while (currentReminder != null);
+    print(result);
     return result;
   }
 
