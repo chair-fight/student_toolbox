@@ -29,6 +29,7 @@ dependencies:
   provider: any
   flutter_spinkit: "^4.1.2"
   lint: any
+  http:
 
 dev_dependencies:
   flutter_test:
