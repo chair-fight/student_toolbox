@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/user_model.dart';
 import 'package:student_toolbox/screens/friend_list_screen/friend_search_screen.dart';
+import 'package:student_toolbox/services/auth.dart';
+import 'package:student_toolbox/widgets/profile_mini.dart';
 import 'package:student_toolbox/widgets/profile_preview.dart';
 import 'package:student_toolbox/widgets/screen_app_bar.dart';
 import 'package:student_toolbox/widgets/search_bar.dart';

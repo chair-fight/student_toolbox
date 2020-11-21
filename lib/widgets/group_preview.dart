@@ -1,7 +1,6 @@
-import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/group_model.dart';
-import 'package:student_toolbox/screens/group_screen.dart';
+import 'package:student_toolbox/screens/group_screen/group_screen.dart';
 import 'package:student_toolbox/widgets/surface.dart';
 
 class GroupPreview extends StatelessWidget {
@@ -13,7 +12,7 @@ class GroupPreview extends StatelessWidget {
   const GroupPreview(
       {Key key,
       this.group,
-      this.navigateOnPress,
+      this.navigateOnPress = true,
       this.isDense = false,
       this.showDescription = true})
       : super(key: key);

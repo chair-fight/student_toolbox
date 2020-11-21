@@ -37,7 +37,7 @@ class Database {
         email: json['email'][index],
         university: json['university'][index],
         photo: null, //Image.network(user.photoURL),
-        metaUser: user);
+        );
   }
 
   static Future<dynamic> _request(
@@ -84,6 +84,7 @@ class Database {
     };
     print(body);
     var dec = await _request('GET', body, _url + '/' + _getUserRoute);
+    dec = jsonDecode(dec);
     UserModel userModel;
     userModel = _userFromJson(dec, '0', user);
     if (userModel == null)

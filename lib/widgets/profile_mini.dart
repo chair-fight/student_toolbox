@@ -1,60 +1,91 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/user_model.dart';
+import 'package:student_toolbox/screens/loading_screen.dart';
 import 'package:student_toolbox/screens/profile_screen.dart';
+import 'package:student_toolbox/services/database.dart';
 
 import 'surface.dart';
 
-class ProfileMini extends StatelessWidget {
+class ProfileMini extends StatefulWidget {
+  final User metaUser;
   final UserModel user;
   final bool navigateOnPress;
 
-  const ProfileMini({Key key, this.user, this.navigateOnPress=true})
+  const ProfileMini(
+      {Key key, this.metaUser, this.user, this.navigateOnPress = true})
       : super(key: key);
 
   @override
+  _ProfileMiniState createState() => _ProfileMiniState(metaUser, user);
+}
+
+class _ProfileMiniState extends State<ProfileMini> {
+  User metaUser;
+  UserModel user;
+
+  _ProfileMiniState(this.metaUser, this.user);
+
+  Future<void> _pullUser() async {
+    print(metaUser);
+    user = await Database.getDBUser(metaUser);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: [
-          ClipOval(
-            child: Material(
-              color: Theme.of(context).colorScheme.primary,
-              child: InkWell(
-                splashColor: Theme.of(context).colorScheme.secondary,
-                child: Image.network(
-                  "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg",
-                  height: 24,
-                  width: 24,
+    return FutureBuilder(
+      future: (user != null) ? Future.value() : _pullUser(),
+      builder: (BuildContext context, AsyncSnapshot<void> buffer) {
+        return (this.user == null)
+            ? LoadingScreen()
+            : Container(
+                child: Row(
+                  children: [
+                    ClipOval(
+                      child: Material(
+                        color: Theme.of(context).colorScheme.primary,
+                        child: InkWell(
+                          child: Container(
+                            width: 16,
+                            height: 16,
+                            child: user.photo != null
+                                ? user.photo
+                                : Icon(
+                                    Icons.account_circle,
+                                    size: 16,
+                                    color: Theme.of(context).colorScheme.onPrimary,
+                                  ),
+                          ),
+                          onTap: widget.navigateOnPress
+                              ? () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ProfileScreen(user: user)));
+                                }
+                              : null,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 4),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${user.name} ${user.surname}",
+                            style: Theme.of(context).textTheme.caption,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-                onTap: navigateOnPress
-                    ? () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              ProfileScreen(user: user)));
-                }
-                    : null,
-              ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(left: 4),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "${user.name} ${user.surname}",
-                  style: Theme.of(context).textTheme.caption,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
+              );
+      },
     );
   }
 }

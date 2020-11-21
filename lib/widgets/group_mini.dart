@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/group_model.dart';
-import 'package:student_toolbox/screens/group_screen.dart';
+import 'package:student_toolbox/screens/group_screen/group_screen.dart';
 
 class GroupMini extends StatelessWidget {
   final GroupModel group;
