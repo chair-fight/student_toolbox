@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class ButtonAccent extends StatelessWidget {
+class ButtonPrimary extends StatelessWidget {
   final String label;
   final IconData leading;
   final IconData trailing;
   final Function onPressed;
   final double width;
 
-  const ButtonAccent(
+  const ButtonPrimary(
       {Key key,
-      this.label,
+      this.label="",
       this.onPressed,
       this.width,
       this.leading,
@@ -19,6 +19,7 @@ class ButtonAccent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 30,
       width: width,
       child: RaisedButton(
         color: Theme.of(context).colorScheme.primary,
@@ -34,6 +35,9 @@ class ButtonAccent extends StatelessWidget {
                 : Container(),
             Text(
               label,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimary
+              ),
             ),
             trailing != null
                 ? Padding(

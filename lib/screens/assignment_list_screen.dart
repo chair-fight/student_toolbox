@@ -9,7 +9,7 @@ class AssignmentListScreen extends StatelessWidget {
     AssignmentModel(
       name: "Assignment -1",
       description:
-      "Description description description description description description description",
+          "Description description description description description description description",
       dueDate: new DateTime(2020, 10, 20),
     ),
     AssignmentModel(
@@ -53,13 +53,18 @@ class AssignmentListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
+      initialIndex: 1,
       child: Scaffold(
         appBar: ScreenAppBar(
             title: "Assignments",
             subScreen: true,
             tabBar: TabBar(
               tabs: [
+                Tab(
+                  icon: Icon(Icons.check_circle),
+                  text: "Completed",
+                ),
                 Tab(
                   icon: Icon(Icons.person),
                   text: "Private",
@@ -72,6 +77,9 @@ class AssignmentListScreen extends StatelessWidget {
             )).get(context),
         body: TabBarView(
           children: [
+            ListView(
+              children: [],
+            ),
             ListView(children: groupAssignments(assignments)),
             ListView(
               children: [],

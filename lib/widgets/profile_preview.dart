@@ -26,31 +26,12 @@ class ProfilePreview extends StatelessWidget {
       children: [
         Row(
           children: [
-            Stack(
-              children: [
-                Container(
-                  height: 64,
-                  width: 64,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: NetworkImage(
-                          "https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg"),
-                    ),
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(32),
-                    color: Theme.of(context).colorScheme.surface,
-                  ),
-                  child: Icon(
-                    Icons.star,
-                    color: Colors.orange,
-                    size: 20,
-                  ),
-                ),
-              ],
+            ClipOval(
+              child: Container(
+                width: 64,
+                height: 64,
+                child: user.photo,
+              ),
             ),
             Flexible(
               child: Container(
