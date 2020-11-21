@@ -15,14 +15,10 @@ import 'package:student_toolbox/screens/schedule_screen/schedule_screen.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/screens/scanner_screen.dart';
 import 'package:student_toolbox/screens/settings_screen.dart';
-import 'package:student_toolbox/services/database.dart';
-import 'package:student_toolbox/widgets/button_primary.dart';
 import 'package:student_toolbox/widgets/post_card.dart';
-import 'package:student_toolbox/widgets/reminder.dart';
-import 'package:student_toolbox/widgets/reminders_card.dart';
+import 'package:student_toolbox/widgets/reminders/reminders_card.dart';
 import 'package:student_toolbox/widgets/screen_app_bar.dart';
 import 'package:student_toolbox/widgets/signature.dart';
-import 'package:student_toolbox/widgets/surface.dart';
 
 class HomeScreen extends StatelessWidget {
   @override

@@ -9,14 +9,14 @@ class ButtonClose extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 32,
-      height: 32,
+      width: 16,
+      height: 16,
       child: FlatButton (
         padding: EdgeInsets.zero,
         splashColor: Theme.of(context).colorScheme.secondary,
         child: Icon(
           Icons.close,
-          size: 24,
+          size: 16,
           color: Colors.red,
         ),
         onPressed: onPressed,
