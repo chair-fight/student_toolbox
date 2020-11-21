@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:student_toolbox/services/auth.dart';
 
 class UserModel {
+  final String uid;
   final String name;
   final String surname;
   final String email;
@@ -12,6 +13,7 @@ class UserModel {
   final DateTime dateOfBirth;
 
   UserModel({
+    this.uid,
     this.name,
     this.surname,
     this.email,
