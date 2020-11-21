@@ -17,6 +17,7 @@ import 'package:student_toolbox/widgets/button_primary.dart';
 import 'package:student_toolbox/widgets/news_card.dart';
 import 'package:student_toolbox/widgets/post_card.dart';
 import 'package:student_toolbox/widgets/reminder.dart';
+import 'package:student_toolbox/widgets/reminders_card.dart';
 import 'package:student_toolbox/widgets/screen_app_bar.dart';
 import 'package:student_toolbox/widgets/signature.dart';
 import 'package:student_toolbox/widgets/surface.dart';
@@ -92,8 +93,10 @@ class HomeScreen extends StatelessWidget {
               title: Text("Notifications"),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => NotificationScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NotificationScreen()));
               },
             ),
             Divider(),
@@ -160,33 +163,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          Surface(
-            title: "Reminders",
-            children: [
-              Column(
-                children: [
-                  Reminder(
-                    reminderModel: ReminderModel(
-                      text: "Assignments Due",
-                      dateTime: DateTime.now(),
-                    ),
-                  ),
-                  Divider(),
-                  Reminder(
-                    reminderModel: ReminderModel(
-                      text: "Exam Soon",
-                      dateTime: DateTime.now(),
-                    ),
-                  ),
-                  Divider(),
-                  ButtonPrimary(
-                    label: "+",
-                    onPressed: () {},
-                  )
-                ],
-              ),
-            ],
-          ),
+          RemindersCard(),
           Divider(),
           PostCard(
             post: PostModel(
