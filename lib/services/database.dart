@@ -24,7 +24,7 @@ class DatabaseCodeResult {
 }
 
 class Database {
-  static const String _url = 'http://884b10d16848.ngrok.io';
+  static const String _url = 'https://1b82eca6dedb.ngrok.io/';
   static const String _registerRoute = 'register';
   static const String _deleteUserRoute = 'delete';
   static const String _getUserRoute = 'get_user_data';
@@ -268,6 +268,7 @@ class Database {
       currentReminder = _reminderFromJson(dec, (currentIndex++).toString());
       if (currentReminder != null) result += [currentReminder];
     } while (currentReminder != null);
+    print(result);
     return result;
   }
 }
