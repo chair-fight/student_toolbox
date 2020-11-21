@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/services/validators/email_validator.dart';
@@ -43,16 +44,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_formKey.currentState.validate()) {
       setState(() => _isLoading = true);
       try {
-        var user = await AuthService().emailRegister(_email, _password);
+        var user = await AuthService()
+            .emailRegister(_email, _password, _name, _surname, 'ubb');
         await AuthService().sendVerificationEmail(user);
         _setParentHint(
             "Please confirm your email address by following the instructions sent to you at " +
                 user.email);
         await AuthService().logOut();
         Navigator.of(context).pop();
-      } catch (e) {
+      } on FirebaseAuthException catch (e) {
         setState(() => _firebaseHint = e.toString());
         setState(() => _isLoading = false);
+      } catch (e) {
+        print(e.toString());
       }
     }
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/services/auth.dart';
+import 'package:student_toolbox/services/database.dart';
 import 'package:student_toolbox/services/validators/email_validator.dart';
 import 'package:student_toolbox/services/validators/password_validator.dart';
 
@@ -19,7 +20,9 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
   _confirmBtnClicked() async {
     if (_formKey.currentState.validate())
       try {
+        var uid = AuthService().currentUser.uid;
         await AuthService().deleteAccount(_email, _password);
+        await Database.deleteUser(uid);
         Navigator.of(context).pop();
         Navigator.of(context).pop();
       } catch (e) {
@@ -67,7 +70,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                   ),
                   FlatButton(
                     child: Text("Cancel"),
-                    onPressed: () {
+                    onPressed: () async {
                       Navigator.of(context).pop();
                     },
                   ),
