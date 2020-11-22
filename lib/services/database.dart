@@ -84,13 +84,13 @@ class Database {
       Map<String, dynamic> json, String index, User user) {
     if (json['name'] == null || json['name'][index] == null) return null;
     return UserModel(
-        uid: json['id'][index],
-        name: json['name'][index],
-        surname: json['surname'][index],
-        email: json['email'][index],
-        university: json['university'][index],
-        photo: null, //Image.network(user.photoURL),
-        );
+      uid: json['id'][index],
+      name: json['name'][index],
+      surname: json['surname'][index],
+      email: json['email'][index],
+      university: json['university'][index],
+      photo: null, //Image.network(user.photoURL),
+    );
   }
 
   static GroupModel _groupFromJson(Map<String, dynamic> json, String index) {

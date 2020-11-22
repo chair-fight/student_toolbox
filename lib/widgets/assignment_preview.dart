@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/assignment_model.dart';
+import 'package:student_toolbox/models/private_assignment_model.dart';
+import 'package:student_toolbox/services/database.dart';
 import 'package:student_toolbox/widgets/button_primary.dart';
 import 'package:student_toolbox/widgets/button_close.dart';
 import 'package:student_toolbox/widgets/surface.dart';
@@ -19,10 +21,12 @@ class AssignmentPreview extends StatelessWidget {
     "NOV",
     "DEC"
   ];
-  final AssignmentModel assignment;
+  final PrivateAssignmentModel assignment;
   final bool navigateOnPress;
+  final Function refreshParent;
 
-  const AssignmentPreview({Key key, this.assignment, this.navigateOnPress})
+  const AssignmentPreview(
+      {Key key, this.assignment, this.navigateOnPress, this.refreshParent})
       : super(key: key);
 
   @override
@@ -59,7 +63,10 @@ class AssignmentPreview extends StatelessWidget {
                     width: 100,
                     leading: Icons.check,
                     label: "Done",
-                    onPressed: () {},
+                    onPressed: () async {
+                      await Database.deleteUserAssignment(assignment.id);
+                      if (refreshParent != null) refreshParent();
+                    },
                   ),
                 ],
               ),
