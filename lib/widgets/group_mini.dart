@@ -6,8 +6,9 @@ class GroupMini extends StatelessWidget {
   final GroupModel group;
   final bool navigateOnPress;
 
-  const GroupMini({Key key, this.group, this.navigateOnPress})
-      : super(key: key);
+  GroupMini({Key key, this.group, this.navigateOnPress}) : super(key: key);
+
+  List<Widget> _widgets;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +28,12 @@ class GroupMini extends StatelessWidget {
                   ),
                   onTap: navigateOnPress
                       ? () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      GroupScreen(group: group)));
+                          if (group.id != null)
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        GroupScreen(group: group)));
                         }
                       : null,
                 ),

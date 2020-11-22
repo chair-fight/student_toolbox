@@ -128,8 +128,12 @@ class Database {
     print(body);
     var convUri = Uri.parse(uri);
     var request = http.MultipartRequest(type, convUri)..fields.addAll(body);
-    var result = await request.send();
-    final respStr = await result.stream.bytesToString();
+    http.StreamedResponse result;
+    String respStr = "";
+    try {
+      result = await request.send();
+      respStr = await result.stream.bytesToString();
+    } catch (e) {}
     var dec = jsonDecode(respStr);
     return dec;
   }
