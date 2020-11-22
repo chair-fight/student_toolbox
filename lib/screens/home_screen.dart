@@ -196,14 +196,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  List<Widget> _posts;
+  List<Widget> _posts = [];
   GlobalKey<RefreshIndicatorState> _refreshKey =
       GlobalKey<RefreshIndicatorState>();
   ScrollController _scrollController = ScrollController();
 
   Future<void> _getPosts() async {
     _refreshKey.currentState?.show(
-      atTop: false,
+      atTop: true,
     );
     var groups = await Database.getUserGroups(AuthService().currentUser.uid);
     List<Widget> result = [

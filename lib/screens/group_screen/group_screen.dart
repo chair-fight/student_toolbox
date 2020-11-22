@@ -17,17 +17,26 @@ import 'package:student_toolbox/widgets/profile_preview.dart';
 import 'package:student_toolbox/widgets/screen_app_bar.dart';
 import 'package:student_toolbox/widgets/surface.dart';
 
-class GroupScreen extends StatelessWidget {
+class GroupScreen extends StatefulWidget {
   final GroupModel group;
 
   const GroupScreen({Key key, this.group}) : super(key: key);
 
+  @override
+  _GroupScreenState createState() => _GroupScreenState();
+}
+
+class _GroupScreenState extends State<GroupScreen> {
   void _navigateToCreatePost(BuildContext context) async {
-    await Navigator.push(context, MaterialPageRoute(builder: (context) => PostCreateScreen(group: group)));
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => PostCreateScreen(group: widget.group)));
   }
 
   @override
   Widget build(BuildContext context) {
+    _getPosts();
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -54,24 +63,30 @@ class GroupScreen extends StatelessWidget {
             )).get(context),
         body: TabBarView(
           children: [
-            ListView(
-              children: [
-                Container(
-                  padding: EdgeInsets.only(top: 8),
-                  width: 256,
-                  child: ButtonPrimary(
-                    leading: Icons.add_photo_alternate_rounded,
-                    label: "New Post",
-                    onPressed: () => _navigateToCreatePost(context),
-                  ),
-                ),
-                Divider(),
-              ] + [],
+            RefreshIndicator(
+              key: _refreshKey,
+              onRefresh: _getPosts,
+              child: ListView(
+                controller: _scrollController,
+                children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(top: 8),
+                        width: 256,
+                        child: ButtonPrimary(
+                          leading: Icons.add_photo_alternate_rounded,
+                          label: "New Post",
+                          onPressed: () => _navigateToCreatePost(context),
+                        ),
+                      ),
+                      Divider(),
+                    ] +
+                    _posts,
+              ),
             ),
             ListView(
               children: [
                 GroupPreview(
-                  group: group,
+                  group: widget.group,
                   showDescription: false,
                   isDense: false,
                   navigateOnPress: false,
@@ -81,15 +96,16 @@ class GroupScreen extends StatelessWidget {
                   children: [
                     Container(
                       alignment: AlignmentDirectional.topStart,
-                      child: Text(group.description),
+                      child: Text(widget.group.description),
                     ),
                   ],
                 ),
                 FutureBuilder(
                   future: Database.checkUserGroupAdmin(
-                      AuthService().currentUser.uid, group.id),
+                      AuthService().currentUser.uid, widget.group.id),
                   builder: (BuildContext context, AsyncSnapshot<bool> buffer) {
-                    return buffer.connectionState == ConnectionState.done
+                    return (buffer.connectionState == ConnectionState.done &&
+                            buffer.data != null)
                         ? Column(children: [
                             Surface(title: "Admin Powers", children: [
                               Row(
@@ -103,8 +119,8 @@ class GroupScreen extends StatelessWidget {
                                       ),
                                       onPressed: () => showDialog(
                                           context: context,
-                                          builder: (_) =>
-                                              DeleteGroupDialog(group: group)),
+                                          builder: (_) => DeleteGroupDialog(
+                                              group: widget.group)),
                                     ),
                                   ),
                                 ],
@@ -118,7 +134,7 @@ class GroupScreen extends StatelessWidget {
                   label: "Members",
                 ),
                 FutureBuilder(
-                  future: Database.getGroupMembers(group.id),
+                  future: Database.getGroupMembers(widget.group.id),
                   builder: (BuildContext context,
                       AsyncSnapshot<List<UserModel>> buffer) {
                     return buffer.connectionState == ConnectionState.done
@@ -142,5 +158,29 @@ class GroupScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<Widget> _posts = [];
+
+  GlobalKey<RefreshIndicatorState> _refreshKey =
+      GlobalKey<RefreshIndicatorState>();
+
+  ScrollController _scrollController = ScrollController();
+
+  Future<void> _getPosts() async {
+    _refreshKey.currentState?.show(
+      atTop: true,
+    );
+    var result = <Widget>[];
+    var groupPosts = await Database.getGroupPosts(widget.group);
+    for (var post in groupPosts) {
+      result += [
+        PostCard(
+          post: post,
+        )
+      ];
+    }
+
+    setState(() => _posts = result);
   }
 }

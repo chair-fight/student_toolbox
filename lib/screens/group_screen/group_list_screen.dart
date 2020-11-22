@@ -56,7 +56,7 @@ class _GroupListScreenState extends State<GroupListScreen> {
               builder: (BuildContext context,
                   AsyncSnapshot<List<GroupModel>> buffer) {
                 return ListView(
-                  children: (buffer.connectionState == ConnectionState.done)
+                  children: (buffer.connectionState == ConnectionState.done && buffer.data != null)
                       ? (buffer.data
                           .where((GroupModel data) => data.name
                               .toUpperCase()

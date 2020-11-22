@@ -41,7 +41,7 @@ class _RemindersCardState extends State<RemindersCard> {
           future: Database.getUserReminders(AuthService().currentUser.uid),
           builder: (BuildContext context,
               AsyncSnapshot<List<ReminderModel>> buffer) {
-            return (buffer.connectionState != ConnectionState.done)
+            return (buffer.connectionState != ConnectionState.done || buffer.data == null)
                 ? Container(
                     child: Center(
                       child: SpinKitWave(

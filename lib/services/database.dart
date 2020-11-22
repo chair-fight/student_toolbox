@@ -58,7 +58,7 @@ class _TempPostModel {
 }
 
 class Database {
-  static const String _url = 'http://d0e1e10f3bb7.ngrok.io';
+  static const String _url = 'http://d9e27afea139.ngrok.io';
   static const String _registerRoute = 'register';
   static const String _deleteUserRoute = 'delete';
   static const String _getUserRoute = 'get_user_data';
