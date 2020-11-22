@@ -3,13 +3,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/group_model.dart';
 import 'package:student_toolbox/models/post_model.dart';
-import 'package:student_toolbox/models/reminder_model.dart';
 import 'package:student_toolbox/models/user_model.dart';
 import 'package:student_toolbox/screens/assignments_screen/assignment_list_screen.dart';
 import 'package:student_toolbox/screens/friend_list_screen/friend_list_screen.dart';
 import 'package:student_toolbox/screens/loading_screen.dart';
 import 'package:student_toolbox/services/database.dart';
-import 'group_screen/group_list_screen.dart';
+import 'package:student_toolbox/screens/group_screen/group_list_screen.dart';
 import 'package:student_toolbox/screens/news_screen.dart';
 import 'package:student_toolbox/screens/notification_screen.dart';
 import 'package:student_toolbox/screens/profile_screen.dart';
@@ -21,6 +20,7 @@ import 'package:student_toolbox/widgets/post_card.dart';
 import 'package:student_toolbox/widgets/reminders/reminders_card.dart';
 import 'package:student_toolbox/widgets/screen_app_bar.dart';
 import 'package:student_toolbox/widgets/signature.dart';
+
 
 class HomeScreen extends StatelessWidget {
   @override

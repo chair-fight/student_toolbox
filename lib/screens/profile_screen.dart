@@ -56,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         user: user,
                         navigateOnPress: false,
                       ),
-                      if (metaUser == null || metaUser.uid != AuthService().currentUser.uid) Surface(children: [
+                      if (user != null && user.uid != AuthService().currentUser.uid) Surface(children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
