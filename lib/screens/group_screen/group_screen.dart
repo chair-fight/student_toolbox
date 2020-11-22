@@ -5,8 +5,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:student_toolbox/models/group_model.dart';
 import 'package:student_toolbox/models/post_model.dart';
 import 'package:student_toolbox/models/user_model.dart';
+import 'package:student_toolbox/screens/group_screen/post_create_screen.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/services/database.dart';
+import 'package:student_toolbox/widgets/button_primary.dart';
 import 'package:student_toolbox/widgets/column_divider.dart';
 import 'package:student_toolbox/widgets/dialogs/delete_group_dialog.dart';
 import 'package:student_toolbox/widgets/group_preview.dart';
@@ -19,6 +21,10 @@ class GroupScreen extends StatelessWidget {
   final GroupModel group;
 
   const GroupScreen({Key key, this.group}) : super(key: key);
+
+  void _navigateToCreatePost(BuildContext context) async {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) => PostCreateScreen(group: group)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +55,18 @@ class GroupScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             ListView(
-              children: [],
+              children: [
+                Container(
+                  padding: EdgeInsets.only(top: 8),
+                  width: 256,
+                  child: ButtonPrimary(
+                    leading: Icons.add_photo_alternate_rounded,
+                    label: "New Post",
+                    onPressed: () => _navigateToCreatePost(context),
+                  ),
+                ),
+                Divider(),
+              ] + [],
             ),
             ListView(
               children: [

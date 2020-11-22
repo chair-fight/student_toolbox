@@ -78,6 +78,9 @@ class _AssignmentListScreenState extends State<AssignmentListScreen> {
     List<Widget> result = [];
     List<PrivateAssignmentModel> set;
 
+    if (assignments == null || assignments.isEmpty)
+      return result;
+
     DateTime thisDay = DateTime(
       DateTime.now().year,
       DateTime.now().month,
