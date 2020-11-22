@@ -58,7 +58,7 @@ class _TempPostModel {
 }
 
 class Database {
-  static const String _url = 'http://1b82eca6dedb.ngrok.io';
+  static const String _url = 'http://d0e1e10f3bb7.ngrok.io';
   static const String _registerRoute = 'register';
   static const String _deleteUserRoute = 'delete';
   static const String _getUserRoute = 'get_user_data';
@@ -128,8 +128,12 @@ class Database {
     print(body);
     var convUri = Uri.parse(uri);
     var request = http.MultipartRequest(type, convUri)..fields.addAll(body);
-    var result = await request.send();
-    final respStr = await result.stream.bytesToString();
+    http.StreamedResponse result;
+    String respStr = "";
+    try {
+      result = await request.send();
+      respStr = await result.stream.bytesToString();
+    } catch (e) {}
     var dec = jsonDecode(respStr);
     return dec;
   }
