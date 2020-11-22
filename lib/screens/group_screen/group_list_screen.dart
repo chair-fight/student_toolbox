@@ -56,13 +56,8 @@ class _GroupListScreenState extends State<GroupListScreen> {
               builder: (BuildContext context,
                   AsyncSnapshot<List<GroupModel>> buffer) {
                 return ListView(
-                  children: (buffer.connectionState == ConnectionState.waiting)
-                      ? [
-                          SpinKitWave(
-                            color: Theme.of(context).colorScheme.primary,
-                          )
-                        ]
-                      : (buffer.data
+                  children: (buffer.connectionState == ConnectionState.done)
+                      ? (buffer.data
                           .where((GroupModel data) => data.name
                               .toUpperCase()
                               .contains(_searchString.toUpperCase()))
@@ -72,7 +67,12 @@ class _GroupListScreenState extends State<GroupListScreen> {
                                 isDense: true,
                                 showDescription: true,
                               ))
-                          .toList()),
+                          .toList())
+                      : [
+                          SpinKitWave(
+                            color: Theme.of(context).colorScheme.primary,
+                          )
+                        ],
                 );
               },
             )),

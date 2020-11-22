@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/assignment_model.dart';
 import 'package:student_toolbox/models/private_assignment_model.dart';
+import 'package:student_toolbox/models/user_model.dart';
 import 'package:student_toolbox/screens/assignments_screen/create_assignment_screen.dart';
 import 'package:student_toolbox/screens/loading_screen.dart';
 import 'package:student_toolbox/services/auth.dart';
@@ -43,25 +44,24 @@ class _AssignmentListScreenState extends State<AssignmentListScreen> {
         body: TabBarView(
           children: [
             FutureBuilder(
-              future: _groupAssignments(),
-              builder:
-                  (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting)
-                  return LoadingScreen();
-                else if (snapshot.connectionState == ConnectionState.done)
-                  return ListView(children: snapshot.data);
-                // TODO - add error screen
+              future:
+                  Database.getUserAssignments(AuthService().currentUser.uid),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<PrivateAssignmentModel>> snapshot) {
+                return (snapshot.connectionState == ConnectionState.done)
+                    ? ListView(children: _groupAssignments(snapshot.data))
+                    : LoadingScreen();
               },
             ),
             ListView(
               children: [],
-            ),
+            )
           ],
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).colorScheme.primary,
           splashColor: Theme.of(context).colorScheme.secondary,
-          child: Icon(Icons.person_add),
+          child: Icon(Icons.add),
           onPressed: () async {
             await Navigator.push(
                 context,
@@ -74,10 +74,7 @@ class _AssignmentListScreenState extends State<AssignmentListScreen> {
     );
   }
 
-  Future<List<Widget>> _groupAssignments() async {
-    var assignments =
-        await Database.getUserAssignments(AuthService().currentUser.uid);
-
+  List<Widget> _groupAssignments(List<PrivateAssignmentModel> assignments) {
     List<Widget> result = [];
     List<PrivateAssignmentModel> set;
 

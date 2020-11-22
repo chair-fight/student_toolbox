@@ -21,7 +21,6 @@ import 'package:student_toolbox/widgets/reminders/reminders_card.dart';
 import 'package:student_toolbox/widgets/screen_app_bar.dart';
 import 'package:student_toolbox/widgets/signature.dart';
 
-
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -173,7 +172,11 @@ class HomeScreen extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.waiting)
               return LoadingScreen();
             return ListView(
-              children: [RemindersCard()].cast<Widget>() + snapshot.data,
+              children: <Widget>[
+                    RemindersCard(),
+                    Divider(),
+                  ] +
+                  snapshot.data,
             );
           },
         ));
