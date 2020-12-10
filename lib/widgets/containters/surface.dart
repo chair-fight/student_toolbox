@@ -16,8 +16,8 @@ class Surface extends StatelessWidget {
       this.height,
       this.width = double.infinity,
       this.title = "",
-      this.margin,
-      this.padding,
+      this.margin = const EdgeInsets.fromLTRB(2, 2, 2, 2),
+      this.padding = const EdgeInsets.fromLTRB(2, 2, 2, 2),
       this.color,
       this.onTap});
 
@@ -32,25 +32,27 @@ class Surface extends StatelessWidget {
               ? Container()
               : Container(
                   width: width,
-                  margin: EdgeInsets.only(left: 16, right: 16, top: 8),
+                  margin: margin.add(EdgeInsets.only(left: 8)),
                   child: Text(
                     title,
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
           Container(
-            margin: EdgeInsets.fromLTRB(8, 4, 8, 4),
+            margin: margin.subtract(EdgeInsets.only(top: 2)),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Material(
-                color: color != null ? color : Theme.of(context).colorScheme.surface,
+                color: color != null
+                    ? color
+                    : Theme.of(context).colorScheme.surface,
                 child: InkWell(
                   onTap: onTap,
                   splashColor: Theme.of(context).colorScheme.secondary,
                   child: Container(
                     width: width,
                     height: height,
-                    padding: EdgeInsets.all(8),
+                    padding: padding,
                     child: Container(
                       padding: padding,
                       child: Column(

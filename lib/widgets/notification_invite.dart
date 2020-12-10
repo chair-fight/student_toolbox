@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/group_model.dart';
-import 'package:student_toolbox/widgets/group_preview.dart';
-import 'package:student_toolbox/widgets/surface.dart';
+import 'file:///D:/Projects/student_toolbox/lib/widgets/group/group_preview.dart';
+import 'file:///D:/Projects/student_toolbox/lib/widgets/containters/surface.dart';
 
-import 'button_close.dart';
-import 'button_primary.dart';
+import 'buttons/button_close.dart';
+import 'buttons/button_primary.dart';
 
 class NotificationInvite extends StatelessWidget {
   final GroupModel group;

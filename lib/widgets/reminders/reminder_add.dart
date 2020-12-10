@@ -3,13 +3,13 @@ import 'package:student_toolbox/models/reminder_model.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/services/database.dart';
 import 'package:student_toolbox/services/validators/nonempty_validator.dart';
-import 'package:student_toolbox/widgets/button_primary.dart';
-import 'package:student_toolbox/widgets/reminders/reminders_card.dart';
+import 'file:///D:/Projects/student_toolbox/lib/widgets/buttons/button_primary.dart';
+import 'package:student_toolbox/widgets/reminders/reminder_list.dart';
 
-import '../button_close.dart';
+import '../buttons/button_close.dart';
 
 class ReminderAdd extends StatefulWidget {
-  final RemindersCard parent;
+  final ReminderList parent;
 
   const ReminderAdd({
     Key key,

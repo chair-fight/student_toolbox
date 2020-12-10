@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:student_toolbox/widgets/button_primary.dart';
-import 'package:student_toolbox/widgets/screen_app_bar.dart';
-import 'package:student_toolbox/widgets/surface.dart';
+import 'package:student_toolbox/widgets/buttons/button_primary.dart';
+import 'package:student_toolbox/widgets/containters/surface.dart';
 
 class ScannerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ScreenAppBar(
-        title: "Scanner",
-        subScreen: true,
-      ).get(context),
+      appBar: AppBar(
+        title: Text("File Scaner"),
+        leading: FlatButton(
+          child: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: Surface(
         children: [
           Container(

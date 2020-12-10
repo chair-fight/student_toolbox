@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:student_toolbox/models/group_model.dart';
@@ -96,7 +95,7 @@ class Database {
   static GroupModel _groupFromJson(Map<String, dynamic> json, String index) {
     if (json['name'] == null || json['name'][index] == null) return null;
     return GroupModel(
-      id: json['id'][index].toString(),
+      gid: json['id'][index].toString(),
       name: json['name'][index],
       description: json['description'][index],
     );
@@ -395,7 +394,7 @@ class Database {
 
   static Future<List<PostModel>> getGroupPosts(GroupModel group) async {
     var body = <String, String>{
-      'gid': group.id,
+      'gid': group.gid,
     };
     print(body);
     var dec = await _request('GET', body, _url + '/' + _getGroupPostsRoute);
@@ -416,7 +415,7 @@ class Database {
       var op = await getDBUserFromUid(temppost.opid);
       result += [
         PostModel(
-          id: temppost.pid,
+          pid: temppost.pid,
           op: op,
           group: group,
           title: temppost.title,

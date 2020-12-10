@@ -3,19 +3,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:student_toolbox/models/group_model.dart';
-import 'package:student_toolbox/models/post_model.dart';
 import 'package:student_toolbox/models/user_model.dart';
 import 'package:student_toolbox/screens/group_screen/post_create_screen.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/services/database.dart';
-import 'package:student_toolbox/widgets/button_primary.dart';
+import 'package:student_toolbox/widgets/buttons/button_primary.dart';
 import 'package:student_toolbox/widgets/column_divider.dart';
+import 'package:student_toolbox/widgets/containters/surface.dart';
 import 'package:student_toolbox/widgets/dialogs/delete_group_dialog.dart';
-import 'package:student_toolbox/widgets/group_preview.dart';
-import 'package:student_toolbox/widgets/post_card.dart';
-import 'package:student_toolbox/widgets/profile_preview.dart';
-import 'package:student_toolbox/widgets/screen_app_bar.dart';
-import 'package:student_toolbox/widgets/surface.dart';
+import 'package:student_toolbox/widgets/group/group_preview.dart';
+import 'package:student_toolbox/widgets/posts/post_card.dart';
+import 'package:student_toolbox/widgets/profile/profile_preview.dart';
 
 class GroupScreen extends StatefulWidget {
   final GroupModel group;
@@ -40,27 +38,36 @@ class _GroupScreenState extends State<GroupScreen> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: ScreenAppBar(
-            title: "Group",
-            subScreen: true,
-            tabBar: TabBar(
-              tabs: [
-                Container(
-                  height: 40,
-                  child: Tab(
-                    icon: Icon(Icons.image),
-                  ),
+        appBar: AppBar(
+          title: Text("Create Group"),
+          leading: FlatButton(
+            child: Icon(
+              Icons.arrow_back,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          bottom: TabBar(
+            tabs: [
+              Container(
+                height: 40,
+                child: Tab(
+                  icon: Icon(Icons.image),
                 ),
-                Container(
-                  padding: EdgeInsets.zero,
-                  height: 40,
-                  width: 20,
-                  child: Tab(
-                    icon: Icon(Icons.info),
-                  ),
+              ),
+              Container(
+                padding: EdgeInsets.zero,
+                height: 40,
+                width: 20,
+                child: Tab(
+                  icon: Icon(Icons.info),
                 ),
-              ],
-            )).get(context),
+              ),
+            ],
+          ),
+        ),
         body: TabBarView(
           children: [
             RefreshIndicator(
@@ -102,7 +109,7 @@ class _GroupScreenState extends State<GroupScreen> {
                 ),
                 FutureBuilder(
                   future: Database.checkUserGroupAdmin(
-                      AuthService().currentUser.uid, widget.group.id),
+                      AuthService().currentUser.uid, widget.group.gid),
                   builder: (BuildContext context, AsyncSnapshot<bool> buffer) {
                     return (buffer.connectionState == ConnectionState.done &&
                             buffer.data != null)
@@ -134,7 +141,7 @@ class _GroupScreenState extends State<GroupScreen> {
                   label: "Members",
                 ),
                 FutureBuilder(
-                  future: Database.getGroupMembers(widget.group.id),
+                  future: Database.getGroupMembers(widget.group.gid),
                   builder: (BuildContext context,
                       AsyncSnapshot<List<UserModel>> buffer) {
                     return buffer.connectionState == ConnectionState.done

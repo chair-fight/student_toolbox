@@ -3,9 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/services/database.dart';
 import 'package:student_toolbox/services/validators/nonempty_validator.dart';
-import 'package:student_toolbox/widgets/button_primary.dart';
-import 'package:student_toolbox/widgets/screen_app_bar.dart';
-import 'package:student_toolbox/widgets/surface.dart';
+import 'package:student_toolbox/widgets/buttons/button_primary.dart';
+import 'package:student_toolbox/widgets/containters/surface.dart';
 
 import '../loading_screen.dart';
 
@@ -65,10 +64,18 @@ class _CreateAssignmentScreenState extends State<CreateAssignmentScreen> {
     return _isLoading
         ? LoadingScreen()
         : Scaffold(
-            appBar: ScreenAppBar(
-              title: "Create New Private Assignment",
-              subScreen: true,
-            ).get(context),
+            appBar: AppBar(
+              title: Text("Create Group"),
+              leading: FlatButton(
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
             body: Form(
               key: _formKey,
               child: ListView(

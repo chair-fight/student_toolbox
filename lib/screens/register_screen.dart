@@ -5,9 +5,9 @@ import 'package:student_toolbox/services/validators/email_validator.dart';
 import 'package:student_toolbox/services/validators/nonempty_validator.dart';
 import 'package:student_toolbox/services/validators/password_validator.dart';
 import 'package:student_toolbox/services/validators/repeat_password_validator.dart';
-import 'package:student_toolbox/widgets/button_primary.dart';
+import 'file:///D:/Projects/student_toolbox/lib/widgets/buttons/button_primary.dart';
 import 'package:student_toolbox/widgets/signature.dart';
-import 'package:student_toolbox/widgets/surface.dart';
+import 'file:///D:/Projects/student_toolbox/lib/widgets/containters/surface.dart';
 
 import 'loading_screen.dart';
 

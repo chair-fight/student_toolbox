@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/reminder_model.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/services/database.dart';
-import 'package:student_toolbox/widgets/surface.dart';
+import 'file:///D:/Projects/student_toolbox/lib/widgets/containters/surface.dart';
 
-import '../button_close.dart';
+import '../buttons/button_close.dart';
 
 class Reminder extends StatelessWidget {
   final ReminderModel reminderModel;

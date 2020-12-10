@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class NotificationScreen extends StatelessWidget {
+class AboutUsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Notifications"),
+        title: Text("About Us"),
         leading: FlatButton(
           child: Icon(
             Icons.arrow_back,
@@ -15,9 +15,6 @@ class NotificationScreen extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-      ),
-      body: ListView(
-        children: [],
       ),
     );
   }

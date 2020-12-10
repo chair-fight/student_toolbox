@@ -28,7 +28,7 @@ class GroupMini extends StatelessWidget {
                   ),
                   onTap: navigateOnPress
                       ? () {
-                          if (group.id != null)
+                          if (group.gid != null)
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
