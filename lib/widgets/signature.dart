@@ -10,14 +10,14 @@ class Signature extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           child: Text(
-            "Version 0.1 (alpha)",
+            "Version 0.2 (alpha)",
             style: Theme.of(context).textTheme.caption,
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           child: Text(
-            "© ChairFight Unihack",
+            "© ChairFight",
             style: Theme.of(context).textTheme.caption,
           ),
         ),

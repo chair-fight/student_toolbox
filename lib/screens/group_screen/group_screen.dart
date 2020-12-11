@@ -26,10 +26,7 @@ class GroupScreen extends StatefulWidget {
 
 class _GroupScreenState extends State<GroupScreen> {
   void _navigateToCreatePost(BuildContext context) async {
-    await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => PostCreateScreen(group: widget.group)));
+    await Navigator.push(context, MaterialPageRoute(builder: (context) => PostCreateScreen(group: widget.group)));
   }
 
   @override
@@ -99,41 +96,45 @@ class _GroupScreenState extends State<GroupScreen> {
                   navigateOnPress: false,
                 ),
                 Surface(
-                  title: "Description",
-                  children: [
-                    Container(
-                      alignment: AlignmentDirectional.topStart,
-                      child: Text(widget.group.description),
-                    ),
-                  ],
+                  child: Column(
+                    children: [
+                      Container(
+                        alignment: AlignmentDirectional.topStart,
+                        child: Text(widget.group.description),
+                      ),
+                    ],
+                  ),
                 ),
                 FutureBuilder(
-                  future: Database.checkUserGroupAdmin(
-                      AuthService().currentUser.uid, widget.group.gid),
+                  future: Database.checkUserGroupAdmin(AuthService().currentUser.uid, widget.group.gid),
                   builder: (BuildContext context, AsyncSnapshot<bool> buffer) {
-                    return (buffer.connectionState == ConnectionState.done &&
-                            buffer.data != null)
-                        ? Column(children: [
-                            Surface(title: "Admin Powers", children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: RaisedButton(
-                                      color: Colors.red[800],
-                                      child: Text(
-                                        "Delete Group",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      onPressed: () => showDialog(
-                                          context: context,
-                                          builder: (_) => DeleteGroupDialog(
-                                              group: widget.group)),
+                    return (buffer.connectionState == ConnectionState.done && buffer.data != null)
+                        ? Column(
+                            children: [
+                              Surface(
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: RaisedButton(
+                                            color: Colors.red[800],
+                                            child: Text(
+                                              "Delete Group",
+                                              style: TextStyle(color: Colors.white),
+                                            ),
+                                            onPressed: () => showDialog(
+                                                context: context,
+                                                builder: (_) => DeleteGroupDialog(group: widget.group)),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ])
-                          ])
+                                  ],
+                                ),
+                              )
+                            ],
+                          )
                         : Container();
                   },
                 ),
@@ -142,8 +143,7 @@ class _GroupScreenState extends State<GroupScreen> {
                 ),
                 FutureBuilder(
                   future: Database.getGroupMembers(widget.group.gid),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<UserModel>> buffer) {
+                  builder: (BuildContext context, AsyncSnapshot<List<UserModel>> buffer) {
                     return buffer.connectionState == ConnectionState.done
                         ? Column(
                             children: buffer.data
@@ -169,8 +169,7 @@ class _GroupScreenState extends State<GroupScreen> {
 
   List<Widget> _posts = [];
 
-  GlobalKey<RefreshIndicatorState> _refreshKey =
-      GlobalKey<RefreshIndicatorState>();
+  GlobalKey<RefreshIndicatorState> _refreshKey = GlobalKey<RefreshIndicatorState>();
 
   ScrollController _scrollController = ScrollController();
 

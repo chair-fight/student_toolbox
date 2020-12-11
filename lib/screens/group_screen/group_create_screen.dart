@@ -43,57 +43,59 @@ class _GroupCreateScreenState extends State<GroupCreateScreen> {
       child: ListView(
         children: [
           Surface(
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 32),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      maxLength: 50,
-                      maxLengthEnforced: true,
-                      decoration: InputDecoration(
-                        labelText: "Name",
-                        counterText: "${_name.length}/50",
-                      ),
-                      validator: NonEmptyValidator.validate,
-                      onChanged: (value) {
-                        setState(() {
-                          _name = value;
-                        });
-                      },
-                    ),
-                    TextFormField(
-                      maxLength: 256,
-                      maxLengthEnforced: true,
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null,
-                      minLines: 5,
-                      decoration: InputDecoration(
-                        labelText: "Description",
-                        alignLabelWithHint: true,
-                        counterText: "${_description.length}/256",
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          _description = value;
-                        });
-                      },
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 64, bottom: 8),
-                      child: ButtonPrimary(
-                        label: "Create",
-                        width: 148,
-                        onPressed: () {
-                          _createGroup();
-                          Navigator.pop(context);
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 4, horizontal: 32),
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        maxLength: 50,
+                        maxLengthEnforced: true,
+                        decoration: InputDecoration(
+                          labelText: "Name",
+                          counterText: "${_name.length}/50",
+                        ),
+                        validator: NonEmptyValidator.validate,
+                        onChanged: (value) {
+                          setState(() {
+                            _name = value;
+                          });
                         },
                       ),
-                    )
-                  ],
+                      TextFormField(
+                        maxLength: 256,
+                        maxLengthEnforced: true,
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        minLines: 5,
+                        decoration: InputDecoration(
+                          labelText: "Description",
+                          alignLabelWithHint: true,
+                          counterText: "${_description.length}/256",
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _description = value;
+                          });
+                        },
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top: 64, bottom: 8),
+                        child: ButtonPrimary(
+                          label: "Create",
+                          width: 148,
+                          onPressed: () {
+                            _createGroup();
+                            Navigator.pop(context);
+                          },
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

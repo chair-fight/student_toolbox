@@ -22,76 +22,90 @@ class SettingsScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          Surface(
-            title: "Account",
-            children: [
-              Row(
-                children: [],
-              )
-            ],
-          ),
-          Surface(
-            title: "Preferences",
-            children: [
-              Row(
-                children: [],
-              )
-            ],
-          ),
-          Surface(
-            title: "Accessibility",
-            children: [
-              Row(
-                children: [
-                  Row(
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+                  child: Text(
+                    "Schedule",
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Column(
                     children: [
-                      Switch(
-                          value: themeSwitcher.isDark,
-                          onChanged: (bool) async {
-                            await themeSwitcher.switchTheme();
-                          }),
-                      Text("Night Mode"),
-                      Icon(themeSwitcher.isDark
-                          ? Icons.brightness_3
-                          : Icons.brightness_7),
                     ],
-                  )
-                ],
-              )
-            ],
+                  ),
+                ),
+              ],
+            ),
           ),
-          Surface(
-            title: "Danger Zone",
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: RaisedButton(
-                      color: Colors.red[800],
-                      child: Text(
-                        "Reset App",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {},
-                    ),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+                  child: Text(
+                    "Danger Zone",
+                    style: Theme.of(context).textTheme.subtitle2,
                   ),
-                  Container(width: 8),
-                  Expanded(
-                    child: RaisedButton(
-                      color: Colors.red[800],
-                      child: Text(
-                        "Delete Account",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () => showDialog(
-                          context: context,
-                          builder: (_) => DeleteAccountDialog()),
-                    ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    borderRadius: BorderRadius.circular(4),
                   ),
-                ],
-              ),
-            ],
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 24,
+                              child: RaisedButton(
+                                color: Colors.red[800],
+                                child: Text(
+                                  "Reset App",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onPressed: () {},
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 4),
+                          Expanded(
+                            child: Container(
+                              height: 24,
+                              child: RaisedButton(
+                                color: Colors.red[800],
+                                child: Text(
+                                  "Delete Account",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onPressed: () => showDialog(context: context, builder: (_) => DeleteAccountDialog()),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           Signature(),
         ],

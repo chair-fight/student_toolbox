@@ -81,54 +81,56 @@ class _CreateAssignmentScreenState extends State<CreateAssignmentScreen> {
               child: ListView(
                 children: [
                   Surface(
-                    children: [
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 4, horizontal: 32),
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              decoration: InputDecoration(
-                                labelText: "Name",
+                    child: Column(
+                      children: [
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 4, horizontal: 32),
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: "Name",
+                                ),
+                                validator: NonEmptyValidator.validate,
+                                onChanged: (value) {
+                                  setState(() => _name = value);
+                                },
                               ),
-                              validator: NonEmptyValidator.validate,
-                              onChanged: (value) {
-                                setState(() => _name = value);
-                              },
-                            ),
-                            TextFormField(
-                              keyboardType: TextInputType.multiline,
-                              maxLines: 10,
-                              minLines: 5,
-                              maxLength: 256,
-                              maxLengthEnforced: true,
-                              decoration: InputDecoration(
-                                labelText: "Description",
-                                alignLabelWithHint: true,
-                                counterText: "${_description.length}/256",
+                              TextFormField(
+                                keyboardType: TextInputType.multiline,
+                                maxLines: 10,
+                                minLines: 5,
+                                maxLength: 256,
+                                maxLengthEnforced: true,
+                                decoration: InputDecoration(
+                                  labelText: "Description",
+                                  alignLabelWithHint: true,
+                                  counterText: "${_description.length}/256",
+                                ),
+                                onChanged: (value) {
+                                  setState(() => _description = value);
+                                },
                               ),
-                              onChanged: (value) {
-                                setState(() => _description = value);
-                              },
-                            ),
-                            ButtonPrimary(
-                              label: "Date: " +
-                                  DateFormat('yyyy-MM-dd').format(_dueDate),
-                              width: 148,
-                              onPressed: _dateBtnClick,
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(top: 64, bottom: 8),
-                              child: ButtonPrimary(
-                                label: "Add",
+                              ButtonPrimary(
+                                label: "Date: " +
+                                    DateFormat('yyyy-MM-dd').format(_dueDate),
                                 width: 148,
-                                onPressed: _addBtnClick,
+                                onPressed: _dateBtnClick,
                               ),
-                            )
-                          ],
+                              Container(
+                                padding: EdgeInsets.only(top: 64, bottom: 8),
+                                child: ButtonPrimary(
+                                  label: "Add",
+                                  width: 148,
+                                  onPressed: _addBtnClick,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
