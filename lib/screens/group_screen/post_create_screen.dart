@@ -46,40 +46,42 @@ class _PostCreateScreenState extends State<PostCreateScreen> {
       body: Form(
         key: formKey,
         child: Surface(
-          children: [
-            TextFormField(
-              maxLines: 1,
-              maxLength: 64,
-              validator: NonEmptyValidator.validate,
-              decoration: InputDecoration(
-                labelText: "Title",
+          child: Column(
+            children: [
+              TextFormField(
+                maxLines: 1,
+                maxLength: 64,
+                validator: NonEmptyValidator.validate,
+                decoration: InputDecoration(
+                  labelText: "Title",
+                ),
+                onChanged: (value) {_title = value;},
               ),
-              onChanged: (value) {_title = value;},
-            ),
-            TextFormField(
-              minLines: 5,
-              maxLines: 10,
-              maxLength: 1024,
-              maxLengthEnforced: true,
-              validator: NonEmptyValidator.validate,
-              decoration: InputDecoration(
-                labelText: "Text",
-                alignLabelWithHint: true,
+              TextFormField(
+                minLines: 5,
+                maxLines: 10,
+                maxLength: 1024,
+                maxLengthEnforced: true,
+                validator: NonEmptyValidator.validate,
+                decoration: InputDecoration(
+                  labelText: "Text",
+                  alignLabelWithHint: true,
+                ),
+                onChanged: (value) {_text = value;},
               ),
-              onChanged: (value) {_text = value;},
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 64, bottom: 8),
-              child: ButtonPrimary(
-                label: "Publish",
-                width: 148,
-                onPressed: () {
-                  _createPost();
-                  Navigator.pop(context);
-                },
-              ),
-            )
-          ],
+              Container(
+                padding: EdgeInsets.only(top: 64, bottom: 8),
+                child: ButtonPrimary(
+                  label: "Publish",
+                  width: 148,
+                  onPressed: () {
+                    _createPost();
+                    Navigator.pop(context);
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

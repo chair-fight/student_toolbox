@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/core/week_day_time.dart';
 import 'package:student_toolbox/models/class_model.dart';
 import 'package:student_toolbox/models/class_type_model.dart';
+import 'package:student_toolbox/placeholders/placeholder_images.dart';
+import 'package:student_toolbox/screens/schedule_screen/class_edit_screen.dart';
 import 'package:student_toolbox/widgets/containters/surface.dart';
 
 class ClassCard extends StatelessWidget {
@@ -12,53 +15,139 @@ class ClassCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Surface(
-      children: [
-        Column(
-          children: [
-            Row(
-              children: [
-                (WeekDayTime.now().isBefore(classModel.end))
-                    ? Container(
-                        width: 14,
-                        height: 14,
-                        child: CircularProgressIndicator(
-                          value: (WeekDayTime.now().isAfter(classModel.start))
-                              ? WeekDayTime.now().subtract(classModel.start).inMinutes() /
-                                  (classModel.end.inMinutes() - classModel.start.inMinutes())
-                              : 0,
-                          backgroundColor: Colors.white10,
-                          strokeWidth: 2,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+      child: Stack(
+        children: [
+          Surface(
+            height: 90,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(10, 4, 8, 4),
+              child: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Container(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text(
+                            classModel.name,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
                         ),
-                      )
-                    : Icon(
-                        Icons.check,
-                        size: 16,
-                        color: Theme.of(context).colorScheme.secondary,
                       ),
-                Container(
-                  padding: EdgeInsets.only(left: 4),
-                  child: Text(
-                    classModel.name,
-                    style: Theme.of(context).textTheme.subtitle1,
+                      Container(
+                        width: 24,
+                        height: 24,
+                        child: ClipOval(
+                          child: PlaceholderImages.image1,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-            Divider(),
-            Text(classModel.location + " - " + classModel.professor),
-            Container(
-              child: Text(
-                classTypeModel.string,
-                textAlign: TextAlign.center,
+                  Divider(height: 6),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Text(
+                                classModel.professor,
+                                style: Theme.of(context).textTheme.bodyText2,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            ),
+                            Container(
+                              child: Text(
+                                classModel.location,
+                                style: Theme.of(context).textTheme.bodyText2,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              classModel.start.hours.toString().padLeft(2, '0'),
+                              style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
+                            ),
+                            Text(
+                              classModel.start.minutes.toString().padLeft(2, '0'),
+                              style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 14),
+                            ),
+                            Text(
+                              " - ",
+                              style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
+                            ),
+                            Text(
+                              classModel.end.hours.toString().padLeft(2, '0'),
+                              style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
+                            ),
+                            Text(
+                              classModel.end.minutes.toString().padLeft(2, '0'),
+                              style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 14),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              height: 16,
-              width: 64,
-              decoration: BoxDecoration(color: classTypeModel.color, borderRadius: BorderRadius.circular(8)),
             ),
-          ],
-        ),
-      ],
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ClassEditScreen()));
+            },
+          ),
+          Container(
+            height: 90,
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4)),
+              child: RotatedBox(
+                quarterTurns: 1,
+                child: LinearProgressIndicator(
+                  backgroundColor: Colors.white12,
+                  value: (WeekDayTime.now().isBefore(classModel.start))
+                      ? 0
+                      : (WeekDayTime.now().isAfter(classModel.end))
+                          ? 1.0
+                          : WeekDayTime.now().subtract(classModel.start).inMinutes() /
+                              classModel.end.subtract(classModel.start).inMinutes(),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 4),
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            height: 18,
+            decoration: BoxDecoration(
+              color: (classTypeModel != null) ? classTypeModel.color : Colors.grey[800],
+              borderRadius: BorderRadius.only(bottomRight: Radius.circular(8)),
+            ),
+            child: Text(
+              (classTypeModel != null) ? classTypeModel.string : "+",
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

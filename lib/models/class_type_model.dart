@@ -5,15 +5,17 @@ class ClassTypeModel {
   Color color;
   String string;
 
-  ClassTypeModel(this.id, {
+  ClassTypeModel(
+    this.id, {
     this.color,
     this.string,
   });
 
   static ClassTypeModel get placeholder {
-    return ClassTypeModel(0,
-      color: Colors.red,
-      string: "Course",
+    return ClassTypeModel(
+      0,
+      color: Colors.blueGrey,
+      string: "Placeholder",
     );
   }
 }

@@ -5,9 +5,9 @@ import 'package:student_toolbox/services/validators/email_validator.dart';
 import 'package:student_toolbox/services/validators/nonempty_validator.dart';
 import 'package:student_toolbox/services/validators/password_validator.dart';
 import 'package:student_toolbox/services/validators/repeat_password_validator.dart';
-import 'file:///D:/Projects/student_toolbox/lib/widgets/buttons/button_primary.dart';
+import 'package:student_toolbox/widgets/buttons/button_primary.dart';
+import 'package:student_toolbox/widgets/containters/surface.dart';
 import 'package:student_toolbox/widgets/signature.dart';
-import 'file:///D:/Projects/student_toolbox/lib/widgets/containters/surface.dart';
 
 import 'loading_screen.dart';
 
@@ -83,70 +83,74 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Center(
                 child: ListView(
                   children: [
-                    Surface(
+                    Padding(
                       padding: EdgeInsets.fromLTRB(32, 16, 32, 0),
-                      children: [
-                        Row(
+                      child: Surface(
+                        child: Column(
                           children: [
-                            Expanded(
-                              child: TextFormField(
-                                decoration: InputDecoration(labelText: "Name"),
-                                validator: NonEmptyValidator.validate,
-                                onChanged: (value) =>
-                                    setState(() => _name = value),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    decoration: InputDecoration(labelText: "Name"),
+                                    validator: NonEmptyValidator.validate,
+                                    onChanged: (value) =>
+                                        setState(() => _name = value),
+                                  ),
+                                ),
+                                SizedBox(width: 32),
+                                Expanded(
+                                  child: TextFormField(
+                                    decoration:
+                                        InputDecoration(labelText: "Surname"),
+                                    validator: NonEmptyValidator.validate,
+                                    onChanged: (value) =>
+                                        setState(() => _surname = value),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            TextFormField(
+                              decoration: InputDecoration(labelText: "Email"),
+                              validator: EmailValidator.validate,
+                              onChanged: (value) => setState(() => _email = value),
+                            ),
+                            TextFormField(
+                              decoration: InputDecoration(labelText: "Password"),
+                              obscureText: true,
+                              validator: PasswordValidator.validate,
+                              onChanged: (value) =>
+                                  setState(() => _password = value),
+                            ),
+                            TextFormField(
+                              decoration:
+                                  InputDecoration(labelText: "Repeat Password"),
+                              obscureText: true,
+                              validator: (value) =>
+                                  RepeatPasswordValidator.validate(
+                                      _password, value),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Center(
+                              child: Text(
+                                _firebaseHint.isEmpty ? "" : _firebaseHint,
+                                style: TextStyle(color: Colors.red),
                               ),
                             ),
-                            SizedBox(width: 32),
-                            Expanded(
-                              child: TextFormField(
-                                decoration:
-                                    InputDecoration(labelText: "Surname"),
-                                validator: NonEmptyValidator.validate,
-                                onChanged: (value) =>
-                                    setState(() => _surname = value),
+                            Container(
+                              padding: EdgeInsets.symmetric(vertical: 32),
+                              width: 150,
+                              child: ButtonPrimary(
+                                label: "Register",
+                                onPressed: () async => await _registerBtnPressed(),
                               ),
                             ),
+                            Signature(),
                           ],
                         ),
-                        TextFormField(
-                          decoration: InputDecoration(labelText: "Email"),
-                          validator: EmailValidator.validate,
-                          onChanged: (value) => setState(() => _email = value),
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(labelText: "Password"),
-                          obscureText: true,
-                          validator: PasswordValidator.validate,
-                          onChanged: (value) =>
-                              setState(() => _password = value),
-                        ),
-                        TextFormField(
-                          decoration:
-                              InputDecoration(labelText: "Repeat Password"),
-                          obscureText: true,
-                          validator: (value) =>
-                              RepeatPasswordValidator.validate(
-                                  _password, value),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Center(
-                          child: Text(
-                            _firebaseHint.isEmpty ? "" : _firebaseHint,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 32),
-                          width: 150,
-                          child: ButtonPrimary(
-                            label: "Register",
-                            onPressed: () async => await _registerBtnPressed(),
-                          ),
-                        ),
-                        Signature(),
-                      ],
+                      ),
                     ),
                   ],
                 ),
