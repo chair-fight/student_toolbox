@@ -25,7 +25,7 @@ class _DeleteGroupDialogState extends State<DeleteGroupDialog> {
   _confirmBtnClicked() async {
     if (_formKey.currentState.validate())
       try {
-        await Database.deleteGroup(AuthService().currentUser.uid, widget.group.id);
+        await Database.deleteGroup(AuthService().currentUser.uid, widget.group.gid);
         Navigator.of(context).pop();
         Navigator.of(context).pop();
       } catch (e) {

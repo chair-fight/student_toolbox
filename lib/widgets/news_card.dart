@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:student_toolbox/widgets/surface.dart';
+import 'file:///D:/Projects/student_toolbox/lib/widgets/containters/surface.dart';
 
 class NewsCard extends StatelessWidget {
   final String title;

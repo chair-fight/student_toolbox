@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/services/theme_switcher.dart';
+import 'package:student_toolbox/widgets/containters/surface.dart';
 import 'package:student_toolbox/widgets/dialogs/delete_account_dialog.dart';
-import 'package:student_toolbox/widgets/screen_app_bar.dart';
 import 'package:student_toolbox/widgets/signature.dart';
-import 'package:student_toolbox/widgets/surface.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ScreenAppBar(
-        title: "Settings",
-        subScreen: true,
-      ).get(context),
+      appBar: AppBar(
+        title: Text("Settings"),
+        leading: FlatButton(
+          child: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: ListView(
         children: [
           Surface(

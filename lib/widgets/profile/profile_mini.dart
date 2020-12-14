@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/user_model.dart';
+import 'package:student_toolbox/screens/home_screen/profile_page.dart';
 import 'package:student_toolbox/screens/loading_screen.dart';
-import 'package:student_toolbox/screens/profile_screen.dart';
 import 'package:student_toolbox/services/database.dart';
 
-import 'surface.dart';
+import '../containters/surface.dart';
 
 class ProfileMini extends StatefulWidget {
   final User metaUser;
@@ -62,7 +62,7 @@ class _ProfileMiniState extends State<ProfileMini> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              ProfileScreen(user: user)));
+                                              ProfilePage(user: user)));
                                 }
                               : null,
                         ),

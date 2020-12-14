@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/user_model.dart';
-import 'package:student_toolbox/widgets/button_primary.dart';
-import 'package:student_toolbox/widgets/button_close.dart';
-import 'package:student_toolbox/widgets/profile_preview.dart';
-import 'package:student_toolbox/widgets/surface.dart';
+import 'file:///D:/Projects/student_toolbox/lib/widgets/buttons/button_primary.dart';
+import 'file:///D:/Projects/student_toolbox/lib/widgets/buttons/button_close.dart';
+import 'file:///D:/Projects/student_toolbox/lib/widgets/profile/profile_preview.dart';
+import 'file:///D:/Projects/student_toolbox/lib/widgets/containters/surface.dart';
 
 class NotificationAddFriend extends StatelessWidget {
   final UserModel user;

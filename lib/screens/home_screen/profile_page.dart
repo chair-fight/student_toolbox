@@ -1,37 +1,34 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:student_toolbox/models/user_model.dart';
 import 'package:student_toolbox/screens/loading_screen.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/services/database.dart';
-import 'package:student_toolbox/widgets/button_primary.dart';
-import 'package:student_toolbox/widgets/profile_mini.dart';
-import 'package:student_toolbox/widgets/profile_preview.dart';
-import 'package:student_toolbox/widgets/screen_app_bar.dart';
-import 'package:student_toolbox/widgets/surface.dart';
+import 'package:student_toolbox/widgets/buttons/button_primary.dart';
+import 'package:student_toolbox/widgets/containters/surface.dart';
+import 'package:student_toolbox/widgets/profile/profile_preview.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfilePage extends StatefulWidget {
   final User metaUser;
   final UserModel user;
 
-  const ProfileScreen({Key key, this.metaUser, this.user}) : super(key: key);
+  const ProfilePage({Key key, this.metaUser, this.user}) : super(key: key);
 
   @override
-  _ProfileScreenState createState() {
-    return _ProfileScreenState(
+  _ProfilePageState createState() {
+    return _ProfilePageState(
       metaUser: metaUser,
       user: user,
     );
   }
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfilePageState extends State<ProfilePage> {
   User metaUser;
   UserModel user;
 
-  _ProfileScreenState({this.user, this.metaUser});
+  _ProfilePageState({this.user, this.metaUser});
 
   Future<void> _pullUser() async {
     print(metaUser);
@@ -44,10 +41,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
         future: (user != null) ? Future.value() : _pullUser(),
         builder: (BuildContext context, AsyncSnapshot<void> buffer) {
           return Scaffold(
-            appBar: ScreenAppBar(
-              title: "Profile",
-              subScreen: true,
-            ).get(context),
+            appBar: AppBar(
+              title: Text("Profile"),
+              leading: FlatButton(
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
             body: (user == null)
                 ? LoadingScreen()
                 : ListView(

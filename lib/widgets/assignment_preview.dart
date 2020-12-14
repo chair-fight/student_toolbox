@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:student_toolbox/models/assignment_model.dart';
 import 'package:student_toolbox/models/private_assignment_model.dart';
 import 'package:student_toolbox/services/database.dart';
-import 'package:student_toolbox/widgets/button_primary.dart';
-import 'package:student_toolbox/widgets/button_close.dart';
-import 'package:student_toolbox/widgets/surface.dart';
+
+import 'buttons/button_primary.dart';
+import 'containters/surface.dart';
 
 class AssignmentPreview extends StatelessWidget {
   static var months = [

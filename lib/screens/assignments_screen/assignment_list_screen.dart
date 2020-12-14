@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:student_toolbox/models/assignment_model.dart';
 import 'package:student_toolbox/models/private_assignment_model.dart';
-import 'package:student_toolbox/models/user_model.dart';
 import 'package:student_toolbox/screens/assignments_screen/create_assignment_screen.dart';
 import 'package:student_toolbox/screens/loading_screen.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/services/database.dart';
 import 'package:student_toolbox/widgets/column_divider.dart';
 import 'package:student_toolbox/widgets/assignment_preview.dart';
-import 'package:student_toolbox/widgets/screen_app_bar.dart';
 
 class AssignmentListScreen extends StatefulWidget {
   @override
@@ -22,25 +19,34 @@ class _AssignmentListScreenState extends State<AssignmentListScreen> {
       length: 2,
       initialIndex: 0,
       child: Scaffold(
-        appBar: ScreenAppBar(
-            title: "Assignments",
-            subScreen: true,
-            tabBar: TabBar(
-              tabs: [
-                Container(
-                  height: 40,
-                  child: Tab(
-                    text: "Private",
-                  ),
+        appBar: AppBar(
+          title: Text("Create Group"),
+          leading: FlatButton(
+            child: Icon(
+              Icons.arrow_back,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          bottom: TabBar(
+            tabs: [
+              Container(
+                height: 40,
+                child: Tab(
+                  text: "Private",
                 ),
-                Container(
-                  height: 40,
-                  child: Tab(
-                    text: "Group",
-                  ),
+              ),
+              Container(
+                height: 40,
+                child: Tab(
+                  text: "Group",
                 ),
-              ],
-            )).get(context),
+              ),
+            ],
+          ),
+        ),
         body: TabBarView(
           children: [
             FutureBuilder(
@@ -78,8 +84,7 @@ class _AssignmentListScreenState extends State<AssignmentListScreen> {
     List<Widget> result = [];
     List<PrivateAssignmentModel> set;
 
-    if (assignments == null || assignments.isEmpty)
-      return result;
+    if (assignments == null || assignments.isEmpty) return result;
 
     DateTime thisDay = DateTime(
       DateTime.now().year,

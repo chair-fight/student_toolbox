@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/group_model.dart';
 import 'package:student_toolbox/screens/group_screen/group_screen.dart';
-import 'package:student_toolbox/widgets/surface.dart';
+import 'package:student_toolbox/widgets/containters/surface.dart';
 
 class GroupPreview extends StatelessWidget {
   final GroupModel group;

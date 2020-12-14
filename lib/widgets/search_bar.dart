@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:student_toolbox/widgets/button_close.dart';
-import 'package:student_toolbox/widgets/surface.dart';
+import 'file:///D:/Projects/student_toolbox/lib/widgets/buttons/button_close.dart';
 
 class SearchBar extends StatefulWidget {
   final Function(String) onType;
@@ -54,7 +53,6 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 4),
       color: Theme.of(context).colorScheme.surface,
       child: Row(
         children: [
@@ -68,7 +66,7 @@ class _SearchBarState extends State<SearchBar> {
           Expanded(
             child: TextFormField(
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(7),
+                contentPadding: EdgeInsets.all(10),
                 isDense: true,
                 hintText: "Search...",
               ),
