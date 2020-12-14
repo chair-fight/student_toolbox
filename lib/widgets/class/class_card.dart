@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/core/week_day_time.dart';
@@ -122,6 +120,7 @@ class ClassCard extends StatelessWidget {
               child: RotatedBox(
                 quarterTurns: 1,
                 child: LinearProgressIndicator(
+                  backgroundColor: Colors.white12,
                   value: (WeekDayTime.now().isBefore(classModel.start))
                       ? 0
                       : (WeekDayTime.now().isAfter(classModel.end))

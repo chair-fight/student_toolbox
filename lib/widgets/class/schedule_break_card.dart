@@ -20,52 +20,49 @@ class ScheduleBreakCard extends StatelessWidget {
               color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(4),
             ),
-            child: Flexible(
-              fit: FlexFit.tight,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Flexible(
-                    fit: FlexFit.tight,
-                    child: Container(
-                      child: Text(
-                        ((end.subtract(start).hours > 0) ? end.subtract(start).hours.toString() : "") +
-                            ((end.subtract(start).hours > 0 && end.subtract(start).minutes > 0) ? ":" : "") +
-                            ((end.subtract(start).hours > 0 &&
-                                    end.subtract(start).minutes > 0 &&
-                                    end.subtract(start).minutes < 10)
-                                ? "0"
-                                : "") +
-                            ((end.subtract(start).minutes > 0) ? end.subtract(start).minutes.toString() : "") +
-                            ((end.subtract(start).hours > 0) ? " Hour Break" : " Minute Break"),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: Container(
+                    child: Text(
+                      ((end.subtract(start).hours > 0) ? end.subtract(start).hours.toString() : "") +
+                          ((end.subtract(start).hours > 0 && end.subtract(start).minutes > 0) ? ":" : "") +
+                          ((end.subtract(start).hours > 0 &&
+                                  end.subtract(start).minutes > 0 &&
+                                  end.subtract(start).minutes < 10)
+                              ? "0"
+                              : "") +
+                          ((end.subtract(start).minutes > 0) ? end.subtract(start).minutes.toString() : "") +
+                          ((end.subtract(start).hours > 0) ? " Hour Break" : " Minute Break"),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                   ),
-                  Text(
-                    start.hours.toString().padLeft(2, '0'),
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
-                  ),
-                  Text(
-                    start.minutes.toString().padLeft(2, '0'),
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 14),
-                  ),
-                  Text(
-                    " - ",
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
-                  ),
-                  Text(
-                    end.hours.toString().padLeft(2, '0'),
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
-                  ),
-                  Text(
-                    end.minutes.toString().padLeft(2, '0'),
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 14),
-                  ),
-                ],
-              ),
+                ),
+                Text(
+                  start.hours.toString().padLeft(2, '0'),
+                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
+                ),
+                Text(
+                  start.minutes.toString().padLeft(2, '0'),
+                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 14),
+                ),
+                Text(
+                  " - ",
+                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
+                ),
+                Text(
+                  end.hours.toString().padLeft(2, '0'),
+                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
+                ),
+                Text(
+                  end.minutes.toString().padLeft(2, '0'),
+                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 14),
+                ),
+              ],
             ),
           ),
           Container(
@@ -75,6 +72,7 @@ class ScheduleBreakCard extends StatelessWidget {
               child: RotatedBox(
                 quarterTurns: 1,
                 child: LinearProgressIndicator(
+                  backgroundColor: Colors.white12,
                   value: (WeekDayTime.now().isBefore(start))
                       ? 0
                       : (WeekDayTime.now().isAfter(end))
