@@ -11,7 +11,7 @@ class WeekDayTime {
 
   int get weekDay => _weekDay;
 
-  int get hours => _weekDay;
+  int get hours => _hours;
 
   int get minutes => _minutes;
 
@@ -50,8 +50,8 @@ class WeekDayTime {
 
   DateTime toDateTime(DateTime referenceDateTime) {
     return referenceDateTime
-        .subtract(
-            Duration(days: referenceDateTime.weekday-1, hours: referenceDateTime.hour, minutes: referenceDateTime.minute))
+        .subtract(Duration(
+            days: referenceDateTime.weekday - 1, hours: referenceDateTime.hour, minutes: referenceDateTime.minute))
         .add(Duration(days: _weekDay, hours: _hours, minutes: _minutes));
   }
 
@@ -83,5 +83,14 @@ class WeekDayTime {
       hours: (x ~/ 60) % 24,
       minutes: x % 60,
     );
+  }
+
+  int compareTo(other) {
+    if (this.isBefore(other))
+      return -1;
+    else if (this.isAfter(other))
+      return 1;
+    else
+      return 0;
   }
 }

@@ -61,56 +61,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         user: user,
                         navigateOnPress: false,
                       ),
-                      if (user != null && user.uid != AuthService().currentUser.uid) Surface(children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ButtonPrimary(
-                              label: "Add Friend",
-                              leading: Icons.person_add,
-                              width: 160,
-                              onPressed: () {},
-                            ),
-                            ButtonPrimary(
-                              label: "Invite to Group",
-                              leading: Icons.group_add,
-                              width: 160,
-                              onPressed: () {},
-                            ),
-                          ],
-                        )
-                      ]),
-                      Surface(
-                        title: "Status",
-                        children: [
-                          Container(
-                              padding: EdgeInsets.symmetric(horizontal: 8),
-                              alignment: AlignmentDirectional.topStart,
-                              child: Text("Hello World")),
-                        ],
-                      ),
-                      Surface(
-                        title: "Info",
-                        padding: EdgeInsets.symmetric(horizontal: 32),
-                        children: [
-                          TextFormField(
-                            initialValue: user.university,
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              labelText: "University",
-                              isDense: true,
-                            ),
-                          ),
-                          TextFormField(
-                            initialValue: user.email,
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              labelText: "Email",
-                              isDense: true,
-                            ),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
           );
