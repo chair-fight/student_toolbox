@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'file:///D:/Projects/student_toolbox/lib/widgets/buttons/button_close.dart';
+import 'package:student_toolbox/widgets/buttons/button_close.dart';
 
 class SearchBar extends StatefulWidget {
   final Function(String) onType;
