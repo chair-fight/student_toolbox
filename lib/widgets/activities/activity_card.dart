@@ -4,14 +4,14 @@ import 'package:student_toolbox/core/week_day_time.dart';
 import 'package:student_toolbox/models/class_model.dart';
 import 'package:student_toolbox/models/class_type_model.dart';
 import 'package:student_toolbox/placeholders/placeholder_images.dart';
-import 'package:student_toolbox/screens/schedule_screen/class_edit_screen.dart';
 import 'package:student_toolbox/widgets/containters/surface.dart';
 
-class ClassCard extends StatelessWidget {
+class ActivityCard extends StatelessWidget {
   final ClassModel classModel;
   final ClassTypeModel classTypeModel;
+  final Function onTap;
 
-  const ClassCard({Key key, this.classModel, this.classTypeModel}) : super(key: key);
+  const ActivityCard({Key key, @required this.classModel, this.classTypeModel, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +21,7 @@ class ClassCard extends StatelessWidget {
         children: [
           Surface(
             height: 90,
+            onTap: onTap,
             child: Padding(
               padding: EdgeInsets.fromLTRB(10, 4, 8, 4),
               child: Column(
@@ -63,7 +64,7 @@ class ClassCard extends StatelessWidget {
                             Container(
                               child: Text(
                                 classModel.professor,
-                                style: Theme.of(context).textTheme.bodyText2,
+                                style: Theme.of(context).textTheme.bodyText2.copyWith(color: Theme.of(context).textTheme.bodyText2.color.withOpacity(.6)),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
@@ -71,7 +72,7 @@ class ClassCard extends StatelessWidget {
                             Container(
                               child: Text(
                                 classModel.location,
-                                style: Theme.of(context).textTheme.bodyText2,
+                                style: Theme.of(context).textTheme.bodyText2.copyWith(color: Theme.of(context).textTheme.bodyText2.color.withOpacity(.6)),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
@@ -109,9 +110,6 @@ class ClassCard extends StatelessWidget {
                 ],
               ),
             ),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ClassEditScreen()));
-            },
           ),
           Container(
             height: 90,

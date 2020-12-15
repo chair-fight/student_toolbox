@@ -1,4 +1,14 @@
 class WeekDayTime {
+  static const List<String> weekDays = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+
   int _weekDay;
   int _hours;
   int _minutes;
@@ -14,6 +24,8 @@ class WeekDayTime {
   int get hours => _hours;
 
   int get minutes => _minutes;
+
+  String get weekDayName => weekDays[_weekDay];
 
   int inDays() {
     return _weekDay;

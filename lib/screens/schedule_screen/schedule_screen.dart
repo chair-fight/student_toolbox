@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:student_toolbox/core/week_day_time.dart';
 import 'package:student_toolbox/models/class_model.dart';
 import 'package:student_toolbox/models/class_type_model.dart';
-import 'package:student_toolbox/screens/schedule_screen/class_edit_screen.dart';
-import 'package:student_toolbox/widgets/class/class_card.dart';
-import 'package:student_toolbox/widgets/class/schedule_break_card.dart';
+import 'package:student_toolbox/screens/schedule_screen/activity_edit_screen.dart';
+import 'package:student_toolbox/services/local_data.dart';
+import 'package:student_toolbox/widgets/activities/activity_card.dart';
+import 'package:student_toolbox/widgets/activities/schedule_break_card.dart';
 import 'package:student_toolbox/widgets/column_divider.dart';
 
 class ScheduleScreen extends StatelessWidget {
@@ -48,7 +49,7 @@ class ScheduleScreen extends StatelessWidget {
       professor: "Drd. Mursa Bogdan",
       location: "Online",
       weekId: [0, 1],
-      classTypeID: null,
+      classTypeID: 4,
     ),
     ClassModel(
       0,
@@ -148,7 +149,7 @@ class ScheduleScreen extends StatelessWidget {
       professor: "Asist. Lazar Adriana",
       location: "Online",
       weekId: [0, 1],
-      classTypeID: null,
+      classTypeID: 4,
     ),
     ClassModel(
       0,
@@ -162,23 +163,7 @@ class ScheduleScreen extends StatelessWidget {
     ),
   ];
 
-  final List<ClassTypeModel> classTypeModelList = [
-    ClassTypeModel(
-      1,
-      color: Colors.red,
-      string: "Lecture",
-    ),
-    ClassTypeModel(
-      2,
-      color: Colors.blue,
-      string: "Seminar",
-    ),
-    ClassTypeModel(
-      3,
-      color: Colors.green,
-      string: "Laboratory",
-    ),
-  ];
+  final List<ClassTypeModel> classTypeModelList = LocalData.getClassTypeModels();
 
   @override
   Widget build(BuildContext context) {
@@ -209,38 +194,39 @@ class ScheduleScreen extends StatelessWidget {
           splashColor: Theme.of(context).colorScheme.secondary,
           child: Icon(Icons.edit),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ClassEditScreen()));
+            //Navigator.push(context, MaterialPageRoute(builder: (context) => ClassEditScreen()));
           },
         ),
         body: TabBarView(
           children: [
-            ListView(children: _groupClasses()..add(SizedBox(height: 86))),
-            ListView(children: _groupClasses()..add(SizedBox(height: 86))),
+            ListView(children: _buildGroupedActivities(context)..add(SizedBox(height: 86))),
+            ListView(children: _buildGroupedActivities(context)..add(SizedBox(height: 86))),
           ],
         ),
       ),
     );
   }
 
-  List<Widget> _groupClasses() {
+  List<Widget> _buildGroupedActivities(BuildContext context) {
     List<Widget> result = [];
-    List<ClassModel> set;
-    List<String> days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
     if (classModelList == null || classModelList.isEmpty) return result;
 
     ClassModel lastClassModel;
     (classModelList..sort((lhs, rhs) => lhs.start.compareTo(rhs.start))).forEach((classModel) {
       if (lastClassModel == null || lastClassModel.start.weekDay != classModel.start.weekDay) {
-        result.add(ColumnDivider(label: days[classModel.start.weekDay]));
+        result.add(ColumnDivider(label: classModel.start.weekDayName));
       } else if (lastClassModel != null && !lastClassModel.end.equals(classModel.start)) {
         result.add(ScheduleBreakCard(start: lastClassModel.end, end: classModel.start));
       }
-      result.add(ClassCard(
+      result.add(ActivityCard(
         classModel: classModel,
         classTypeModel: classModel.classTypeID != null
             ? classTypeModelList.firstWhere((classType) => classModel.classTypeID == classType.id)
             : null,
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ActivityEditScreen(classModel: classModel)));
+        },
       ));
       lastClassModel = classModel;
     });
