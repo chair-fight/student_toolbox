@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:student_toolbox/themes/custom_themes.dart';
 
 class ThemeSwitcher with ChangeNotifier {
   static bool _isDark = true;

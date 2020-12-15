@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/post_model.dart';
 import 'package:student_toolbox/screens/post_screen.dart';
-import 'file:///D:/Projects/student_toolbox/lib/widgets/group/group_mini.dart';
-import 'file:///D:/Projects/student_toolbox/lib/widgets/profile/profile_mini.dart';
+import 'package:student_toolbox/widgets/group/group_mini.dart';
+import 'package:student_toolbox/widgets/profile/profile_mini.dart';
 import '../containters/surface.dart';
 
 class PostCard extends StatelessWidget {
@@ -11,7 +11,9 @@ class PostCard extends StatelessWidget {
   final bool isDense;
   final bool navigateOnPress;
 
-  const PostCard({Key key, this.post, this.isDense = false, this.navigateOnPress = false}) : super(key: key);
+  const PostCard(
+      {Key key, this.post, this.isDense = false, this.navigateOnPress = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +119,10 @@ class PostCard extends StatelessWidget {
         ),
         onTap: navigateOnPress
             ? () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PostScreen(post: post)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PostScreen(post: post)));
               }
             : null,
       ),

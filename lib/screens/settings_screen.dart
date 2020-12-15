@@ -78,7 +78,7 @@ class SettingsScreen extends StatelessWidget {
                         padding: EdgeInsets.only(left: 24),
                         child: Wrap(
                           alignment: WrapAlignment.start,
-                          children: LocalData.getClassTypeModels()
+                          children: ClassTypeModelLocalData.getClassTypeModels()
                               .map((e) => ClassTypeCard(
                                     classTypeModel: e,
                                     onTap: () {
