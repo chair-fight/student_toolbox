@@ -61,8 +61,8 @@ class SettingsScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: LocalData.getSchedules()
                               .map((e) => Container(
-                                    padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 4, horizontal: 8),
                                   ))
                               .toList(),
                         ),
@@ -78,9 +78,10 @@ class SettingsScreen extends StatelessWidget {
                       Container(
                         child: Wrap(
                           alignment: WrapAlignment.start,
-                          children: LocalData.getClassTypeModels()
+                          children: ClassTypeModelLocalData.getClassTypeModels()
                               .map((e) => Container(
-                                    margin: EdgeInsets.only(bottom: 8, right: 8),
+                                    margin:
+                                        EdgeInsets.only(bottom: 8, right: 8),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(16),
                                       child: Material(
@@ -88,7 +89,8 @@ class SettingsScreen extends StatelessWidget {
                                         child: InkWell(
                                           onTap: () {},
                                           child: Container(
-                                            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4, horizontal: 8),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
@@ -111,7 +113,8 @@ class SettingsScreen extends StatelessWidget {
                                       child: InkWell(
                                         onTap: () {},
                                         child: Container(
-                                          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 4, horizontal: 8),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
@@ -178,7 +181,9 @@ class SettingsScreen extends StatelessWidget {
                                   "Delete Account",
                                   style: TextStyle(color: Colors.white),
                                 ),
-                                onPressed: () => showDialog(context: context, builder: (_) => DeleteAccountDialog()),
+                                onPressed: () => showDialog(
+                                    context: context,
+                                    builder: (_) => DeleteAccountDialog()),
                               ),
                             ),
                           ),

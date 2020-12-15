@@ -5,7 +5,7 @@ import 'package:student_toolbox/screens/register_screen.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/services/validators/email_validator.dart';
 import 'package:student_toolbox/services/validators/password_validator.dart';
-import 'file:///D:/Projects/student_toolbox/lib/widgets/buttons/button_primary.dart';
+import 'package:student_toolbox/widgets/buttons/button_primary.dart';
 
 class SignInScreen extends StatefulWidget {
   @override

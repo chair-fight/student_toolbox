@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ClassTypeModel {
-  final int id;
+  int id;
   Color color;
   String string;
 
@@ -10,6 +10,16 @@ class ClassTypeModel {
     this.color,
     this.string,
   });
+
+  List<String> toStringList() {
+    return <String>[id.toString(), color.value.toString(), string];
+  }
+
+  ClassTypeModel.fromStringList(List<String> list) {
+    id = int.parse(list[0]);
+    color = Color(int.parse(list[1]));
+    string = list[2];
+  }
 
   static ClassTypeModel get placeholder {
     return ClassTypeModel(
