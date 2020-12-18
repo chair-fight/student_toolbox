@@ -164,17 +164,17 @@ class ScheduleScreen extends StatelessWidget {
 
   final List<ClassTypeModel> classTypeModelList = [
     ClassTypeModel(
-      1,
+      '1',
       color: Colors.red,
       string: "Lecture",
     ),
     ClassTypeModel(
-      2,
+      '2',
       color: Colors.blue,
       string: "Seminar",
     ),
     ClassTypeModel(
-      3,
+      '3',
       color: Colors.green,
       string: "Laboratory",
     ),
@@ -209,7 +209,8 @@ class ScheduleScreen extends StatelessWidget {
           splashColor: Theme.of(context).colorScheme.secondary,
           child: Icon(Icons.edit),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ClassEditScreen()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ClassEditScreen()));
           },
         ),
         body: TabBarView(
@@ -225,21 +226,34 @@ class ScheduleScreen extends StatelessWidget {
   List<Widget> _groupClasses() {
     List<Widget> result = [];
     List<ClassModel> set;
-    List<String> days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    List<String> days = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+    ];
 
     if (classModelList == null || classModelList.isEmpty) return result;
 
     ClassModel lastClassModel;
-    (classModelList..sort((lhs, rhs) => lhs.start.compareTo(rhs.start))).forEach((classModel) {
-      if (lastClassModel == null || lastClassModel.start.weekDay != classModel.start.weekDay) {
+    (classModelList..sort((lhs, rhs) => lhs.start.compareTo(rhs.start)))
+        .forEach((classModel) {
+      if (lastClassModel == null ||
+          lastClassModel.start.weekDay != classModel.start.weekDay) {
         result.add(ColumnDivider(label: days[classModel.start.weekDay]));
-      } else if (lastClassModel != null && !lastClassModel.end.equals(classModel.start)) {
-        result.add(ScheduleBreakCard(start: lastClassModel.end, end: classModel.start));
+      } else if (lastClassModel != null &&
+          !lastClassModel.end.equals(classModel.start)) {
+        result.add(ScheduleBreakCard(
+            start: lastClassModel.end, end: classModel.start));
       }
       result.add(ClassCard(
         classModel: classModel,
         classTypeModel: classModel.classTypeID != null
-            ? classTypeModelList.firstWhere((classType) => classModel.classTypeID == classType.id)
+            ? classTypeModelList.firstWhere(
+                (classType) => classModel.classTypeID == classType.id)
             : null,
       ));
       lastClassModel = classModel;

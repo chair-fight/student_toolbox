@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:student_toolbox/models/class_type_model.dart';
-import 'package:student_toolbox/services/local_data.dart';
+import 'package:student_toolbox/screens/loading_screen.dart';
+import 'package:student_toolbox/services/firebase_data.dart';
 import 'package:student_toolbox/services/theme_switcher.dart';
 import 'package:student_toolbox/widgets/buttons/button_primary.dart';
 import 'package:student_toolbox/widgets/buttons/button_secondary.dart';
@@ -59,7 +60,7 @@ class SettingsScreen extends StatelessWidget {
                       Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: LocalData.getSchedules()
+                          children: FirebaseData.getSchedules()
                               .map((e) => Container(
                                     padding: EdgeInsets.symmetric(
                                         vertical: 4, horizontal: 8),
@@ -75,60 +76,100 @@ class SettingsScreen extends StatelessWidget {
                           style: Theme.of(context).textTheme.subtitle2,
                         ),
                       ),
-                      Container(
-                        child: Wrap(
-                          alignment: WrapAlignment.start,
-                          children: ClassTypeModelLocalData.getClassTypeModels()
-                              .map((e) => Container(
-                                    margin:
-                                        EdgeInsets.only(bottom: 8, right: 8),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(16),
-                                      child: Material(
-                                        color: e.color,
-                                        child: InkWell(
-                                          onTap: () {},
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 4, horizontal: 8),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Icon(Icons.bookmark, size: 16),
-                                                Text(e.string),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                      StreamBuilder(
+                          stream: ClassTypeModelFirebaseData
+                              .getObservableClassTypeModels(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<List<ClassTypeModel>> snapshot) {
+                            if (snapshot.hasError) {
+                              return const Scaffold(
+                                body: Center(
+                                  child: Text(
+                                      "Something went wrong"), // TODO - Make an error screen
+                                ),
+                              );
+                            } else {
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.none:
+                                case ConnectionState.waiting:
+                                  return LoadingScreen();
+                                case ConnectionState.active:
+                                case ConnectionState.done:
+                                  return Container(
+                                    child: Wrap(
+                                      alignment: WrapAlignment.start,
+                                      children: snapshot.data
+                                          .map((e) => Container(
+                                                margin: EdgeInsets.only(
+                                                    bottom: 8, right: 8),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
+                                                  child: Material(
+                                                    color: e.color,
+                                                    child: InkWell(
+                                                      onTap: () {},
+                                                      child: Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                vertical: 4,
+                                                                horizontal: 8),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            Icon(Icons.bookmark,
+                                                                size: 16),
+                                                            Text(e.string),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ))
+                                          .toList()
+                                            ..add(Container(
+                                              margin: EdgeInsets.only(
+                                                  bottom: 4, right: 8),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(16),
+                                                child: Material(
+                                                  color: Colors.grey[700],
+                                                  child: InkWell(
+                                                    onTap: () {},
+                                                    child: Container(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 4,
+                                                          horizontal: 8),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Icon(Icons.bookmark,
+                                                              size: 16),
+                                                          Text("+"),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            )),
                                     ),
-                                  ))
-                              .toList()
-                                ..add(Container(
-                                  margin: EdgeInsets.only(bottom: 4, right: 8),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(16),
-                                    child: Material(
-                                      color: Colors.grey[700],
-                                      child: InkWell(
-                                        onTap: () {},
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 4, horizontal: 8),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Icon(Icons.bookmark, size: 16),
-                                              Text("+"),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                )),
-                        ),
-                      ),
+                                  );
+                              }
+                              return const Scaffold(
+                                body: Center(
+                                  child: Text(
+                                      "Something went wrong"), // TODO - Make an error screen
+                                ),
+                              );
+                            }
+                          })
                     ],
                   ),
                 ),
