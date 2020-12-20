@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:student_toolbox/core/week_day_time.dart';
 import 'package:student_toolbox/models/activity_model.dart';
 import 'package:student_toolbox/models/activity_label_model.dart';
-import 'package:student_toolbox/screens/schedule_screen/class_edit_screen.dart';
-import 'package:student_toolbox/widgets/class/class_card.dart';
-import 'package:student_toolbox/widgets/class/schedule_break_card.dart';
+import 'package:student_toolbox/screens/schedule_screen/activity_edit_screen.dart';
+import 'package:student_toolbox/widgets/activities/activity_card.dart';
+import 'package:student_toolbox/widgets/activities/schedule_break_card.dart';
 import 'package:student_toolbox/widgets/column_divider.dart';
 
 class ScheduleScreen extends StatelessWidget {
@@ -210,20 +210,24 @@ class ScheduleScreen extends StatelessWidget {
           child: Icon(Icons.edit),
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ClassEditScreen()));
+                MaterialPageRoute(builder: (context) => ActivityEditScreen()));
           },
         ),
         body: TabBarView(
           children: [
-            ListView(children: _groupClasses()..add(SizedBox(height: 86))),
-            ListView(children: _groupClasses()..add(SizedBox(height: 86))),
+            ListView(
+                children: _buildGroupedActivities(context)
+                  ..add(SizedBox(height: 86))),
+            ListView(
+                children: _buildGroupedActivities(context)
+                  ..add(SizedBox(height: 86))),
           ],
         ),
       ),
     );
   }
 
-  List<Widget> _groupClasses() {
+  List<Widget> _buildGroupedActivities(BuildContext context) {
     List<Widget> result = [];
     List<ActivityModel> set;
     List<String> days = [
