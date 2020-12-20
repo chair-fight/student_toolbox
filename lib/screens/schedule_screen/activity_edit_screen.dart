@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:student_toolbox/models/class_model.dart';
-import 'package:student_toolbox/services/local_data.dart';
+import 'package:student_toolbox/models/activity_model.dart';
+import 'package:student_toolbox/services/firebase_data.dart';
 import 'package:student_toolbox/widgets/activities/activity_edit_card.dart';
 import 'package:student_toolbox/widgets/class_type/class_type_card.dart';
 import 'package:student_toolbox/widgets/column_divider.dart';
 
 class ActivityEditScreen extends StatefulWidget {
-  final ClassModel classModel;
+  final ActivityModel activityModel;
 
-  const ActivityEditScreen({Key key, @required this.classModel}) : super(key: key);
+  const ActivityEditScreen({Key key, @required this.activityModel})
+      : super(key: key);
 
   @override
-  _ActivityEditScreenState createState() => _ActivityEditScreenState(classModel);
+  _ActivityEditScreenState createState() =>
+      _ActivityEditScreenState(activityModel);
 }
 
 class _ActivityEditScreenState extends State<ActivityEditScreen> {
-  final ClassModel classModel;
+  final ActivityModel activityModel;
 
-  _ActivityEditScreenState(this.classModel);
+  _ActivityEditScreenState(this.activityModel);
 
   @override
   Widget build(BuildContext context) {
@@ -68,20 +70,21 @@ class _ActivityEditScreenState extends State<ActivityEditScreen> {
                         ),
                       ),
                       Container(
-                          alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.only(top: 16),
-                          child: ClassTypeCard(
-                            classTypeModel:
-                                LocalData.getClassTypeModels().firstWhere((e) => e.id == classModel.classTypeID),
-                            onTap: () {},
-                          )),
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.only(top: 16),
+                        // child: ClassTypeCard(
+                        //   activityLabelModel:
+                        //       LocalData.getClassTypeModels().firstWhere((e) => e.id == activityModel.classTypeID),
+                        //  onTap: () {},
+                        //),
+                      ),
                     ],
                   ),
                 ),
               ),
               ColumnDivider(label: "Instances"),
             ] +
-            [classModel, classModel]
+            [activityModel, activityModel]
                 .map((e) => ActivityEditCard(
                       classModel: e,
                     ))

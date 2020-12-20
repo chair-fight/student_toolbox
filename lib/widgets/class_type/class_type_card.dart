@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:student_toolbox/models/class_type_model.dart';
+import 'package:student_toolbox/models/activity_label_model.dart';
 
 class ClassTypeCard extends StatelessWidget {
-  final ClassTypeModel classTypeModel;
+  final ActivityLabelModel activityLabelModel;
   final Function onTap;
 
   const ClassTypeCard({
     Key key,
-    @required this.classTypeModel,
+    @required this.activityLabelModel,
     this.onTap,
   }) : super(key: key);
 
@@ -18,7 +18,7 @@ class ClassTypeCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Material(
-          color: classTypeModel.color,
+          color: activityLabelModel.color,
           child: InkWell(
             onTap: onTap,
             child: Container(
@@ -27,7 +27,7 @@ class ClassTypeCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.bookmark, size: 16),
-                  Text(classTypeModel.string),
+                  Text(activityLabelModel.string),
                 ],
               ),
             ),

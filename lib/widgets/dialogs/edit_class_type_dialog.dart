@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:student_toolbox/models/class_type_model.dart';
+import 'package:student_toolbox/models/activity_label_model.dart';
 import 'package:student_toolbox/widgets/class_type/class_type_card.dart';
 
 class EditClassTypeDialog extends StatefulWidget {
-  final ClassTypeModel classTypeModel;
+  final ActivityLabelModel activityLabelModel;
 
-  const EditClassTypeDialog({Key key, @required this.classTypeModel}) : super(key: key);
+  const EditClassTypeDialog({Key key, @required this.activityLabelModel})
+      : super(key: key);
 
   @override
-  _EditClassTypeDialogState createState() => _EditClassTypeDialogState(classTypeModel);
+  _EditClassTypeDialogState createState() =>
+      _EditClassTypeDialogState(activityLabelModel);
 }
 
 class _EditClassTypeDialogState extends State<EditClassTypeDialog> {
-  final ClassTypeModel _classTypeModel;
+  final ActivityLabelModel _activityLabelModel;
   String _newLabel = '';
   Color _newColor = Colors.red;
   String _error = '';
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  _EditClassTypeDialogState(this._classTypeModel);
+  _EditClassTypeDialogState(this._activityLabelModel);
 
   _confirmBtnClicked() {
     Navigator.of(context).pop();
@@ -28,8 +30,8 @@ class _EditClassTypeDialogState extends State<EditClassTypeDialog> {
   @override
   void initState() {
     super.initState();
-    _newLabel = _classTypeModel.string;
-    _newColor = _classTypeModel.color;
+    _newLabel = _activityLabelModel.string;
+    _newColor = _activityLabelModel.color;
   }
 
   @override
@@ -91,7 +93,9 @@ class _EditClassTypeDialogState extends State<EditClassTypeDialog> {
               _error,
               style: TextStyle(color: Colors.red),
             ),
-            ClassTypeCard(classTypeModel: ClassTypeModel(0, color: _newColor, string: _newLabel)),
+            ClassTypeCard(
+                activityLabelModel: ActivityLabelModel('0',
+                    color: _newColor, string: _newLabel)),
             Divider(),
             ButtonBar(
               alignment: MainAxisAlignment.spaceEvenly,
@@ -100,7 +104,9 @@ class _EditClassTypeDialogState extends State<EditClassTypeDialog> {
                   child: Text(
                     "Confirm",
                   ),
-                  onPressed: (_newLabel.length > 0 && _newLabel.length < 24) ? _confirmBtnClicked : null,
+                  onPressed: (_newLabel.length > 0 && _newLabel.length < 24)
+                      ? _confirmBtnClicked
+                      : null,
                 ),
                 TextButton(
                   child: Text("Cancel"),
