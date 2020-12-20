@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/core/week_day_time.dart';
-import 'package:student_toolbox/models/class_model.dart';
-import 'package:student_toolbox/models/class_type_model.dart';
+import 'package:student_toolbox/models/activity_model.dart';
+import 'package:student_toolbox/models/activity_label_model.dart';
 import 'package:student_toolbox/placeholders/placeholder_images.dart';
 import 'package:student_toolbox/screens/schedule_screen/class_edit_screen.dart';
 import 'package:student_toolbox/widgets/containters/surface.dart';
 
 class ClassCard extends StatelessWidget {
-  final ClassModel classModel;
-  final ClassTypeModel classTypeModel;
+  final ActivityModel classModel;
+  final ActivityLabelModel classTypeModel;
 
   const ClassCard({Key key, this.classModel, this.classTypeModel}) : super(key: key);
 

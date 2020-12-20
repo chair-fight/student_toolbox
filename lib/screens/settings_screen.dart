@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:student_toolbox/models/class_type_model.dart';
+import 'package:student_toolbox/core/week_day_time.dart';
+import 'package:student_toolbox/models/activity_model.dart';
+import 'package:student_toolbox/models/activity_label_model.dart';
+import 'package:student_toolbox/models/schedule_model.dart';
 import 'package:student_toolbox/screens/loading_screen.dart';
 import 'package:student_toolbox/services/firebase_data.dart';
 import 'package:student_toolbox/services/theme_switcher.dart';
@@ -77,10 +80,11 @@ class SettingsScreen extends StatelessWidget {
                         ),
                       ),
                       StreamBuilder(
-                          stream: ClassTypeModelFirebaseData
-                              .getObservableClassTypeModels(),
+                          stream: ActivityLabelModelFirebaseData
+                              .getObservableActivityLabelModels(),
                           builder: (BuildContext context,
-                              AsyncSnapshot<List<ClassTypeModel>> snapshot) {
+                              AsyncSnapshot<List<ActivityLabelModel>>
+                                  snapshot) {
                             if (snapshot.hasError) {
                               return const Scaffold(
                                 body: Center(
