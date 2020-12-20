@@ -1,17 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/core/week_day_time.dart';
-import 'package:student_toolbox/models/class_model.dart';
-import 'package:student_toolbox/models/class_type_model.dart';
+import 'package:student_toolbox/models/activity_model.dart';
+import 'package:student_toolbox/models/activity_label_model.dart';
 import 'package:student_toolbox/placeholders/placeholder_images.dart';
 import 'package:student_toolbox/widgets/containters/surface.dart';
 
 class ActivityCard extends StatelessWidget {
-  final ClassModel classModel;
-  final ClassTypeModel classTypeModel;
+  final ActivityModel classModel;
+  final ActivityLabelModel classTypeModel;
   final Function onTap;
 
-  const ActivityCard({Key key, @required this.classModel, this.classTypeModel, this.onTap}) : super(key: key);
+  const ActivityCard(
+      {Key key, @required this.classModel, this.classTypeModel, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,15 @@ class ActivityCard extends StatelessWidget {
                             Container(
                               child: Text(
                                 classModel.professor,
-                                style: Theme.of(context).textTheme.bodyText2.copyWith(color: Theme.of(context).textTheme.bodyText2.color.withOpacity(.6)),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    .copyWith(
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2
+                                            .color
+                                            .withOpacity(.6)),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
@@ -72,7 +82,15 @@ class ActivityCard extends StatelessWidget {
                             Container(
                               child: Text(
                                 classModel.location,
-                                style: Theme.of(context).textTheme.bodyText2.copyWith(color: Theme.of(context).textTheme.bodyText2.color.withOpacity(.6)),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    .copyWith(
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2
+                                            .color
+                                            .withOpacity(.6)),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
@@ -84,23 +102,40 @@ class ActivityCard extends StatelessWidget {
                           children: [
                             Text(
                               classModel.start.hours.toString().padLeft(2, '0'),
-                              style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                  fontSize: 24),
                             ),
                             Text(
-                              classModel.start.minutes.toString().padLeft(2, '0'),
-                              style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 14),
+                              classModel.start.minutes
+                                  .toString()
+                                  .padLeft(2, '0'),
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                  fontSize: 14),
                             ),
                             Text(
                               " - ",
-                              style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                  fontSize: 24),
                             ),
                             Text(
                               classModel.end.hours.toString().padLeft(2, '0'),
-                              style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                  fontSize: 24),
                             ),
                             Text(
                               classModel.end.minutes.toString().padLeft(2, '0'),
-                              style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 14),
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                  fontSize: 14),
                             ),
                           ],
                         ),
@@ -114,7 +149,8 @@ class ActivityCard extends StatelessWidget {
           Container(
             height: 90,
             child: ClipRRect(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4)),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(4), bottomLeft: Radius.circular(4)),
               child: RotatedBox(
                 quarterTurns: 1,
                 child: LinearProgressIndicator(
@@ -123,8 +159,12 @@ class ActivityCard extends StatelessWidget {
                       ? 0
                       : (WeekDayTime.now().isAfter(classModel.end))
                           ? 1.0
-                          : WeekDayTime.now().subtract(classModel.start).inMinutes() /
-                              classModel.end.subtract(classModel.start).inMinutes(),
+                          : WeekDayTime.now()
+                                  .subtract(classModel.start)
+                                  .inMinutes() /
+                              classModel.end
+                                  .subtract(classModel.start)
+                                  .inMinutes(),
                 ),
               ),
             ),
@@ -134,7 +174,9 @@ class ActivityCard extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 8),
             height: 18,
             decoration: BoxDecoration(
-              color: (classTypeModel != null) ? classTypeModel.color : Colors.grey[800],
+              color: (classTypeModel != null)
+                  ? classTypeModel.color
+                  : Colors.grey[800],
               borderRadius: BorderRadius.only(bottomRight: Radius.circular(8)),
             ),
             child: Text(

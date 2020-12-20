@@ -19,6 +19,13 @@ class WeekDayTime {
     this._minutes = minutes % 60;
   }
 
+  WeekDayTime.fromMinutes(int minutes) {
+    _weekDay = minutes ~/ 1440;
+    minutes -= _weekDay * 1440;
+    _hours = minutes ~/ 60;
+    _minutes = minutes - _hours * 60;
+  }
+
   int get weekDay => _weekDay;
 
   int get hours => _hours;
@@ -63,12 +70,16 @@ class WeekDayTime {
   DateTime toDateTime(DateTime referenceDateTime) {
     return referenceDateTime
         .subtract(Duration(
-            days: referenceDateTime.weekday - 1, hours: referenceDateTime.hour, minutes: referenceDateTime.minute))
+            days: referenceDateTime.weekday - 1,
+            hours: referenceDateTime.hour,
+            minutes: referenceDateTime.minute))
         .add(Duration(days: _weekDay, hours: _hours, minutes: _minutes));
   }
 
   bool equals(WeekDayTime weekDayTime) {
-    return _weekDay == weekDayTime._weekDay && _hours == weekDayTime._hours && _minutes == weekDayTime._minutes;
+    return _weekDay == weekDayTime._weekDay &&
+        _hours == weekDayTime._hours &&
+        _minutes == weekDayTime._minutes;
   }
 
   bool isBefore(WeekDayTime weekDayTime) {
@@ -80,7 +91,8 @@ class WeekDayTime {
   }
 
   WeekDayTime add(WeekDayTime weekDayTime) {
-    var x = (inMinutes() + weekDayTime.inMinutes()) % WeekDayTime.max.inMinutes();
+    var x =
+        (inMinutes() + weekDayTime.inMinutes()) % WeekDayTime.max.inMinutes();
     return new WeekDayTime(
       weekDay: (x ~/ 1440) % 7,
       hours: (x ~/ 60) % 24,
@@ -89,7 +101,8 @@ class WeekDayTime {
   }
 
   WeekDayTime subtract(WeekDayTime weekDayTime) {
-    var x = (inMinutes() - weekDayTime.inMinutes()) % WeekDayTime.max.inMinutes();
+    var x =
+        (inMinutes() - weekDayTime.inMinutes()) % WeekDayTime.max.inMinutes();
     return new WeekDayTime(
       weekDay: (x ~/ 1440) % 7,
       hours: (x ~/ 60) % 24,
