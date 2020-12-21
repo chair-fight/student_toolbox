@@ -72,7 +72,7 @@ class _ActivityEditScreenState extends State<ActivityEditScreen> {
                           padding: EdgeInsets.only(top: 16),
                           child: ClassTypeCard(
                             classTypeModel:
-                                LocalData.getClassTypeModels().firstWhere((e) => e.id == classModel.classTypeID),
+                                ClassTypeModelLocalData.getClassTypeModels().firstWhere((e) => e.id == classModel.classTypeID),
                             onTap: () {},
                           )),
                     ],

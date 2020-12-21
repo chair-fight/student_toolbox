@@ -163,7 +163,7 @@ class ScheduleScreen extends StatelessWidget {
     ),
   ];
 
-  final List<ClassTypeModel> classTypeModelList = LocalData.getClassTypeModels();
+  final List<ClassTypeModel> classTypeModelList = ClassTypeModelLocalData.getClassTypeModels();
 
   @override
   Widget build(BuildContext context) {
@@ -221,7 +221,7 @@ class ScheduleScreen extends StatelessWidget {
       }
       result.add(ActivityCard(
         classModel: classModel,
-        classTypeModel: classModel.classTypeID != null
+        classTypeModel: (classModel.classTypeID != null && classTypeModelList.any((classType) => classModel.classTypeID == classType.id))
             ? classTypeModelList.firstWhere((classType) => classModel.classTypeID == classType.id)
             : null,
         onTap: () {

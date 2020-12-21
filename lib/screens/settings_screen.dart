@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/class_type_model.dart';
 import 'package:student_toolbox/services/local_data.dart';
 import 'package:student_toolbox/widgets/class_type/class_type_card.dart';
+import 'package:student_toolbox/widgets/dialogs/create_class_type_dialog.dart';
 import 'package:student_toolbox/widgets/dialogs/delete_account_dialog.dart';
 import 'package:student_toolbox/widgets/dialogs/edit_class_type_dialog.dart';
 import 'package:student_toolbox/widgets/signature.dart';
@@ -91,7 +92,10 @@ class SettingsScreen extends StatelessWidget {
                               .toList()
                                 ..add(ClassTypeCard(
                                   classTypeModel: ClassTypeModel(0, color: Colors.grey[700], string: "+"),
-                                  onTap: () {},
+                                  onTap: () {showDialog(
+                                    context: context,
+                                    builder: (context) => CreateClassTypeDialog(),
+                                  );},
                                 )),
                         ),
                       ),

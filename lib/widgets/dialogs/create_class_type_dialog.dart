@@ -3,34 +3,31 @@ import 'package:student_toolbox/models/class_type_model.dart';
 import 'package:student_toolbox/services/local_data.dart';
 import 'package:student_toolbox/widgets/class_type/class_type_card.dart';
 
-class EditClassTypeDialog extends StatefulWidget {
-  final ClassTypeModel classTypeModel;
+class CreateClassTypeDialog extends StatefulWidget {
 
-  const EditClassTypeDialog({Key key, @required this.classTypeModel}) : super(key: key);
+  const CreateClassTypeDialog({Key key}) : super(key: key);
 
   @override
-  _EditClassTypeDialogState createState() => _EditClassTypeDialogState(classTypeModel);
+  _CreateClassTypeDialog createState() => _CreateClassTypeDialog();
 }
 
-class _EditClassTypeDialogState extends State<EditClassTypeDialog> {
-  final ClassTypeModel _classTypeModel;
+class _CreateClassTypeDialog extends State<CreateClassTypeDialog> {
   String _newLabel = '';
   Color _newColor = Colors.red;
   String _error = '';
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  _EditClassTypeDialogState(this._classTypeModel);
-
   _confirmBtnClicked() {
+    ClassTypeModelLocalData.addClassTypeModel(ClassTypeModel(1, color: _newColor, string: _newLabel));
     Navigator.of(context).pop();
   }
 
   @override
   void initState() {
     super.initState();
-    _newLabel = _classTypeModel.string;
-    _newColor = _classTypeModel.color;
+    _newLabel = "";
+    _newColor = Colors.red[900];
   }
 
   @override
@@ -72,19 +69,19 @@ class _EditClassTypeDialogState extends State<EditClassTypeDialog> {
                   Colors.brown[300],
                 ]
                     .map((color) => Container(
-                          width: 32,
-                          height: 32,
-                          margin: EdgeInsets.all(4),
-                          child: ClipOval(
-                            child: Material(
-                              color: color,
-                              child: InkWell(
-                                onTap: () {},
-                                child: Icon(Icons.bookmark, size: 16),
-                              ),
-                            ),
-                          ),
-                        ))
+                  width: 32,
+                  height: 32,
+                  margin: EdgeInsets.all(4),
+                  child: ClipOval(
+                    child: Material(
+                      color: color,
+                      child: InkWell(
+                        onTap: () {},
+                        child: Icon(Icons.bookmark, size: 16),
+                      ),
+                    ),
+                  ),
+                ))
                     .toList(),
               ),
             ),
@@ -97,13 +94,6 @@ class _EditClassTypeDialogState extends State<EditClassTypeDialog> {
             ButtonBar(
               alignment: MainAxisAlignment.spaceEvenly,
               children: [
-                TextButton(
-                  child: Text("Delete"),
-                  onPressed: () async {
-                    ClassTypeModelLocalData.deleteClassTypeModel(_classTypeModel.id);
-                    Navigator.of(context).pop();
-                  },
-                ),
                 ElevatedButton(
                   child: Text(
                     "Confirm",
