@@ -180,6 +180,8 @@ class ScheduleScreen extends StatelessWidget {
     ),
   ];
 
+  final List<ClassTypeModel> classTypeModelList = ClassTypeModelLocalData.getClassTypeModels();
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
