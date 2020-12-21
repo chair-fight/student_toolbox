@@ -1,19 +1,19 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/core/week_day_time.dart';
-import 'package:student_toolbox/models/class_model.dart';
-import 'package:student_toolbox/models/class_type_model.dart';
+import 'package:student_toolbox/models/activity_model.dart';
+import 'package:student_toolbox/models/activity_label_model.dart';
 import 'package:student_toolbox/widgets/containters/surface.dart';
 
 class ActivityEditCard extends StatelessWidget {
-  final ClassModel classModel;
-  final ClassTypeModel classTypeModel;
+  final ActivityModel classModel;
+  final ActivityLabelModel classTypeModel;
   final Function onTap;
 
-  const ActivityEditCard({Key key, @required this.classModel, this.classTypeModel, this.onTap}) : super(key: key);
+  const ActivityEditCard(
+      {Key key, @required this.classModel, this.classTypeModel, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,35 +29,48 @@ class ActivityEditCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Target Schedule", style: Theme.of(context).textTheme.subtitle1),
+                    Text("Target Schedule",
+                        style: Theme.of(context).textTheme.subtitle1),
                     ToggleButtons(
                       renderBorder: false,
                       isSelected: [true, false],
                       children: ["Week 1", "Week 2"]
                           .map((e) => Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
                                 child: Text(e),
                               ))
                           .toList(),
                       onPressed: (int index) {},
                       fillColor: Colors.transparent,
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(.5),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(.5),
                     ),
-                    Text("Week Day", style: Theme.of(context).textTheme.subtitle1),
+                    Text("Week Day",
+                        style: Theme.of(context).textTheme.subtitle1),
                     ToggleButtons(
                       renderBorder: false,
-                      isSelected: WeekDayTime.weekDays.map((e) => false).toList(),
-                      children: WeekDayTime.weekDays.map((e) => Text(e.substring(0, 3))).toList(),
+                      isSelected:
+                          WeekDayTime.weekDays.map((e) => false).toList(),
+                      children: WeekDayTime.weekDays
+                          .map((e) => Text(e.substring(0, 3)))
+                          .toList(),
                       onPressed: (int index) {},
                       fillColor: Colors.transparent,
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(.5),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(.5),
                     ),
                     Row(
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Start Time", style: Theme.of(context).textTheme.subtitle1),
+                            Text("Start Time",
+                                style: Theme.of(context).textTheme.subtitle1),
                             Row(
                               children: [
                                 Container(
@@ -70,7 +83,9 @@ class ActivityEditCard extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Text(":", style: Theme.of(context).textTheme.headline6),
+                                Text(":",
+                                    style:
+                                        Theme.of(context).textTheme.headline6),
                                 Container(
                                   width: 48,
                                   child: TextFormField(
@@ -89,7 +104,8 @@ class ActivityEditCard extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Duration", style: Theme.of(context).textTheme.subtitle1),
+                            Text("Duration",
+                                style: Theme.of(context).textTheme.subtitle1),
                             Row(
                               children: [
                                 Container(
@@ -102,7 +118,9 @@ class ActivityEditCard extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Text(":", style: Theme.of(context).textTheme.headline6),
+                                Text(":",
+                                    style:
+                                        Theme.of(context).textTheme.headline6),
                                 Container(
                                   width: 48,
                                   child: TextFormField(
