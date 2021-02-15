@@ -3,20 +3,23 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:student_toolbox/models/assignment_model.dart';
 import 'package:student_toolbox/models/group_model.dart';
 import 'package:student_toolbox/models/post_model.dart';
-import 'package:student_toolbox/models/private_assignment_model.dart';
 import 'package:student_toolbox/models/reminder_model.dart';
 import 'package:student_toolbox/models/user_model.dart';
 
 class DatabaseException implements Exception {
   final String cause;
+
   DatabaseException(this.cause);
 }
 
 class DatabaseCodeResult {
   int _code;
+
   get code => _code;
+
   DatabaseCodeResult.fromJson(Map<String, dynamic> json, String index) {
     if (index == null)
       _code = json.containsKey('code') ? int.parse(json['code']) : 400;
@@ -79,8 +82,7 @@ class Database {
   static const String _addUserAssignmentRoute = 'add_assignment';
   static const String _deleteUserAssignmentRoute = 'delete_assignment';
 
-  static UserModel _userFromJson(
-      Map<String, dynamic> json, String index, User user) {
+  static UserModel _userFromJson(Map<String, dynamic> json, String index, User user) {
     if (json['name'] == null || json['name'][index] == null) return null;
     return UserModel(
       uid: json['id'][index],
@@ -101,8 +103,7 @@ class Database {
     );
   }
 
-  static ReminderModel _reminderFromJson(
-      Map<String, dynamic> json, String index) {
+  static ReminderModel _reminderFromJson(Map<String, dynamic> json, String index) {
     if (json['id'] == null || json['id'][index] == null) return null;
     return ReminderModel(
       rid: json['id'][index].toString(),
@@ -110,20 +111,17 @@ class Database {
     );
   }
 
-  static PrivateAssignmentModel _privateAssignmentFromJson(
-      Map<String, dynamic> json, String index) {
+  static AssignmentModel _assignmentFromJson(Map<String, dynamic> json, String index) {
     if (json['id'] == null || json['id'][index] == null) return null;
-    return PrivateAssignmentModel(
-      id: json['id'][index].toString(),
-      uid: json['uid'][index],
-      name: json['name'][index],
-      description: json['description'][index],
-      dueDate: DateTime.parse(json['due_date'][index]),
+    return AssignmentModel(
+      json['id'][index].toString(),
+      json['name'][index],
+      DateTime.parse(json['due_date'][index]),
+      json['is_finished'][index],
     );
   } // id, uid, name, description, due_date
 
-  static Future<dynamic> _request(
-      String type, Map<String, String> body, String uri) async {
+  static Future<dynamic> _request(String type, Map<String, String> body, String uri) async {
     print(body);
     var convUri = Uri.parse(uri);
     var request = http.MultipartRequest(type, convUri)..fields.addAll(body);
@@ -137,20 +135,11 @@ class Database {
     return dec;
   }
 
-  static Future<void> registerUser(String uid, String name, String surname,
-      String email, String university) async {
-    var body = <String, String>{
-      'id': uid,
-      'name': name,
-      'surname': surname,
-      'email': email,
-      'university': university
-    };
+  static Future<void> registerUser(String uid, String name, String surname, String email, String university) async {
+    var body = <String, String>{'id': uid, 'name': name, 'surname': surname, 'email': email, 'university': university};
     var dec = await _request('POST', body, _url + '/' + _registerRoute);
     var code = DatabaseCodeResult.fromJson(dec, null)._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
   }
 
   static Future<void> deleteUser(String uid) async {
@@ -159,9 +148,7 @@ class Database {
     };
     var dec = await _request('POST', body, _url + '/' + _deleteUserRoute);
     var code = DatabaseCodeResult.fromJson(dec, null)._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
   }
 
   static Future<UserModel> getDBUser(User user) async {
@@ -173,8 +160,7 @@ class Database {
     dec = jsonDecode(dec);
     UserModel userModel;
     userModel = _userFromJson(dec, '0', user);
-    if (userModel == null)
-      throw DatabaseException("Invalid user data received from the database");
+    if (userModel == null) throw DatabaseException("Invalid user data received from the database");
     return userModel;
   }
 
@@ -187,24 +173,16 @@ class Database {
     dec = jsonDecode(dec);
     UserModel userModel;
     userModel = _userFromJson(dec, '0', null);
-    if (userModel == null)
-      throw DatabaseException("Invalid user data received from the database");
+    if (userModel == null) throw DatabaseException("Invalid user data received from the database");
     return userModel;
   }
 
-  static Future<void> createGroup(
-      String uid, String name, String description) async {
-    var body = <String, String>{
-      'id': uid,
-      'name': name,
-      'description': description
-    };
+  static Future<void> createGroup(String uid, String name, String description) async {
+    var body = <String, String>{'id': uid, 'name': name, 'description': description};
     print(body);
     var dec = await _request('POST', body, _url + '/' + _createGroupRoute);
     var code = DatabaseCodeResult.fromJson(dec, null)._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
   }
 
   static Future<void> deleteGroup(String uid, String gid) async {
@@ -215,9 +193,7 @@ class Database {
     print(body);
     var dec = await _request('POST', body, _url + '/' + _deleteGroupRoute);
     var code = DatabaseCodeResult.fromJson(dec, null)._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
   }
 
   static Future<List<GroupModel>> getUserGroups(String uid) async {
@@ -226,9 +202,7 @@ class Database {
     var dec = await _request('GET', body, _url + '/' + _getUserGroupsRoute);
     dec = jsonDecode(dec);
     var code = DatabaseCodeResult.fromJson(dec, '0')._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
     var currentIndex = 0;
     GroupModel currentGroup;
     List<GroupModel> result = List<GroupModel>();
@@ -245,9 +219,7 @@ class Database {
     var dec = await _request('GET', body, _url + '/' + _getAllUsersRoute);
     dec = jsonDecode(dec);
     var code = DatabaseCodeResult.fromJson(dec, '0')._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
     var currentIndex = 0;
     UserModel currentUser;
     List<UserModel> result = List<UserModel>();
@@ -258,21 +230,12 @@ class Database {
     return result;
   }
 
-  static Future<void> updateUser(String uid, String name, String surname,
-      String email, String university) async {
-    var body = <String, String>{
-      'id': uid,
-      'name': name,
-      'surname': surname,
-      'email': email,
-      'university': university
-    };
+  static Future<void> updateUser(String uid, String name, String surname, String email, String university) async {
+    var body = <String, String>{'id': uid, 'name': name, 'surname': surname, 'email': email, 'university': university};
     print(body);
     var dec = await _request('POST', body, _url + '/' + _updateUserRoute);
     var code = DatabaseCodeResult.fromJson(dec, null)._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
   }
 
   static Future<List<UserModel>> getGroupMembers(String gid) async {
@@ -283,9 +246,7 @@ class Database {
     var dec = await _request('GET', body, _url + '/' + _getGroupMembersRoute);
     dec = jsonDecode(dec);
     var code = DatabaseCodeResult.fromJson(dec, '0')._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
     var currentIndex = 0;
     UserModel currentUser;
     List<UserModel> result = List<UserModel>();
@@ -296,8 +257,7 @@ class Database {
     return result;
   }
 
-  static Future<void> addGroupMember(
-      String uid, String other_uid, String gid) async {
+  static Future<void> addGroupMember(String uid, String other_uid, String gid) async {
     var body = <String, String>{
       'uid': uid,
       'gid': gid,
@@ -306,25 +266,19 @@ class Database {
     print(body);
     var dec = await _request('POST', body, _url + '/' + _addGroupMemberRoute);
     var code = DatabaseCodeResult.fromJson(dec, null)._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
   }
 
-  static Future<void> removeGroupMember(
-      String uid, String other_uid, String gid) async {
+  static Future<void> removeGroupMember(String uid, String other_uid, String gid) async {
     var body = <String, String>{
       'uid': uid,
       'gid': gid,
       'other_uid': other_uid,
     };
     print(body);
-    var dec =
-        await _request('POST', body, _url + '/' + _removeGroupMemberRoute);
+    var dec = await _request('POST', body, _url + '/' + _removeGroupMemberRoute);
     var code = DatabaseCodeResult.fromJson(dec, null)._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
   }
 
   static Future<void> addReminder(String uid, String content) async {
@@ -335,9 +289,7 @@ class Database {
     print(body);
     var dec = await _request('POST', body, _url + '/' + _addReminderRoute);
     var code = DatabaseCodeResult.fromJson(dec, null)._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
   }
 
   static Future<void> removeReminder(String uid, String rid) async {
@@ -348,9 +300,7 @@ class Database {
     print(body);
     var dec = await _request('POST', body, _url + '/' + _removeReminderRoute);
     var code = DatabaseCodeResult.fromJson(dec, null)._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
   }
 
   static Future<List<ReminderModel>> getUserReminders(String uid) async {
@@ -361,9 +311,7 @@ class Database {
     var dec = await _request('GET', body, _url + '/' + _getRemindersRoute);
     dec = jsonDecode(dec);
     var code = DatabaseCodeResult.fromJson(dec, '0')._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
     var currentIndex = 0;
     ReminderModel currentReminder;
     List<ReminderModel> result = List<ReminderModel>();
@@ -375,21 +323,12 @@ class Database {
     return result;
   }
 
-  static Future<void> addPost(String uid, String gid, String title,
-      String post_body, DateTime post_time) async {
-    var body = <String, String>{
-      'uid': uid,
-      'gid': gid,
-      'title': title,
-      'body': post_body,
-      'post_time': DateFormat('yyyy-MM-ddTHH:mm:ss').format(post_time)
-    };
+  static Future<void> addPost(String uid, String gid, String title, String post_body, DateTime post_time) async {
+    var body = <String, String>{'uid': uid, 'gid': gid, 'title': title, 'body': post_body, 'post_time': DateFormat('yyyy-MM-ddTHH:mm:ss').format(post_time)};
     print(body);
     var dec = await _request('POST', body, _url + '/' + _addPostRoute);
     var code = DatabaseCodeResult.fromJson(dec, null)._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
   }
 
   static Future<List<PostModel>> getGroupPosts(GroupModel group) async {
@@ -400,9 +339,7 @@ class Database {
     var dec = await _request('GET', body, _url + '/' + _getGroupPostsRoute);
     dec = jsonDecode(dec);
     var code = DatabaseCodeResult.fromJson(dec, '0')._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
     var currentIndex = 0;
     _TempPostModel currentPost;
     List<_TempPostModel> tempResult = List<_TempPostModel>();
@@ -434,60 +371,41 @@ class Database {
     };
     var dec = await _request('GET', body, _url + '/' + _checkGroupAdminRoute);
     var code = DatabaseCodeResult.fromJson(dec, null)._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
     return dec['is_admin'] == 'true';
   }
 
-  static Future<List<PrivateAssignmentModel>> getUserAssignments(
-      String uid) async {
+  static Future<List<AssignmentModel>> getUserAssignments(String uid) async {
     var body = <String, String>{
       'id': uid,
     };
-    var dec =
-        await _request('GET', body, _url + '/' + _getUserAssignmentsRoute);
+    var dec = await _request('GET', body, _url + '/' + _getUserAssignmentsRoute);
     dec = jsonDecode(dec);
     var code = DatabaseCodeResult.fromJson(dec, '0')._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
     var currentIndex = 0;
-    PrivateAssignmentModel currentAssignment;
-    List<PrivateAssignmentModel> result = List<PrivateAssignmentModel>();
+    AssignmentModel currentAssignment;
+    List<AssignmentModel> result = List<AssignmentModel>();
     do {
-      currentAssignment =
-          _privateAssignmentFromJson(dec, (currentIndex++).toString());
+      currentAssignment = _assignmentFromJson(dec, (currentIndex++).toString());
       if (currentAssignment != null) result += [currentAssignment];
     } while (currentAssignment != null);
     return result;
   }
 
-  static Future<void> addUserAssignment(
-      String uid, String name, String description, DateTime dueDate) async {
-    var body = <String, String>{
-      'id': uid,
-      'name': name,
-      'description': description,
-      'due_date': DateFormat('yyyy-MM-ddTHH:mm:ss').format(dueDate)
-    };
-    var dec =
-        await _request('POST', body, _url + '/' + _addUserAssignmentRoute);
+  static Future<void> addUserAssignment(String uid, String name, DateTime dueDate, bool isFinished) async {
+    var body = <String, String>{'id': uid, 'name': name, 'due_date': DateFormat('yyyy-MM-ddTHH:mm:ss').format(dueDate), 'is_finished': isFinished.toString()};
+    var dec = await _request('POST', body, _url + '/' + _addUserAssignmentRoute);
     var code = DatabaseCodeResult.fromJson(dec, null)._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
   }
 
   static Future<void> deleteUserAssignment(String aid) async {
     var body = <String, String>{
       'id': aid,
     };
-    var dec =
-        await _request('POST', body, _url + '/' + _deleteUserAssignmentRoute);
+    var dec = await _request('POST', body, _url + '/' + _deleteUserAssignmentRoute);
     var code = DatabaseCodeResult.fromJson(dec, null)._code;
-    if (code == null || code != 100)
-      throw DatabaseException(
-          "Database error code " + (code == null ? "" : code.toString()));
+    if (code == null || code != 100) throw DatabaseException("Database error code " + (code == null ? "" : code.toString()));
   }
 }

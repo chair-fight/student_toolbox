@@ -24,6 +24,7 @@ class _EditClassTypeDialogState extends State<EditClassTypeDialog> {
   _EditClassTypeDialogState(this._activityLabelModel);
 
   _confirmBtnClicked() {
+    // TODO - Implement
     Navigator.of(context).pop();
   }
 
@@ -93,13 +94,20 @@ class _EditClassTypeDialogState extends State<EditClassTypeDialog> {
               _error,
               style: TextStyle(color: Colors.red),
             ),
-            ClassTypeCard(
+            ActivityTypeCard(
                 activityLabelModel: ActivityLabelModel('0',
                     color: _newColor, string: _newLabel)),
             Divider(),
             ButtonBar(
               alignment: MainAxisAlignment.spaceEvenly,
               children: [
+                TextButton(
+                  child: Text("Delete"),
+                  onPressed: () async {
+                    // TODO - Implement
+                    Navigator.of(context).pop();
+                  },
+                ),
                 ElevatedButton(
                   child: Text(
                     "Confirm",

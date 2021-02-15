@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/core/week_day_time.dart';
 import 'package:student_toolbox/models/activity_model.dart';
 import 'package:student_toolbox/models/activity_label_model.dart';
-import 'package:student_toolbox/placeholders/placeholder_images.dart';
-import 'package:student_toolbox/widgets/containters/surface.dart';
 
 class ActivityCard extends StatelessWidget {
   final ActivityModel classModel;
@@ -21,9 +18,7 @@ class ActivityCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
       child: Stack(
         children: [
-          Surface(
-            height: 90,
-            onTap: onTap,
+          Material(
             child: Padding(
               padding: EdgeInsets.fromLTRB(10, 4, 8, 4),
               child: Column(
@@ -41,13 +36,6 @@ class ActivityCard extends StatelessWidget {
                             maxLines: 1,
                             style: Theme.of(context).textTheme.headline6,
                           ),
-                        ),
-                      ),
-                      Container(
-                        width: 24,
-                        height: 24,
-                        child: ClipOval(
-                          child: PlaceholderImages.image1,
                         ),
                       ),
                     ],
