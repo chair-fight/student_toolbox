@@ -1,13 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/services/validators/email_validator.dart';
 import 'package:student_toolbox/services/validators/nonempty_validator.dart';
 import 'package:student_toolbox/services/validators/password_validator.dart';
 import 'package:student_toolbox/services/validators/repeat_password_validator.dart';
-import 'package:student_toolbox/widgets/buttons/button_primary.dart';
-import 'package:student_toolbox/widgets/containters/surface.dart';
-import 'package:student_toolbox/widgets/signature.dart';
 
 import 'loading_screen.dart';
 
@@ -27,6 +26,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String _surname = '';
   String _email = '';
   String _password = '';
+  String _repeatPassword = '';
+  bool _agreeTOS = false;
+  bool _agreeNewsletter = false;
 
   String _firebaseHint = '';
 
@@ -44,12 +46,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_formKey.currentState.validate()) {
       setState(() => _isLoading = true);
       try {
-        var user = await AuthService()
-            .emailRegister(_email, _password, _name, _surname, 'ubb');
+        var user = await AuthService().emailRegister(_email, _password, _name, _surname, 'ubb');
         await AuthService().sendVerificationEmail(user);
-        _setParentHint(
-            "Please confirm your email address by following the instructions sent to you at " +
-                user.email);
+        _setParentHint("Please confirm your email address by following the instructions sent to you at " + user.email);
         await AuthService().logOut();
         Navigator.of(context).pop();
       } on FirebaseAuthException catch (e) {
@@ -68,10 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         : Scaffold(
             appBar: AppBar(
               leading: FlatButton(
-                child: Icon(
-                  Icons.arrow_back,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
+                child: Icon(Icons.arrow_back),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -85,71 +81,100 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   children: [
                     Padding(
                       padding: EdgeInsets.fromLTRB(32, 16, 32, 0),
-                      child: Surface(
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: TextFormField(
-                                    decoration: InputDecoration(labelText: "Name"),
-                                    validator: NonEmptyValidator.validate,
-                                    onChanged: (value) =>
-                                        setState(() => _name = value),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  decoration: InputDecoration(labelText: "Name"),
+                                  validator: NonEmptyValidator.validate,
+                                  onChanged: (value) => setState(() => _name = value),
+                                ),
+                              ),
+                              SizedBox(width: 32),
+                              Expanded(
+                                child: TextFormField(
+                                  decoration: InputDecoration(labelText: "Surname"),
+                                  validator: NonEmptyValidator.validate,
+                                  onChanged: (value) => setState(() => _surname = value),
+                                ),
+                              ),
+                            ],
+                          ),
+                          TextFormField(
+                            decoration: InputDecoration(labelText: "Email"),
+                            validator: EmailValidator.validate,
+                            onChanged: (value) => setState(() => _email = value),
+                          ),
+                          TextFormField(
+                            decoration: InputDecoration(labelText: "Password", suffixIcon: Icon(FontAwesomeIcons.eye)),
+                            obscureText: true,
+                            validator: PasswordValidator.validate,
+                            onChanged: (value) => setState(() => _password = value),
+                          ),
+                          TextFormField(
+                            decoration: InputDecoration(labelText: "Repeat Password", suffixIcon: Icon(FontAwesomeIcons.eye)),
+                            obscureText: true,
+                            onChanged: (value) => setState(() => _repeatPassword = value),
+                            validator: (value) => RepeatPasswordValidator.validate(_password, _repeatPassword),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Center(
+                            child: Text(
+                              _firebaseHint.isEmpty ? "" : _firebaseHint,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: _agreeTOS,
+                                onChanged: (bool value) => this.setState(() => _agreeTOS = value),
+                              ),
+                              Flexible(
+                                child: RichText(
+                                  text: TextSpan(
+                                    style: Theme.of(context).textTheme.bodyText2,
+                                    children: [
+                                      TextSpan(text: "By checking this you agree with our "),
+                                      TextSpan(
+                                        text: "Terms of Service",
+                                        style: TextStyle(color: Colors.lightBlueAccent, decoration: TextDecoration.underline),
+                                        recognizer: TapGestureRecognizer()..onTap = () => {},
+                                      ),
+                                      TextSpan(text: "."),
+                                    ],
                                   ),
                                 ),
-                                SizedBox(width: 32),
-                                Expanded(
-                                  child: TextFormField(
-                                    decoration:
-                                        InputDecoration(labelText: "Surname"),
-                                    validator: NonEmptyValidator.validate,
-                                    onChanged: (value) =>
-                                        setState(() => _surname = value),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: _agreeNewsletter,
+                                onChanged: (bool value) => this.setState(() => _agreeNewsletter = value),
+                              ),
+                              Flexible(
+                                child: RichText(
+                                  text: TextSpan(
+                                    text: "Subscribe to our newsletter.",
+                                    style: Theme.of(context).textTheme.bodyText2,
                                   ),
                                 ),
-                              ],
-                            ),
-                            TextFormField(
-                              decoration: InputDecoration(labelText: "Email"),
-                              validator: EmailValidator.validate,
-                              onChanged: (value) => setState(() => _email = value),
-                            ),
-                            TextFormField(
-                              decoration: InputDecoration(labelText: "Password"),
-                              obscureText: true,
-                              validator: PasswordValidator.validate,
-                              onChanged: (value) =>
-                                  setState(() => _password = value),
-                            ),
-                            TextFormField(
-                              decoration:
-                                  InputDecoration(labelText: "Repeat Password"),
-                              obscureText: true,
-                              validator: (value) =>
-                                  RepeatPasswordValidator.validate(
-                                      _password, value),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Center(
-                              child: Text(
-                                _firebaseHint.isEmpty ? "" : _firebaseHint,
-                                style: TextStyle(color: Colors.red),
                               ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(vertical: 32),
-                              width: 150,
-                              child: ButtonPrimary(
-                                label: "Register",
-                                onPressed: () async => await _registerBtnPressed(),
-                              ),
-                            ),
-                            Signature(),
-                          ],
-                        ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
+                          ElevatedButton(
+                            child: Text("Register"),
+                            onPressed: () async => await _registerBtnPressed(),
+                          ),
+                        ],
                       ),
                     ),
                   ],

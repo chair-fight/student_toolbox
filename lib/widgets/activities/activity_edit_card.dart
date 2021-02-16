@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:student_toolbox/core/week_day_time.dart';
 import 'package:student_toolbox/models/activity_model.dart';
 import 'package:student_toolbox/models/activity_label_model.dart';
-import 'package:student_toolbox/widgets/containters/surface.dart';
 
 class ActivityEditCard extends StatelessWidget {
   final ActivityModel classModel;
@@ -20,8 +19,7 @@ class ActivityEditCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
       child: Form(
-        child: Surface(
-          onTap: onTap,
+        child: Material(
           child: Padding(
             padding: EdgeInsets.all(8),
             child: Stack(

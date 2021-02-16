@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:student_toolbox/models/class_type_model.dart';
-import 'package:student_toolbox/services/local_data.dart';
+import 'package:student_toolbox/models/activity_label_model.dart';
 import 'package:student_toolbox/widgets/class_type/class_type_card.dart';
 
 class CreateClassTypeDialog extends StatefulWidget {
@@ -19,7 +18,7 @@ class _CreateClassTypeDialog extends State<CreateClassTypeDialog> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   _confirmBtnClicked() {
-    ClassTypeModelLocalData.addClassTypeModel(ClassTypeModel(1, color: _newColor, string: _newLabel));
+    // TODO - Implement
     Navigator.of(context).pop();
   }
 
@@ -89,7 +88,7 @@ class _CreateClassTypeDialog extends State<CreateClassTypeDialog> {
               _error,
               style: TextStyle(color: Colors.red),
             ),
-            ClassTypeCard(classTypeModel: ClassTypeModel(0, color: _newColor, string: _newLabel)),
+            ActivityTypeCard(activityLabelModel: ActivityLabelModel("0", color: _newColor, string: _newLabel)),
             Divider(),
             ButtonBar(
               alignment: MainAxisAlignment.spaceEvenly,

@@ -30,8 +30,8 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: CustomThemes.classic(),
-      darkTheme: CustomThemes.classic(),
+      theme: CustomThemes.light(),
+      darkTheme: CustomThemes.dark(),
       themeMode: themeSwitcher.currentTheme(),
       home: FutureBuilder(
         future: Firebase.initializeApp(),

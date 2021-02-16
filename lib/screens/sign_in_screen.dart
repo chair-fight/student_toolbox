@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:student_toolbox/art/gradients/primary_gradient.dart';
 import 'package:student_toolbox/screens/loading_screen.dart';
 import 'package:student_toolbox/screens/register_screen.dart';
 import 'package:student_toolbox/services/auth.dart';
 import 'package:student_toolbox/services/validators/email_validator.dart';
 import 'package:student_toolbox/services/validators/password_validator.dart';
-import 'package:student_toolbox/widgets/buttons/button_primary.dart';
+import 'package:student_toolbox/widgets/column_divider.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -66,113 +69,101 @@ class _SignInScreenState extends State<SignInScreen> {
     return _isLoading
         ? LoadingScreen()
         : Scaffold(
-            body: Stack(
+            body: ListView(
               children: [
                 Container(
                   padding: EdgeInsets.all(32),
                   decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary),
-                  child: SizedBox(
-                    height: 128,
-                    width: double.infinity,
-                    child: FlutterLogo(),
+                    gradient: PrimaryGradient().build(context),
                   ),
+                  child: Image.asset("assets/images/logo_full_monoxxxhdpi.png"),
                 ),
                 Container(
-                  margin: EdgeInsets.only(
-                      left: 32, right: 32, bottom: 32, top: 160),
-                  decoration: new BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
-                    borderRadius: new BorderRadius.all(Radius.circular(8)),
-                  ),
-                  child: ListView(
-                    children: [
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 64),
-                        child: Form(
-                          key: _formKey,
-                          child: Center(
-                            child: Column(
-                              children: [
-                                SizedBox(height: 20),
-                                Center(
-                                  child: Text(
-                                    "WELCOME",
-                                    style: TextStyle(
-                                      fontSize: 46,
-                                    ),
-                                  ),
-                                ),
-                                Divider(),
-                                TextFormField(
-                                  decoration:
-                                      InputDecoration(hintText: "Email"),
-                                  validator: EmailValidator.validate,
-                                  onChanged: (value) =>
-                                      setState(() => _email = value),
-                                ),
-                                TextFormField(
-                                  decoration:
-                                      InputDecoration(hintText: "Password"),
-                                  obscureText: true,
-                                  validator: PasswordValidator.validate,
-                                  onChanged: (value) =>
-                                      setState(() => _password = value),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Center(
-                                  child: Text(
-                                    _firebaseHint.isEmpty ? "" : _firebaseHint,
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(
-                                      top: 32, left: 32, right: 32),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      ButtonPrimary(
-                                        label: "Sign in",
-                                        onPressed: () async =>
-                                            await _signInBtnClick(),
-                                      ),
-                                      Divider(),
-                                      ButtonPrimary(
-                                        label: "Register",
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      RegisterScreen(
-                                                          _setFirebaseHint)));
-                                        },
-                                      ),
-                                      _resendUser == null
-                                          ? Container()
-                                          : Column(
-                                              children: [
-                                                Divider(),
-                                                ButtonPrimary(
-                                                  label: "Resend Email",
-                                                  onPressed: _resendBtnClick,
-                                                ),
-                                              ],
-                                            ),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+                  child: Form(
+                    key: _formKey,
+                    child: Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          TextFormField(
+                            decoration: InputDecoration(hintText: "Email", icon: Icon(FontAwesomeIcons.userAlt)),
+                            validator: EmailValidator.validate,
+                            onChanged: (value) => setState(() => _email = value),
+                          ),
+                          TextFormField(
+                            decoration: InputDecoration(hintText: "Password", icon: Icon(FontAwesomeIcons.key)),
+                            obscureText: true,
+                            validator: PasswordValidator.validate,
+                            onChanged: (value) => setState(() => _password = value),
+                          ),
+                          Center(
+                            child: Text(
+                              _firebaseHint.isEmpty ? "" : _firebaseHint,
+                              style: TextStyle(color: Colors.red),
                             ),
                           ),
-                        ),
+                          if (_resendUser != null)
+                            OutlinedButton(
+                              child: Text("Resend Email"),
+                              onPressed: _resendBtnClick,
+                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  child: Text("Login"),
+                                  onPressed: () async => await _signInBtnClick(),
+                                ),
+                              ),
+                              SizedBox(width: 20),
+                              Expanded(
+                                child: OutlinedButton(
+                                  child: Text("Register"),
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterScreen(_setFirebaseHint)));
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          ColumnDivider(label: "Login using"),
+                          ElevatedButton(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(FontAwesomeIcons.facebookF, size: 16),
+                                Text(" Facebook"),
+                              ],
+                            ),
+                            onPressed: () {},
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(Colors.blue[900]),
+                              foregroundColor: MaterialStateProperty.all(Colors.white)
+                            ),
+                          ),
+                          ElevatedButton(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(FontAwesomeIcons.google, size: 16),
+                                Text(" Google"),
+                              ],
+                            ),
+                            onPressed: () {},
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(Colors.red),
+                                foregroundColor: MaterialStateProperty.all(Colors.white)
+                            ),
+                          ),
+                          TextButton(
+                            child: Text("Login as guest"),
+                            onPressed: () {},
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ],

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/activity_label_model.dart';
 
-class ClassTypeCard extends StatelessWidget {
+class ActivityTypeCard extends StatelessWidget {
   final ActivityLabelModel activityLabelModel;
   final Function onTap;
 
-  const ClassTypeCard({
+  const ActivityTypeCard({
     Key key,
     @required this.activityLabelModel,
     this.onTap,

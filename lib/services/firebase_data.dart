@@ -1,13 +1,66 @@
 import 'package:student_toolbox/models/activity_label_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:student_toolbox/models/assignment_model.dart';
 import 'package:student_toolbox/models/schedule_model.dart';
 import 'package:student_toolbox/models/activity_model.dart';
 
 class FirebaseDataException implements Exception {
   String _cause;
+
   get cause => _cause;
+
   String toString() => "FirebaseDataException: $cause";
+
   FirebaseDataException(this._cause);
+}
+
+class AssignmentModelFirebaseData {
+  static CollectionReference _assignmentCollection;
+
+  static _init() {
+    _assignmentCollection = FirebaseFirestore.instance
+        .collection("Users")
+        .doc(FirebaseData._uid)
+        .collection("Assignments");
+  }
+
+  static _checkInitialized() {
+    if (_assignmentCollection == null)
+      throw new FirebaseDataException("Firebase data not initialized.");
+  }
+
+  static Future<List<AssignmentModel>> getAssignmentModels() async {
+    _checkInitialized();
+    return _assignmentCollection.get().then((queryData) =>
+        queryData.docs
+            .map((almData) =>
+            AssignmentModel.fromJson(
+                almData.data()
+                  ..addAll({'id': almData.id})
+            )
+        ).toList());
+    }
+
+  static Future<String> addAssignmentModel(AssignmentModel assignmentModel) async {
+    _checkInitialized();
+    return _assignmentCollection
+        .add(assignmentModel.toJson()
+          ..remove('id'))
+          .then((documentReference) => documentReference.id);
+  }
+
+  static Future<void> updateAssignmentModel(AssignmentModel assignmentModel) async {
+    _checkInitialized();
+    return _assignmentCollection
+        .doc(assignmentModel.id)
+        .set(assignmentModel.toJson()
+      ..remove('id'));
+  }
+
+  static Future<void> deleteAssignmentModel(String id) async {
+    _checkInitialized();
+    return _assignmentCollection.doc(id).delete();
+  }
 }
 
 class ActivityLabelModelFirebaseData {
@@ -21,6 +74,7 @@ class ActivityLabelModelFirebaseData {
         .collection("ScheduleData")
         .doc("ActivityTypes")
         .collection("ActivityTypes");
+
   }
 
   static _checkInitialized() {
@@ -28,27 +82,37 @@ class ActivityLabelModelFirebaseData {
       throw new FirebaseDataException("Firebase data not initialized.");
   }
 
+
+
   static Future<List<ActivityLabelModel>> getActivityLabelModels() async {
     _checkInitialized();
-    return _activityCollection.get().then((queryData) => queryData.docs
-        .map((almData) => ActivityLabelModel.fromJson(
-            almData.data()..addAll({'id': almData.id})))
-        .toList());
+    return _activityCollection.get().then((queryData) =>
+        queryData.docs
+            .map((almData) =>
+            ActivityLabelModel.fromJson(
+                almData.data()
+                  ..addAll({'id': almData.id})))
+            .toList());
   }
 
   static Stream<List<ActivityLabelModel>> getObservableActivityLabelModels() {
     _checkInitialized();
     return _activityCollection.snapshots(includeMetadataChanges: true).map(
-        (event) => event.docs
-            .map((almData) => ActivityLabelModel.fromJson(
-                almData.data()..addAll({'id': almData.id})))
-            .toList());
+            (event) =>
+            event.docs
+                .map((almData) =>
+                ActivityLabelModel.fromJson(
+                    almData.data()
+                      ..addAll({'id': almData.id})))
+                .toList());
   }
 
   static Future<ActivityLabelModel> getActivityLabelModel(String id) async {
     _checkInitialized();
-    return _activityCollection.doc(id).get().then((doc) => doc.exists
-        ? ActivityLabelModel.fromJson(doc.data()..addAll({'id': id}))
+    return _activityCollection.doc(id).get().then((doc) =>
+    doc.exists
+        ? ActivityLabelModel.fromJson(doc.data()
+      ..addAll({'id': id}))
         : null);
   }
 
@@ -57,25 +121,27 @@ class ActivityLabelModelFirebaseData {
     return _activityCollection
         .doc(id)
         .snapshots(includeMetadataChanges: true)
-        .map((doc) => doc.exists
-            ? ActivityLabelModel.fromJson(doc.data()..addAll({'id': id}))
-            : null);
+        .map((doc) =>
+    doc.exists
+        ? ActivityLabelModel.fromJson(doc.data()
+      ..addAll({'id': id}))
+        : null);
   }
 
-  static Future<String> addActivityLabelModel(
-      ActivityLabelModel activityLabelModel) async {
+  static Future<String> addActivityLabelModel(ActivityLabelModel activityLabelModel) async {
     _checkInitialized();
     return _activityCollection
-        .add(activityLabelModel.toJson()..remove('id'))
+        .add(activityLabelModel.toJson()
+      ..remove('id'))
         .then((documentReference) => documentReference.id);
   }
 
-  static Future<void> updateActivityLabelModel(
-      ActivityLabelModel activityLabelModel) async {
+  static Future<void> updateActivityLabelModel(ActivityLabelModel activityLabelModel) async {
     _checkInitialized();
     return _activityCollection
         .doc(activityLabelModel.id)
-        .set(activityLabelModel.toJson()..remove('id'));
+        .set(activityLabelModel.toJson()
+      ..remove('id'));
   }
 
   static Future<void> deleteActivityLabelModel(String id) async {
@@ -126,15 +192,19 @@ class ScheduleModelFirebaseData {
       orderMap.addAll({element: index++});
     });
 
-    return _scheduleCollection.get().then((queryData) => queryData.docs
-        .map((scheduleData) => ScheduleModel.fromJson(
-            scheduleData.data()..addAll({'id': scheduleData.id})))
+    return _scheduleCollection.get().then((queryData) =>
+    queryData.docs
+        .map((scheduleData) =>
+        ScheduleModel.fromJson(
+            scheduleData.data()
+              ..addAll({'id': scheduleData.id})))
         .toList()
-          ..sort((first, second) => orderMap[first.id] - orderMap[second.id]));
+      ..sort((first, second) => orderMap[first.id] - orderMap[second.id]));
   }
 
   static Stream<List<ScheduleModel>> getObservableSchedules() {
     _checkInitialized();
+    print(_scheduleOrder);
     return _scheduleOrder
         .snapshots()
         .map((doc) => List.of(doc.data()['order']).cast<String>())
@@ -145,18 +215,23 @@ class ScheduleModelFirebaseData {
         orderMap.addAll({element: index++});
       });
       return _scheduleCollection.snapshots(includeMetadataChanges: true).map(
-          (event) => event.docs
-              .map((scheduleData) => ScheduleModel.fromJson(
-                  scheduleData.data()..addAll({'id': scheduleData.id})))
+              (event) =>
+          event.docs
+              .map((scheduleData) =>
+              ScheduleModel.fromJson(
+                  scheduleData.data()
+                    ..addAll({'id': scheduleData.id})))
               .toList()
-                ..sort((a, b) => orderMap[a.id] - orderMap[b.id]));
+            ..sort((a, b) => orderMap[a.id] - orderMap[b.id]));
     });
   }
 
   static Future<ScheduleModel> getSchedule(String id) async {
     _checkInitialized();
-    return _scheduleCollection.doc(id).get().then((doc) => doc.exists
-        ? ScheduleModel.fromJson(doc.data()..addAll({'id': doc.id}))
+    return _scheduleCollection.doc(id).get().then((doc) =>
+    doc.exists
+        ? ScheduleModel.fromJson(doc.data()
+      ..addAll({'id': doc.id}))
         : null);
   }
 
@@ -165,13 +240,14 @@ class ScheduleModelFirebaseData {
     return _scheduleCollection
         .doc(id)
         .snapshots(includeMetadataChanges: true)
-        .map((doc) => doc.exists
-            ? ScheduleModel.fromJson(doc.data()..addAll({'id': doc.id}))
-            : null);
+        .map((doc) =>
+    doc.exists
+        ? ScheduleModel.fromJson(doc.data()
+      ..addAll({'id': doc.id}))
+        : null);
   }
 
-  static Future<String> addSchedule(
-      ScheduleModel scheduleModel, int position) async {
+  static Future<String> addSchedule(ScheduleModel scheduleModel, int position) async {
     _checkInitialized();
     return _scheduleOrder.get().then((document) {
       if (!document.exists) return [];
@@ -180,7 +256,8 @@ class ScheduleModelFirebaseData {
       if (position > order.length)
         throw new FirebaseDataException("Invalid insertion position");
       return _scheduleCollection
-          .add(scheduleModel.toJson()..remove('id'))
+          .add(scheduleModel.toJson()
+        ..remove('id'))
           .then((doc) {
         order.insert(position, doc.id);
         _scheduleOrder.set({'order': order});
@@ -192,7 +269,8 @@ class ScheduleModelFirebaseData {
   static Future<void> deleteSchedule(String id) async {
     _checkInitialized();
     return _scheduleOrder.get().then((doc) {
-      _scheduleOrder.set({'order': List.of(doc.data()['order'])..remove(id)});
+      _scheduleOrder.set({'order': List.of(doc.data()['order'])
+        ..remove(id)});
       _scheduleCollection.doc(id).delete();
     });
   }
@@ -201,7 +279,8 @@ class ScheduleModelFirebaseData {
     _checkInitialized();
     return _scheduleCollection
         .doc(scheduleModel.id)
-        .set(scheduleModel.toJson()..remove('id'));
+        .set(scheduleModel.toJson()
+      ..remove('id'));
   }
 
   static Future<void> moveScheduleToPosition(String id, int position) async {
@@ -220,8 +299,10 @@ class ScheduleModelFirebaseData {
 
   static Future<ActivityModel> getActivity(String id) async {
     _checkInitialized();
-    return _activityCollection.doc(id).get().then((doc) => doc.exists
-        ? ActivityModel.fromJson(doc.data()..addAll({'id': doc.id}))
+    return _activityCollection.doc(id).get().then((doc) =>
+    doc.exists
+        ? ActivityModel.fromJson(doc.data()
+      ..addAll({'id': doc.id}))
         : null);
   }
 
@@ -230,15 +311,18 @@ class ScheduleModelFirebaseData {
     return _activityCollection
         .doc(id)
         .snapshots(includeMetadataChanges: true)
-        .map((doc) => doc.exists
-            ? ActivityModel.fromJson(doc.data()..addAll({'id': doc.id}))
-            : null);
+        .map((doc) =>
+    doc.exists
+        ? ActivityModel.fromJson(doc.data()
+      ..addAll({'id': doc.id}))
+        : null);
   }
 
   static Future<String> addActivity(ActivityModel activityModel) async {
     _checkInitialized();
     return _activityCollection
-        .add(activityModel.toJson()..remove('id'))
+        .add(activityModel.toJson()
+      ..remove('id'))
         .then((doc) => doc.id);
   }
 
@@ -251,7 +335,8 @@ class ScheduleModelFirebaseData {
     _checkInitialized();
     return _activityCollection
         .doc(activityModel.id)
-        .set(activityModel.toJson()..remove('id'));
+        .set(activityModel.toJson()
+      ..remove('id'));
   }
 }
 
@@ -260,6 +345,7 @@ class FirebaseData {
 
   static init(String userId) async {
     _uid = userId;
+    AssignmentModelFirebaseData._init();
     ActivityLabelModelFirebaseData._init();
     ScheduleModelFirebaseData._init();
   }
