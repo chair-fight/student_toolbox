@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:student_toolbox/models/assignment_model.dart';
+import 'package:student_toolbox/models/assignment_model_private.dart';
 import 'package:student_toolbox/widgets/dialogs/assignment_edit_dialog.dart';
 
 class AssignmentCard extends StatefulWidget {
@@ -34,7 +35,7 @@ class _AssignmentCardState extends State<AssignmentCard> with TickerProviderStat
     _isFinishedAnimationController = AnimationController(
       duration: Duration(milliseconds: 300),
       reverseDuration: Duration(milliseconds: 150),
-      value: widget.assignment.isFinished ? 1 : 0,
+      value: isFinishedByUser() ? 1 : 0,
       vsync: this,
     );
   }
@@ -47,11 +48,15 @@ class _AssignmentCardState extends State<AssignmentCard> with TickerProviderStat
 
   void _playIsFinishedAnimation() async {
     try {
-      if (widget.assignment.isFinished)
+      if (isFinishedByUser())
         await _isFinishedAnimationController.animateTo(1, curve: Curves.decelerate).orCancel;
       else
         await _isFinishedAnimationController.animateBack(0, curve: Curves.decelerate).orCancel;
     } on TickerCanceled {}
+  }
+
+  bool isFinishedByUser() {
+    return (widget.assignment is AssignmentModelPrivate && (widget.assignment as AssignmentModelPrivate).isFinished);
   }
 
   int _dateDifference(DateTime lhs, DateTime rhs) {
@@ -75,15 +80,17 @@ class _AssignmentCardState extends State<AssignmentCard> with TickerProviderStat
             children: [
               Checkbox(
                 activeColor: Theme.of(context).colorScheme.primary,
-                value: widget.assignment.isFinished,
+                value: isFinishedByUser(),
                 onChanged: (bool value) {
+                  // TODO - Allow both private & public assignments
                   widget.onEdit(
                     widget.assignment,
-                    AssignmentModel(
-                      widget.assignment.id,
-                      widget.assignment.name,
-                      widget.assignment.dueDate,
-                      value,
+                    AssignmentModelPrivate(
+                      aid: widget.assignment.aid,
+                      name: widget.assignment.name,
+                      dueDate: widget.assignment.dueDate,
+                      isFinished: value,
+                      uid: 0,
                     ),
                   );
                 },

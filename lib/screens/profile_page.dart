@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/models/user_model.dart';
-import 'package:student_toolbox/services/database.dart';
 
 class ProfilePage extends StatefulWidget {
   final User metaUser;
@@ -27,7 +26,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _pullUser() async {
     print(metaUser);
-    user = await Database.getDBUser(metaUser);
+    // FIXME - Replace this line
+    //user = await Database.getDBUser(metaUser);
   }
 
   @override

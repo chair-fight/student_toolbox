@@ -29,6 +29,7 @@ class SettingsScreen extends StatelessWidget {
                   icon: FontAwesomeIcons.userEdit,
                   label: "Edit Profile",
                   buttonRole: _SettingsButtonRole.Button,
+                  onTap: () {},
                 ),
                 _SettingsButton(
                   icon: FontAwesomeIcons.signOutAlt,

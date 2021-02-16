@@ -95,10 +95,12 @@ class AboutUsScreen extends StatelessWidget {
                 _DevWidget(
                   devName: "Cătălin Borza",
                   devRoles: ["Mobile Developer"],
+                  contactLink: "",
                 ),
                 _DevWidget(
                   devName: "Andrei Petruș",
                   devRoles: ["Database Manager", "Web Developer"],
+                  contactLink: "",
                 ),
                 _DevWidget(
                   devName: "Darius Călugăr",
@@ -108,14 +110,17 @@ class AboutUsScreen extends StatelessWidget {
                 _DevWidget(
                   devName: "Andrei Barzu",
                   devRoles: ["Database Manager"],
+                  contactLink: "",
                 ),
                 _DevWidget(
                   devName: "Alex Conțu",
                   devRoles: ["Software Tester"],
+                  contactLink: "",
                 ),
                 _DevWidget(
                   devName: "Paul Bumbu",
                   devRoles: ["General Help"],
+                  contactLink: "",
                 ),
               ],
             ),

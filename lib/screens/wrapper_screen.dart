@@ -13,7 +13,8 @@ class WrapperScreen extends StatelessWidget {
     if (_user == null || !_user.emailVerified)
       return SignInScreen();
     else {
-      FirebaseData.init(_user.uid);
+      // FIXME - Make sure we can delete this line
+      //FirebaseData.init(_user.uid);
       return HomeScreen();
     }
   }

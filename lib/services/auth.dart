@@ -8,28 +8,23 @@ class AuthService {
     this._auth = FirebaseAuth.instance;
   }
 
-  Future<User> emailSignIn(String email, String password) async =>
-      (await _auth.signInWithEmailAndPassword(email: email, password: password))
-          .user;
+  Future<User> emailSignIn(String email, String password) async => (await _auth.signInWithEmailAndPassword(email: email, password: password)).user;
 
-  Future<User> emailRegister(String email, String password, String name,
-      String surname, String university) async {
-    var user = (await _auth.createUserWithEmailAndPassword(
-            email: email, password: password))
-        .user;
+  Future<User> emailRegister(String email, String password, String name, String surname, String university) async {
+    // FIXME - Fix on database implementation
+    /*
+    var user = (await _auth.createUserWithEmailAndPassword(email: email, password: password)).user;
     try {
       await Database.registerUser(user.uid, name, surname, email, university);
     } on DatabaseException {
       await user.delete();
-      throw FirebaseAuthException(
-          message:
-              "An error occurred when trying to add the user to the database. The account was not created.");
-    }
+      throw FirebaseAuthException(message: "An error occurred when trying to add the user to the database. The account was not created.");
     return user;
+    }*/
+    return null;
   }
 
-  Future<void> sendVerificationEmail(User user) async =>
-      await user.sendEmailVerification();
+  Future<void> sendVerificationEmail(User user) async => await user.sendEmailVerification();
 
   Future<void> logOut() async => (await _auth.signOut());
 

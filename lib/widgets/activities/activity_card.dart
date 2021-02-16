@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:student_toolbox/core/week_day_time.dart';
-import 'package:student_toolbox/models/activity_model.dart';
-import 'package:student_toolbox/models/activity_label_model.dart';
+import 'package:student_toolbox/models/schedule_entry_label_model.dart';
+import 'package:student_toolbox/models/schedule_entry_model.dart';
 
 class ActivityCard extends StatelessWidget {
-  final ActivityModel classModel;
-  final ActivityLabelModel classTypeModel;
+  final ScheduleEntryModel classModel;
+  final ScheduleEntryLabelModel classTypeModel;
   final Function onTap;
 
-  const ActivityCard(
-      {Key key, @required this.classModel, this.classTypeModel, this.onTap})
-      : super(key: key);
+  const ActivityCard({Key key, @required this.classModel, this.classTypeModel, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
-      child: Stack(
+      /*child: Stack(
         children: [
           Material(
             child: Padding(
@@ -168,14 +165,14 @@ class ActivityCard extends StatelessWidget {
               borderRadius: BorderRadius.only(bottomRight: Radius.circular(8)),
             ),
             child: Text(
-              (classTypeModel != null) ? classTypeModel.string : "+",
+              (classTypeModel != null) ? classTypeModel.label : "+",
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
               textAlign: TextAlign.center,
             ),
           ),
         ],
-      ),
+      ),*/
     );
   }
 }

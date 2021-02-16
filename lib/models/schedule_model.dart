@@ -1,22 +1,9 @@
-class ScheduleModel {
-  String id;
-  String name;
-  List<String> classIds;
+import 'package:student_toolbox/models/model.dart';
 
-  ScheduleModel(id, {this.name, this.classIds}) {
-    this.id = id;
-  }
+abstract class ScheduleModel extends Model {
+  int get sid;
 
-  ScheduleModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    classIds = List.from(json['classIds']);
-  }
+  String get name;
 
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'classIds': classIds,
-    };
-  }
+  List<int> get scheduleEntrySeidList;
 }

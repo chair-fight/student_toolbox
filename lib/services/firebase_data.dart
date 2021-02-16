@@ -1,8 +1,9 @@
-import 'package:student_toolbox/models/activity_label_model.dart';
+/*
+import 'package:student_toolbox/models/schedule_entry_label_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:student_toolbox/models/assignment_model.dart';
 import 'package:student_toolbox/models/schedule_model.dart';
-import 'package:student_toolbox/models/activity_model.dart';
+import 'package:student_toolbox/models/schedule_entry_model.dart';
 
 class FirebaseDataException implements Exception {
   String _cause;
@@ -52,7 +53,7 @@ class AssignmentModelFirebaseData {
   static Future<void> updateAssignmentModel(AssignmentModel assignmentModel) async {
     _checkInitialized();
     return _assignmentCollection
-        .doc(assignmentModel.id)
+        .doc(assignmentModel.aid)
         .set(assignmentModel.toJson()
       ..remove('id'));
   }
@@ -361,3 +362,4 @@ class FirebaseData {
     ];
   }
 }
+*/

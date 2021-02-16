@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:student_toolbox/models/assignment_model.dart';
-import 'package:student_toolbox/services/firebase_data.dart';
+import 'package:student_toolbox/models/assignment_model_private.dart';
 
 class AssignmentEditDialog extends StatefulWidget {
   final AssignmentModel assignment;
@@ -27,7 +27,8 @@ class _AssignmentEditDialogState extends State<AssignmentEditDialog> {
       setState(() {
         _name = widget.assignment.name;
         _dueDate = widget.assignment.dueDate;
-        _isFinished = widget.assignment.isFinished;
+        // TODO - Fix isFinished checkMark
+        _isFinished = false;
       });
   }
 
@@ -96,17 +97,20 @@ class _AssignmentEditDialogState extends State<AssignmentEditDialog> {
             child: Text("Confirm"),
             onPressed: () {
               Navigator.of(context).pop((widget.assignment == null)
-                  ? AssignmentModel(
-                      "",
-                      _name,
-                      _dueDate,
-                      _isFinished,
+                  // TODO - Add User ID when created
+                  ? AssignmentModelPrivate(
+                      aid: null,
+                      name: _name,
+                      dueDate: _dueDate,
+                      isFinished: _isFinished,
+                      uid: 0,
                     )
-                  : AssignmentModel(
-                      widget.assignment.id,
-                      _name,
-                      _dueDate,
-                      _isFinished,
+                  : AssignmentModelPrivate(
+                      aid: widget.assignment.aid,
+                      name: _name,
+                      dueDate: _dueDate,
+                      isFinished: _isFinished,
+                      uid: 0,
                     ));
             },
           ),

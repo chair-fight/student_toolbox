@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:student_toolbox/models/activity_label_model.dart';
+import 'package:student_toolbox/models/schedule_entry_label_model.dart';
 
 class ActivityTypeCard extends StatelessWidget {
-  final ActivityLabelModel activityLabelModel;
+  final ScheduleEntryLabelModel activityLabelModel;
   final Function onTap;
 
   const ActivityTypeCard({
@@ -27,7 +27,7 @@ class ActivityTypeCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.bookmark, size: 16),
-                  Text(activityLabelModel.string),
+                  Text(activityLabelModel.label),
                 ],
               ),
             ),

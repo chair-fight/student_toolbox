@@ -1,36 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:student_toolbox/models/model.dart';
 
-class UserModel {
-  final String uid;
+class UserModel implements Model {
+  final int uid;
   final String name;
   final String surname;
   final String email;
-  final Image photo;
-  final String university;
-  final String gender;
-  final DateTime dateOfBirth;
 
   UserModel({
     @required this.uid,
     @required this.name,
     @required this.surname,
     @required this.email,
-    this.photo,
-    this.university,
-    this.gender,
-    this.dateOfBirth,
   });
 
-  static UserModel get placeholder {
-    return UserModel(
-      uid: "-1",
-      name: "Name",
-      surname: "Surname",
-      email: "email_address@domain.com",
-      university: "University Name",
-      photo: Image.asset("images/image2.jpg"),
-      gender: "Non-Binary",
-      dateOfBirth: DateTime(2000, 1, 1),
-    );
+  @override
+  UserModel placeholder() => UserModel(
+        uid: 0,
+        name: "Lorem-Ipsum",
+        surname: "Dolor",
+        email: "lorem_ipsum@dolor.sit",
+      );
+
+  @override
+  UserModel fromJson(Map<String, dynamic> json) => UserModel(
+        uid: json['uid'],
+        name: json['name'],
+        surname: json['surname'],
+        email: json['email'],
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'uid': uid,
+      'name': name,
+      'surname': surname,
+      'email': email,
+    };
+  }
+
+  @override
+  bool valid() {
+    // TODO: implement valid
+    throw UnimplementedError();
   }
 }

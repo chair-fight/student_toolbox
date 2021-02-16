@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:student_toolbox/core/week_day_time.dart';
-import 'package:student_toolbox/models/activity_model.dart';
-import 'package:student_toolbox/models/activity_label_model.dart';
+import 'package:student_toolbox/models/schedule_entry_model.dart';
+import 'package:student_toolbox/models/schedule_entry_label_model.dart';
 
 class ActivityEditCard extends StatelessWidget {
-  final ActivityModel classModel;
-  final ActivityLabelModel classTypeModel;
+  final ScheduleEntryModel classModel;
+  final ScheduleEntryLabelModel classTypeModel;
   final Function onTap;
 
   const ActivityEditCard(
