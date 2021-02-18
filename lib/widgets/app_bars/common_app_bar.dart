@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:student_toolbox/screens/profile_page.dart';
+import 'package:student_toolbox/art/gradients/primary_gradient.dart';
+import 'package:student_toolbox/screens/profile_screen.dart';
 import 'package:student_toolbox/screens/settings_screen.dart';
 
 class CommonAppBar extends StatelessWidget with PreferredSizeWidget {
@@ -22,11 +23,14 @@ class CommonAppBar extends StatelessWidget with PreferredSizeWidget {
           child: ClipOval(
             child: FittedBox(
               fit: BoxFit.cover,
-              child: Icon(FontAwesomeIcons.user),
+              child: Icon(
+                FontAwesomeIcons.user,
+                color: Theme.of(context).primaryIconTheme.color,
+              ),
             ),
           ),
         ),
-        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage())),
+        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen())),
       ),
       actions: [
         IconButton(
@@ -34,6 +38,9 @@ class CommonAppBar extends StatelessWidget with PreferredSizeWidget {
           onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen())),
         )
       ],
+      flexibleSpace: Container(
+        decoration: BoxDecoration(gradient: PrimaryGradient.build(context)),
+      ),
       bottom: bottom,
     );
   }

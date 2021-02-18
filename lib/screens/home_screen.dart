@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:student_toolbox/screens/assignment_list_screen.dart';
 import 'package:student_toolbox/screens/dashboard_screen.dart';
+import 'package:student_toolbox/screens/group_list_screen.dart';
 import 'package:student_toolbox/screens/schedule_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Builder(builder: (BuildContext context) => AssignmentListScreen()),
     Builder(builder: (BuildContext context) => ScheduleScreen()),
     Builder(builder: (BuildContext context) => DashboardScreen()),
-    Builder(builder: (BuildContext context) => DashboardScreen()),
+    Builder(builder: (BuildContext context) => GroupListScreen()),
     Builder(builder: (BuildContext context) => DashboardScreen()),
   ];
 
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: _setPage,
         items: [
           BottomNavigationBarItem(
-            label: "Tasks",
+            label: "Assignments",
             icon: Icon(
               FontAwesomeIcons.tasks,
               size: 24,

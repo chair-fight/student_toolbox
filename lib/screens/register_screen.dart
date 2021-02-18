@@ -7,8 +7,9 @@ import 'package:student_toolbox/services/validators/email_validator.dart';
 import 'package:student_toolbox/services/validators/nonempty_validator.dart';
 import 'package:student_toolbox/services/validators/password_validator.dart';
 import 'package:student_toolbox/services/validators/repeat_password_validator.dart';
+import 'package:student_toolbox/widgets/common_text_form_field.dart';
 
-import 'loading_screen.dart';
+import '../widgets/loading_widget.dart';
 
 class RegisterScreen extends StatefulWidget {
   Function _setParentHint;
@@ -63,7 +64,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return _isLoading
-        ? LoadingScreen()
+        ? LoadingWidget()
         : Scaffold(
             appBar: AppBar(
               leading: FlatButton(
@@ -87,7 +88,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Row(
                             children: [
                               Expanded(
-                                child: TextFormField(
+                                child: CommonTextFormField(
                                   decoration: InputDecoration(labelText: "Name"),
                                   validator: NonEmptyValidator.validate,
                                   onChanged: (value) => setState(() => _name = value),
@@ -95,7 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               SizedBox(width: 32),
                               Expanded(
-                                child: TextFormField(
+                                child: CommonTextFormField(
                                   decoration: InputDecoration(labelText: "Surname"),
                                   validator: NonEmptyValidator.validate,
                                   onChanged: (value) => setState(() => _surname = value),
@@ -103,19 +104,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ],
                           ),
-                          TextFormField(
+                          CommonTextFormField(
                             decoration: InputDecoration(labelText: "Email"),
                             validator: EmailValidator.validate,
                             onChanged: (value) => setState(() => _email = value),
                           ),
-                          TextFormField(
-                            decoration: InputDecoration(labelText: "Password", suffixIcon: Icon(FontAwesomeIcons.eye)),
+                          CommonTextFormField(
+                            decoration: InputDecoration(labelText: "Password"),
                             obscureText: true,
                             validator: PasswordValidator.validate,
                             onChanged: (value) => setState(() => _password = value),
                           ),
-                          TextFormField(
-                            decoration: InputDecoration(labelText: "Repeat Password", suffixIcon: Icon(FontAwesomeIcons.eye)),
+                          CommonTextFormField(
+                            decoration: InputDecoration(labelText: "Repeat Password"),
                             obscureText: true,
                             onChanged: (value) => setState(() => _repeatPassword = value),
                             validator: (value) => RepeatPasswordValidator.validate(_password, _repeatPassword),

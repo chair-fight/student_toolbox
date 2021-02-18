@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:student_toolbox/art/gradients/gradient.dart';
+import 'package:student_toolbox/art/gradients/gradient_factory.dart';
 
 class NaturalGradientFactory implements GradientFactory {
   Gradient build(BuildContext context) {

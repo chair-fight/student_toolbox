@@ -16,7 +16,7 @@ class CustomThemes {
   static final Color _onDark1 = Color(0xffffffff);
   static final Color _onDark2 = Color(0x50ffffff);
 
-  static final Color _primary = Color(0xff00d785);
+  static final Color _primary = Color(0xff00C76D);
   static final Color _secondary = Color(0xff009eff);
   static final Color _error = Color(0xffcf1f1b);
 
@@ -43,7 +43,8 @@ class CustomThemes {
       buttonColor: _primary,
       dividerColor: _light3,
       toggleableActiveColor: _primary,
-      iconTheme: IconThemeData(color: _onLight1),
+      primaryTextTheme: _textThemeFromColor(_onDark1),
+      primaryIconTheme: _iconThemeFromColor(_onDark1),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           minimumSize: MaterialStateProperty.all(Size(0, 36)),
@@ -87,7 +88,7 @@ class CustomThemes {
         error: _error,
         onBackground: _onDark1,
         onError: _onDark1,
-        onPrimary: _onDark1,
+        onPrimary: _onLight1,
         onSecondary: _onDark1,
         onSurface: _onDark1,
         primary: _primary,
@@ -102,6 +103,8 @@ class CustomThemes {
       buttonColor: _primary,
       dividerColor: _dark3,
       toggleableActiveColor: _primary,
+      primaryTextTheme: _textThemeFromColor(_onDark1),
+      primaryIconTheme: _iconThemeFromColor(_onDark1),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           minimumSize: MaterialStateProperty.all(Size(0, 36)),
@@ -135,5 +138,25 @@ class CustomThemes {
         unselectedItemColor: _onDark1,
       ),
     );
+  }
+
+  static TextTheme _textThemeFromColor(Color color) {
+    return TextTheme(
+      headline1: TextStyle(color: color),
+      headline2: TextStyle(color: color),
+      headline3: TextStyle(color: color),
+      headline4: TextStyle(color: color),
+      headline5: TextStyle(color: color),
+      headline6: TextStyle(color: color),
+      subtitle1: TextStyle(color: color),
+      subtitle2: TextStyle(color: color),
+      bodyText1: TextStyle(color: color),
+      bodyText2: TextStyle(color: color),
+      caption: TextStyle(color: color),
+    );
+  }
+
+  static IconThemeData _iconThemeFromColor(Color color) {
+    return IconThemeData(color: color);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:student_toolbox/art/gradients/primary_gradient.dart';
 
 class SimpleAppBar extends StatelessWidget with PreferredSizeWidget {
   final Widget title;
@@ -12,10 +13,16 @@ class SimpleAppBar extends StatelessWidget with PreferredSizeWidget {
     return AppBar(
       title: title,
       leading: FlatButton(
-        child: Icon(FontAwesomeIcons.arrowLeft),
+        child: Icon(
+          FontAwesomeIcons.arrowLeft,
+          color: Theme.of(context).primaryIconTheme.color,
+        ),
         onPressed: () {
-          Navigator.pop(context);
+          Navigator.maybePop(context);
         },
+      ),
+      flexibleSpace: Container(
+        decoration: BoxDecoration(gradient: PrimaryGradient.build(context)),
       ),
       bottom: bottom,
     );

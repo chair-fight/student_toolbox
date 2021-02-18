@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:student_toolbox/models/assignment_model.dart';
-import 'package:student_toolbox/screens/loading_screen.dart';
 import 'package:student_toolbox/widgets/app_bars/common_app_bar.dart';
 import 'package:student_toolbox/widgets/assignment_card.dart';
 import 'package:student_toolbox/widgets/dialogs/assignment_edit_dialog.dart';
+import 'package:student_toolbox/widgets/loading_widget.dart';
 
 class AssignmentListScreen extends StatefulWidget {
   @override
@@ -102,7 +102,7 @@ class _AssignmentListScreenState extends State<AssignmentListScreen> {
           );
         },
         child: assignments == null //
-            ? LoadingScreen()
+            ? LoadingWidget()
             : ListView(
                 children: <Widget>[]
                   ..addAll([

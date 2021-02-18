@@ -47,7 +47,21 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/
+    - assets/images/logo_primary.png
+    - assets/images/logo_secondary.png
+    - assets/images/logo_oncolor.png
+    - assets/images/logo_onwhite.png
+    - assets/images/logo_onblack.png
+    - assets/images/logo_mini_primary.png
+    - assets/images/logo_mini_secondary.png
+    - assets/images/logo_mini_oncolor.png
+    - assets/images/logo_mini_onwhite.png
+    - assets/images/logo_mini_onblack.png
+    - assets/images/logo_full_primary.png
+    - assets/images/logo_full_secondary.png
+    - assets/images/logo_full_oncolor.png
+    - assets/images/logo_full_onwhite.png
+    - assets/images/logo_full_onblack.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

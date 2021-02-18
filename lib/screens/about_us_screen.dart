@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:student_toolbox/art/gradients/primary_gradient.dart';
 import 'package:student_toolbox/widgets/app_bars/simple_app_bar.dart';
-import 'package:student_toolbox/widgets/brand/logo.dart';
 
 class AboutUsScreen extends StatelessWidget {
   @override
@@ -10,27 +8,16 @@ class AboutUsScreen extends StatelessWidget {
     return Scaffold(
       appBar: SimpleAppBar(
         title: Text("About Us"),
+        bottom: PreferredSize(
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Image.asset("assets/images/logo_full_oncolor.png", height: 128),
+          ),
+          preferredSize: Size(0, 148),
+        ),
       ),
       body: ListView(
         children: [
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 32, horizontal: 16),
-            decoration: BoxDecoration(
-              gradient: PrimaryGradient().build(context),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Image.asset("assets/images/logo_full_monoxxxhdpi.png"),
-                Container(
-                  child: Text(
-                    "Developed by Chair Fight",
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(color: Theme.of(context).colorScheme.onPrimary),
-                  ),
-                ),
-              ],
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text("Contact Us", style: Theme.of(context).textTheme.headline5),

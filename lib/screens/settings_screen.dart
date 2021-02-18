@@ -16,12 +16,20 @@ class SettingsScreen extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text("Profile", style: Theme.of(context).textTheme.headline6),
+            child: Text("Profile", style: Theme
+                .of(context)
+                .textTheme
+                .headline6),
           ),
           Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              border: BorderDirectional(bottom: BorderSide(color: Theme.of(context).dividerColor)),
+              color: Theme
+                  .of(context)
+                  .colorScheme
+                  .surface,
+              border: BorderDirectional(bottom: BorderSide(color: Theme
+                  .of(context)
+                  .dividerColor)),
             ),
             child: Column(
               children: [
@@ -35,19 +43,30 @@ class SettingsScreen extends StatelessWidget {
                   icon: FontAwesomeIcons.signOutAlt,
                   label: "Log Out",
                   buttonRole: _SettingsButtonRole.Button,
-                  onTap: () => AuthService().logOut(),
+                  onTap: () {
+                    Navigator.maybePop(context);
+                    return AuthService().logOut();
+                  },
                 ),
               ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text("Accessibility", style: Theme.of(context).textTheme.headline6),
+            child: Text("Accessibility", style: Theme
+                .of(context)
+                .textTheme
+                .headline6),
           ),
           Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              border: BorderDirectional(bottom: BorderSide(color: Theme.of(context).dividerColor)),
+              color: Theme
+                  .of(context)
+                  .colorScheme
+                  .surface,
+              border: BorderDirectional(bottom: BorderSide(color: Theme
+                  .of(context)
+                  .dividerColor)),
             ),
             child: Column(
               children: [
@@ -63,12 +82,20 @@ class SettingsScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text("Notifications", style: Theme.of(context).textTheme.headline6),
+            child: Text("Notifications", style: Theme
+                .of(context)
+                .textTheme
+                .headline6),
           ),
           Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              border: BorderDirectional(bottom: BorderSide(color: Theme.of(context).dividerColor)),
+              color: Theme
+                  .of(context)
+                  .colorScheme
+                  .surface,
+              border: BorderDirectional(bottom: BorderSide(color: Theme
+                  .of(context)
+                  .dividerColor)),
             ),
             child: Column(
               children: [
@@ -91,12 +118,20 @@ class SettingsScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text("Application", style: Theme.of(context).textTheme.headline6),
+            child: Text("Application", style: Theme
+                .of(context)
+                .textTheme
+                .headline6),
           ),
           Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              border: BorderDirectional(bottom: BorderSide(color: Theme.of(context).dividerColor)),
+              color: Theme
+                  .of(context)
+                  .colorScheme
+                  .surface,
+              border: BorderDirectional(bottom: BorderSide(color: Theme
+                  .of(context)
+                  .dividerColor)),
             ),
             child: Column(
               children: [
@@ -104,7 +139,7 @@ class SettingsScreen extends StatelessWidget {
                   icon: FontAwesomeIcons.infoCircle,
                   label: "About Us",
                   buttonRole: _SettingsButtonRole.Goto,
-                  pageRoute: MaterialPageRoute(builder: (context) => AboutUsScreen()),
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AboutUsScreen())),
                 ),
               ],
             ),
@@ -128,7 +163,6 @@ class _SettingsButton extends StatelessWidget {
   final Function onTap;
   final Function(bool) onChanged;
   final bool value;
-  final MaterialPageRoute pageRoute;
 
   const _SettingsButton({
     Key key,
@@ -138,13 +172,15 @@ class _SettingsButton extends StatelessWidget {
     this.onTap,
     this.onChanged,
     this.value,
-    this.pageRoute,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).colorScheme.surface,
+      color: Theme
+          .of(context)
+          .colorScheme
+          .surface,
       child: InkWell(
         child: Container(
           height: 56,
@@ -153,7 +189,10 @@ class _SettingsButton extends StatelessWidget {
             children: [
               Icon(icon, size: 32),
               SizedBox(width: 16),
-              Expanded(child: Text(label, style: Theme.of(context).textTheme.subtitle1)),
+              Expanded(child: Text(label, style: Theme
+                  .of(context)
+                  .textTheme
+                  .subtitle1)),
               if (buttonRole == _SettingsButtonRole.Goto)
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -167,11 +206,7 @@ class _SettingsButton extends StatelessWidget {
             ],
           ),
         ),
-        onTap: buttonRole != _SettingsButtonRole.Switch //
-            ? () => buttonRole != _SettingsButtonRole.Button //
-                ? Navigator.push(context, pageRoute)
-                : onTap()
-            : null,
+        onTap: onTap,
       ),
     );
   }
